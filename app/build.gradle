@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'android-apt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+    defaultConfig {
+        applicationId "com.guuguo.android.pikacomic"
+        minSdkVersion 17
+        targetSdkVersion 25
+        versionCode 7
+        versionName "0.5"
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'x86'//, 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+        vectorDrawables.useSupportLibrary = true
+    }
+    signingConfigs {
+        release {
+            keyAlias 'mimi'
+            keyPassword 'guuguo123'
+            storeFile file('mimi.jks')
+            storePassword 'android'
+        }
+        debug {
+            keyAlias 'mimi'
+            keyPassword 'guuguo123'
+            storeFile file('mimi.jks')
+            storePassword 'android'
+        }
+    }
+    buildTypes {
+        release {
+            debuggable false
+            jniDebuggable false
+            zipAlignEnabled true
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+        debug {
+            debuggable true
+            jniDebuggable true
+            zipAlignEnabled true
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    compile project(':androidLib:androidLib')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+
+
+    //kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
