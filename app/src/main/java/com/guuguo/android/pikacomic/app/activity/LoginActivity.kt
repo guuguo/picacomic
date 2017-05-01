@@ -30,7 +30,7 @@ class LoginActivity : BaseActivity() {
 
     override fun initView() {
         super.initView()
-        toolbar.navigationIcon = ContextCompat.getDrawable(activity, R.drawable.ic_icecream)
+        toolbar.navigationIcon = ContextCompat.getDrawable(activity, R.drawable.ic_login)
         edt_username.setText("1152168009@qq.com")
         edt_password.setText("200996GDQ")
 
