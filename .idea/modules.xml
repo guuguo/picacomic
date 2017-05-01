@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/piccomic.iml" filepath="$PROJECT_DIR$/piccomic.iml" />
       <module fileurl="file://$PROJECT_DIR$/../androidLib/piccomic-androidLib.iml" filepath="$PROJECT_DIR$/../androidLib/piccomic-androidLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pika.iml" filepath="$PROJECT_DIR$/pika.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../androidLib/pika-androidLib.iml" filepath="$PROJECT_DIR$/../androidLib/pika-androidLib.iml" />
     </modules>
   </component>
 </project>
