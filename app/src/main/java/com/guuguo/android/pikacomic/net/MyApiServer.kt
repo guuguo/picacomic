@@ -1,26 +1,35 @@
-package com.guuguo.android.pikacomic.net
+package com.guuguo.gank.net
 
-import com.guuguo.android.lib.net.ApiServer
+import com.google.gson.GsonBuilder
 import com.guuguo.android.lib.net.LBaseCallback
-import com.guuguo.android.pikacomic.constant.LocalData
+import com.guuguo.android.pikacomic.entity.TokenResponse
+import com.guuguo.android.pikacomic.net.ApiConfig
+import com.guuguo.android.pikacomic.net.ResponseModel
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import java.util.*
 
 /**
- * guode 创造于 2017-05-01.
- * 项目 pika
+ * Created by guodeqing on 7/14/16.
  */
+object MyApiServer {
+    val gson = GsonBuilder().setDateFormat(ApiConfig.jsonDataFormatStr).create()
+    val service by lazy { MyRetrofit.getRetrofit().create(Service::class.java) }
+    fun signIn(email: String, password: String): Observable<ResponseModel<TokenResponse>> {
+        val map = HashMap<String, String>()
+        map.put("email", email)
+        map.put("password", password)
 
-fun ApiServer.request(httpUrl: String, hashMap: HashMap<String, String>, callbackL: LBaseCallback<*>, isLogin: Boolean = false) {
-    val headers = HashMap<String, String>()
-    headers.put("api-key", "C69BAF41DA5ABD1FFEDC6D2FEA56B")
-    headers.put("accept", "application/vnd.picacomic.com.v1+json")
-    headers.put("app-version", "2.0.3.13")
-    headers.put("app-uuid", UUID.randomUUID().toString())
-    headers.put("app-platform", "android")
-    headers.put("app-build-version", "29")
-    headers.put("User-Agent", "okhttp/3.2.0")
-    if (!isLogin) {
-        headers.put("authorization", LocalData.token)
+        return service.signIn(getRequestJsonBody(map))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
-    ApiServer.apiPost(httpUrl, "", headers, null, hashMap, callbackL)
+
+
+    fun getRequestJsonBody(map: HashMap<String, String>): RequestBody = RequestBody.create(
+            MediaType.parse("application/json; charset=UTF-8"),
+            LBaseCallback.gson.toJson(map))
 }

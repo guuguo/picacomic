@@ -6,7 +6,6 @@ import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.base.BaseActivity
 import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.entity.TokenResponse
-import com.guuguo.android.pikacomic.net.ApiLoginServer
 import com.guuguo.android.pikacomic.net.BaseCallback
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_login.*
