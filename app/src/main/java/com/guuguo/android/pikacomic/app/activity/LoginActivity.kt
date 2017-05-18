@@ -9,6 +9,7 @@ import com.guuguo.android.pikacomic.entity.TokenResponse
 import com.guuguo.android.pikacomic.net.BaseCallback
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.base_toolbar_common.*
 
 class LoginActivity : BaseActivity() {
     override fun getLayoutResId(): Int {
@@ -27,9 +28,8 @@ class LoginActivity : BaseActivity() {
         return false
     }
 
-    override fun initView() {
-        super.initView()
-        toolbar.navigationIcon = ContextCompat.getDrawable(activity, R.drawable.ic_login)
+    override fun init() {
+        id_tool_bar.navigationIcon = ContextCompat.getDrawable(activity, R.drawable.ic_login)
         edt_username.setText("1152168009@qq.com")
         edt_password.setText("200996GDQ")
 

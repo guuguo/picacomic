@@ -5,16 +5,17 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.guuguo.android.pikacomic.app.activity.LoginActivity">
+
+    <include
+        android:id="@+id/in_toolbar"
+        layout="@layout/base_toolbar_common" />
 
     <ImageView
         android:id="@+id/iv_username"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@+id/edt_username"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -25,7 +26,8 @@
         android:id="@+id/edt_username"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:layout_toRightOf="@+id/iv_username"
         android:background="@null"
         android:gravity="center_vertical"
@@ -34,16 +36,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/iv_username"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/in_toolbar" />
 
     <View
         android:id="@+id/line_user"
         style="@style/under_line_20"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/iv_username"
+        app:layout_constraintRight_toRightOf="@id/edt_username"
         app:layout_constraintTop_toBottomOf="@+id/edt_username" />
 
     <ImageView
+        
         android:id="@+id/iv_password"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
@@ -51,7 +54,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/edt_password"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/iv_username"
         app:layout_constraintTop_toBottomOf="@id/line_user"
         app:layout_constraintTop_toTopOf="@+id/edt_password"
         app:srcCompat="@drawable/ic_password" />
@@ -71,15 +74,15 @@
         android:textColorHint="@color/black20"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/iv_password"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@id/edt_username"
         app:layout_constraintTop_toBottomOf="@+id/line_user"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <View
         android:id="@+id/line_password"
         style="@style/under_line_20"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/iv_username"
+        app:layout_constraintRight_toRightOf="@id/edt_username"
         app:layout_constraintTop_toBottomOf="@id/edt_password" />
 
     <com.flyco.roundview.RoundTextView
@@ -91,8 +94,8 @@
         android:text="登录"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/iv_username"
+        app:layout_constraintRight_toRightOf="@id/edt_username"
         app:layout_constraintTop_toBottomOf="@+id/line_password"
         app:rv_backgroundColor="#fe9710"
         app:rv_backgroundPressColor="@color/colorPrimaryBlue"

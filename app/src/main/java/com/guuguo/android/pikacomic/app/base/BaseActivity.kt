@@ -3,6 +3,7 @@ package com.guuguo.android.pikacomic.app.base
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.WindowManager
 import com.guuguo.android.lib.utils.ScreenManager
@@ -14,19 +15,22 @@ import com.guuguo.android.pikacomic.app.MyApplication
 
 abstract class BaseActivity : AppCompatActivity() {
     protected var myApplication = MyApplication.instance
-    /*abstract*/
+    /*init*/
     protected abstract fun init()
 
-    protected abstract fun initVariable(savedInstanceState: Bundle?)
+    open protected fun initVariable(savedInstanceState: Bundle?) {}
+
     /*setting*/
     open protected fun getHeaderTitle() = ""
 
-    open protected fun getToolBarResId() = 0
+    open protected fun getToolBar(): Toolbar? = null
     open protected fun isNavigationButtonVisible() = true
 
     /*onCreate*/
     protected abstract fun getLayoutResId(): Int
 
+    val activity = this
+    
     open protected fun isFullScreen() = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +51,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
 
         setContentView(getLayoutResId())
+        setSupportActionBar(getToolBar())
         initVariable(savedInstanceState)
         init()
     }
