@@ -5,7 +5,7 @@ import com.guuguo.android.lib.net.LBaseCallback
 import com.guuguo.android.pikacomic.entity.TokenResponse
 import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.ResponseModel
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
@@ -18,7 +18,7 @@ import java.util.*
 object MyApiServer {
     val gson = GsonBuilder().setDateFormat(ApiConfig.jsonDataFormatStr).create()
     val service by lazy { MyRetrofit.getRetrofit().create(Service::class.java) }
-    fun signIn(email: String, password: String): Observable<ResponseModel<TokenResponse>> {
+    fun signIn(email: String, password: String): Single<ResponseModel<TokenResponse>> {
         val map = HashMap<String, String>()
         map.put("email", email)
         map.put("password", password)

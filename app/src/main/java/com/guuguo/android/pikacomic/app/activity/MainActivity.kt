@@ -8,9 +8,6 @@ import com.guuguo.android.pikacomic.app.base.BaseActivity
  * 项目 pika
  */
 class MainActivity : BaseActivity() {
-    override fun init() {
-    }
-
     override fun getLayoutResId(): Int {
         return R.layout.activity_main
     }

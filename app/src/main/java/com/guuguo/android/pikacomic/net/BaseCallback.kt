@@ -1,37 +1,41 @@
 package com.guuguo.android.pikacomic.net
 
-import com.google.gson.reflect.TypeToken
-import com.guuguo.android.lib.net.LBaseCallback
+import android.accounts.NetworkErrorException
+import com.guuguo.android.R
+import com.guuguo.android.lib.BaseApplication
+import com.guuguo.android.lib.extension.safe
+import io.reactivex.SingleObserver
 import java.io.IOException
-import java.lang.Exception
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 /**
  * guodeqing 创造于 16/6/4.
  * 项目 youku
  */
-abstract class BaseCallback<T> : LBaseCallback<T>() {
-
-    var typeToken: TypeToken<ResponseModel<T>>? = null
-    fun initTypeToken(typeToken: TypeToken<ResponseModel<T>>) {
-        this.typeToken = typeToken
-    }
-
-    override fun gsonExchange(result: String) {
-        var model: ResponseModel<T>?
-        if (typeToken == null)
-            onApiLoadError("没有设置typeToken")
-        else {
-            try {
-                model = ResponseModel.getResponseModel<T>(gson, typeToken!!, result)
-                if (model.code != 200) {
-                    onError(IOException(model.detail))
-                    return
-                }
-            } catch (e: Exception) {
-                onApiLoadError(result)
-                return;
-            }
-            onApiLoadSuccess(model.data)
+abstract class BaseCallback<T> : SingleObserver<T> {
+    override fun onSuccess(t: T) {
+        val resModel = t as ResponseModel<*>
+        if (resModel.code != 200) {
+            onError(IOException(resModel.detail))
+            return
         }
     }
+
+    override fun onError(e: Throwable?) {
+        if (e != null) {
+            when (e) {
+                is SocketTimeoutException -> onApiLoadError(BaseApplication.getInstance().getString(R.string.state_network_timeout))
+                is NetworkErrorException -> onApiLoadError(BaseApplication.getInstance().getString(R.string.state_network_error))
+                is UnknownHostException -> onApiLoadError(BaseApplication.getInstance().getString(R.string.state_network_unknown_host))
+                is ConnectException -> onApiLoadError(BaseApplication.getInstance().getString(R.string.state_network_unknown_host))
+                is IOException -> onApiLoadError(e.message.safe())
+                else -> throw e
+            }
+        }
+    }
+
+    abstract fun onApiLoadError(msg: String)
+
 }
