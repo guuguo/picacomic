@@ -1,98 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/layer_login">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.CardView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="90dp"
-        app:cardCornerRadius="10dp">
+        android:background="@mipmap/bg_login">
 
-        <LinearLayout
-            android:id="@+id/activity_main"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="com.guuguo.android.pikacomic.app.activity.LoginActivity">
+            android:layout_marginBottom="95dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="90dp"
+            app:cardCornerRadius="10dp">
 
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_comic" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="PICA COMIC"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edt_username"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/activity_main"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_toRightOf="@+id/iv_username"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="邮箱/手机号码"
-                android:textColorHint="@color/black15"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toRightOf="@+id/iv_username"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context="com.guuguo.android.pikacomic.app.activity.LoginActivity">
 
 
-            <EditText
-                android:id="@+id/edt_password"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/line_user"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_toRightOf="@+id/iv_password"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="请输入密码"
-                android:inputType="textPassword"
-                android:textColorHint="@color/black20"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toRightOf="@+id/iv_password"
-                app:layout_constraintRight_toRightOf="@id/edt_username"
-                app:layout_constraintTop_toBottomOf="@+id/line_user"
-                app:layout_constraintVertical_chainStyle="spread" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:tint="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_comic"
+                    tools:layout_editor_absoluteX="171dp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="PICA COMIC"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    tools:layout_editor_absoluteX="155dp" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="25dp"
+                    android:text="让你轻松阅读本子·你懂得"
+                    android:textColor="@color/black30"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    tools:layout_editor_absoluteX="150dp" />
+
+                <EditText
+                    android:id="@+id/edt_username"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_edittext"
+                    android:gravity="center_horizontal|bottom"
+                    android:hint="邮箱/手机号码"
+                    android:maxLines="1"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/black80"
+                    android:textColorHint="@color/black20"
+                    app:layout_constraintBottom_toTopOf="@+id/edt_password"
+                    app:layout_constraintEnd_toEndOf="@+id/rtv_login"
+                    app:layout_constraintStart_toStartOf="@+id/rtv_login"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:layout_editor_absoluteX="76dp" />
 
 
-            <com.flyco.roundview.RoundTextView
-                android:id="@+id/rtv_login"
-                android:layout_width="200dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="60dp"
-                android:gravity="center"
-                android:text="登录"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="@id/iv_username"
-                app:layout_constraintRight_toRightOf="@id/edt_username"
-                app:layout_constraintTop_toBottomOf="@+id/line_password"
-                app:rv_backgroundColor="@color/colorPrimary"
-                app:rv_backgroundPressColor="@color/colorPrimaryBlue"
-                app:rv_cornerRadius="5dp"
-                app:rv_isRippleEnable="false" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-</FrameLayout>
+                <EditText
+                    android:id="@+id/edt_password"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_edittext"
+                    android:gravity="center_horizontal|bottom"
+                    android:hint="请输入密码"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/black80"
+                    android:textColorHint="@color/black20"
+                    app:layout_constraintBottom_toTopOf="@+id/rtv_login"
+                    app:layout_constraintEnd_toEndOf="@+id/rtv_login"
+                    app:layout_constraintStart_toStartOf="@+id/rtv_login"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_username"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:layout_editor_absoluteX="76dp" />
+
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/rtv_login"
+                    android:layout_width="323dp"
+                    android:layout_height="43dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:text="登录"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_forget_password"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:rv_backgroundColor="@color/colorPrimary"
+                    app:rv_backgroundPressColor="@color/colorPrimaryBlue"
+                    app:rv_cornerRadius="5dp"
+                    app:rv_isRippleEnable="false"
+                    tools:layout_editor_absoluteX="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_forget_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="忘记密码"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_register"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_resend_email"
+                    app:layout_constraintTop_toTopOf="@+id/tv_register"
+                    tools:layout_editor_absoluteX="285dp" />
+
+                <TextView
+                    android:id="@+id/tv_resend_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="重发激活邮件"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_register"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_forget_password"
+                    app:layout_constraintStart_toEndOf="@+id/tv_register"
+                    app:layout_constraintTop_toTopOf="@+id/tv_register"
+                    tools:layout_editor_absoluteX="169dp" />
+
+                <TextView
+                    android:id="@+id/tv_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="免费注册"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_resend_email"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteX="78dp" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
+</layout>

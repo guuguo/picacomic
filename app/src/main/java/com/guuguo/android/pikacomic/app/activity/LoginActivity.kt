@@ -1,28 +1,32 @@
 package com.guuguo.android.pikacomic.app.activity
 
-import android.support.v4.content.ContextCompat
+import android.databinding.DataBindingUtil
+import com.flyco.systembar.SystemBarHelper
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.base.BaseActivity
 import com.guuguo.android.pikacomic.constant.LocalData
+import com.guuguo.android.pikacomic.databinding.ActivityLoginBinding
 import com.guuguo.android.pikacomic.entity.TokenResponse
 import com.guuguo.android.pikacomic.net.BaseCallback
 import com.guuguo.android.pikacomic.net.ResponseModel
 import com.guuguo.gank.net.MyApiServer
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.base_toolbar_common.*
 
 class LoginActivity : BaseActivity() {
-    
+    lateinit var binding : ActivityLoginBinding
+
     override fun getLayoutResId()= R.layout.activity_login
-    override fun getToolBar()= id_tool_bar
     override fun getHeaderTitle()="登录"
     override fun isNavigationBack() = false
-    
+
+    override fun setContentView(layoutResID: Int) {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+    }
     override fun initView() {
-        id_tool_bar.navigationIcon = ContextCompat.getDrawable(activity, R.drawable.ic_login)
-        edt_username.setText("1152168009@qq.com")
-        edt_password.setText("200996GDQ")
+        SystemBarHelper.immersiveStatusBar(activity,0f)
+        binding.edtUsername.setText("1152168009@qq.com")
+        binding.edtPassword.setText("200996GDQ")
 
         rtv_login.setOnClickListener({
             if (checkValidate()) {
