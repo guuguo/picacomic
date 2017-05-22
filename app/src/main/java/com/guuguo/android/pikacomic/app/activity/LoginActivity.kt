@@ -3,7 +3,7 @@ package com.guuguo.android.pikacomic.app.activity
 import android.databinding.DataBindingUtil
 import com.flyco.systembar.SystemBarHelper
 import com.guuguo.android.pikacomic.R
-import com.guuguo.android.pikacomic.app.base.BaseActivity
+import com.guuguo.android.pikacomic.base.BaseActivity
 import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.databinding.ActivityLoginBinding
 import com.guuguo.android.pikacomic.entity.TokenResponse
@@ -14,17 +14,18 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity() {
-    lateinit var binding : ActivityLoginBinding
+    lateinit var binding: ActivityLoginBinding
 
-    override fun getLayoutResId()= R.layout.activity_login
-    override fun getHeaderTitle()="登录"
+    override fun getLayoutResId() = R.layout.activity_login
+    override fun getHeaderTitle() = "登录"
     override fun isNavigationBack() = false
 
-    override fun setContentView(layoutResID: Int) {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+    override fun setLayoutResId(layoutResId: Int) {
+        binding = DataBindingUtil.setContentView(activity, layoutResId)
     }
+
     override fun initView() {
-        SystemBarHelper.immersiveStatusBar(activity,0f)
+        SystemBarHelper.immersiveStatusBar(activity, 0f)
         binding.edtUsername.setText("1152168009@qq.com")
         binding.edtPassword.setText("200996GDQ")
 
@@ -41,7 +42,8 @@ class LoginActivity : BaseActivity() {
                         dialogDismiss()
                         t.data?.let {
                             LocalData.token = t.data!!.token
-                            dialogCompleteShow(LocalData.token, null, 1200)
+                            MainActivity.intentTo(activity)
+//                            dialogCompleteShow(LocalData.token, null, 1200)
                         }
                     }
 

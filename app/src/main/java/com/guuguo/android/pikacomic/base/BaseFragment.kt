@@ -1,7 +1,5 @@
-package com.guuguo.android.pikacomic.app.base
+package com.guuguo.android.pikacomic.base
 
-import android.view.View
-import com.guuguo.android.lib.app.LBaseFragment
 import com.guuguo.android.lib.app.LNBaseFragment
 import com.guuguo.android.pikacomic.app.MyApplication
 

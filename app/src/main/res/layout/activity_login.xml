@@ -81,10 +81,11 @@
                     android:textColorHint="@color/black20"
                     app:layout_constraintBottom_toTopOf="@+id/edt_password"
                     app:layout_constraintEnd_toEndOf="@+id/rtv_login"
+                    app:layout_constraintLeft_toLeftOf="@+id/rtv_login"
+                    app:layout_constraintRight_toRightOf="@+id/rtv_login"
                     app:layout_constraintStart_toStartOf="@+id/rtv_login"
                     app:layout_constraintTop_toBottomOf="@+id/textView2"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    tools:layout_editor_absoluteX="76dp" />
+                    app:layout_constraintVertical_chainStyle="packed" />
 
 
                 <EditText
@@ -102,15 +103,16 @@
                     android:textColorHint="@color/black20"
                     app:layout_constraintBottom_toTopOf="@+id/rtv_login"
                     app:layout_constraintEnd_toEndOf="@+id/rtv_login"
+                    app:layout_constraintLeft_toLeftOf="@+id/rtv_login"
+                    app:layout_constraintRight_toRightOf="@+id/rtv_login"
                     app:layout_constraintStart_toStartOf="@+id/rtv_login"
                     app:layout_constraintTop_toBottomOf="@+id/edt_username"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    tools:layout_editor_absoluteX="76dp" />
+                    app:layout_constraintVertical_chainStyle="packed" />
 
 
                 <com.flyco.roundview.RoundTextView
                     android:id="@+id/rtv_login"
-                    android:layout_width="323dp"
+                    android:layout_width="260dp"
                     android:layout_height="43dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="30dp"
