@@ -1,3 +1,3 @@
-include ':app', ':androidLib'
+include ':app', ':androidLib',':library'
 project(':androidLib').projectDir = new File('../androidLib/')
 include ':androidLib:androidLib'

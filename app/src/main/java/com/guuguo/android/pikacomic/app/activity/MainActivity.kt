@@ -9,7 +9,10 @@ import android.support.v4.content.ContextCompat
 import com.flyco.systembar.SystemBarHelper
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.guuguo.android.pikacomic.R
+import com.guuguo.android.pikacomic.app.fragment.GameFragment
 import com.guuguo.android.pikacomic.app.fragment.HomeFragment
+import com.guuguo.android.pikacomic.app.fragment.MineFragment
+import com.guuguo.android.pikacomic.app.fragment.SettingFragment
 import com.guuguo.android.pikacomic.base.BaseActivity
 import com.guuguo.android.pikacomic.databinding.ActivityMainBinding
 
@@ -43,9 +46,9 @@ class MainActivity : BaseActivity() {
     override fun initVariable(savedInstanceState: Bundle?) {
         super.initVariable(savedInstanceState)
         mFragments.add(HomeFragment())
-        mFragments.add(HomeFragment())
-        mFragments.add(HomeFragment())
-        mFragments.add(HomeFragment())
+        mFragments.add(GameFragment())
+        mFragments.add(MineFragment())
+        mFragments.add(SettingFragment())
     }
 
     override fun initView() {
@@ -56,9 +59,7 @@ class MainActivity : BaseActivity() {
 
     fun getTabEntities(): ArrayList<TabEntity> {
         val array = ArrayList<TabEntity>()
-        for (i in 0..mTitles.size - 1) {
-            array.add(TabEntity(mTitles[i], mSelectedIcons[i], mUnselectedIcons[i]))
-        }
+        (0..mTitles.size - 1).mapTo(array) { TabEntity(mTitles[it], mSelectedIcons[it], mUnselectedIcons[it]) }
         return array
     }
 
@@ -74,22 +75,5 @@ class MainActivity : BaseActivity() {
         override fun getTabUnselectedIcon(): Int {
             return unSelectedIcon
         }
-    }
-
-    /**
-     * 切换fragment
-     * @param toPosition
-     */
-    fun switchContent(toPosition: Int) {
-        val to = mFragments[toPosition]
-        val fragmentManager = supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-
-        if (currentFragment != null)
-            transaction.hide(currentFragment)
-        if (!to.isAdded)
-            transaction.add(R.id.content, to, to.javaClass.name) // 隐藏当前的fragment，add下一个到Activity中
-        transaction.show(to).commitAllowingStateLoss()
-        currentFragment = to
     }
 }

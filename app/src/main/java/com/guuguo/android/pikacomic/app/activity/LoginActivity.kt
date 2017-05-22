@@ -3,18 +3,14 @@ package com.guuguo.android.pikacomic.app.activity
 import android.databinding.DataBindingUtil
 import com.flyco.systembar.SystemBarHelper
 import com.guuguo.android.pikacomic.R
+import com.guuguo.android.pikacomic.app.viewModel.LoginViewModel
 import com.guuguo.android.pikacomic.base.BaseActivity
-import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.databinding.ActivityLoginBinding
-import com.guuguo.android.pikacomic.entity.TokenResponse
-import com.guuguo.android.pikacomic.net.BaseCallback
-import com.guuguo.android.pikacomic.net.ResponseModel
-import com.guuguo.gank.net.MyApiServer
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity() {
     lateinit var binding: ActivityLoginBinding
+    val viewModel = LoginViewModel(this)
 
     override fun getLayoutResId() = R.layout.activity_login
     override fun getHeaderTitle() = "登录"
@@ -22,6 +18,7 @@ class LoginActivity : BaseActivity() {
 
     override fun setLayoutResId(layoutResId: Int) {
         binding = DataBindingUtil.setContentView(activity, layoutResId)
+        binding.viewModel = viewModel
     }
 
     override fun initView() {
@@ -31,27 +28,7 @@ class LoginActivity : BaseActivity() {
 
         rtv_login.setOnClickListener({
             if (checkValidate()) {
-                dialogLoadingShow("正在登录中")
-                MyApiServer.signIn(edt_username.text.toString(), edt_password.text.toString()).subscribe(object : BaseCallback<ResponseModel<TokenResponse>>() {
-                    override fun onSubscribe(d: Disposable?) {
-                        addApiCall(d)
-                    }
-
-                    override fun onSuccess(t: ResponseModel<TokenResponse>) {
-                        super.onSuccess(t)
-                        dialogDismiss()
-                        t.data?.let {
-                            LocalData.token = t.data!!.token
-                            MainActivity.intentTo(activity)
-//                            dialogCompleteShow(LocalData.token, null, 1200)
-                        }
-                    }
-
-                    override fun onApiLoadError(msg: String) {
-                        dialogDismiss()
-                        activity.dialogErrorShow(msg, null)
-                    }
-                })
+                viewModel.sign_in(binding.edtUsername.text.toString(), binding.edtPassword.text.toString())
             }
         })
     }

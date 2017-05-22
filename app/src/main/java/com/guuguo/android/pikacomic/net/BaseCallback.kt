@@ -26,10 +26,10 @@ abstract class BaseCallback<T> : SingleObserver<T> {
     override fun onError(e: Throwable?) {
         if (e != null) {
             when (e) {
-                is SocketTimeoutException -> onApiLoadError(BaseApplication.getInstance().getString(R.string.state_network_timeout))
-                is NetworkErrorException -> onApiLoadError(BaseApplication.getInstance().getString(R.string.state_network_error))
-                is UnknownHostException -> onApiLoadError(BaseApplication.getInstance().getString(R.string.state_network_unknown_host))
-                is ConnectException -> onApiLoadError(BaseApplication.getInstance().getString(R.string.state_network_unknown_host))
+                is SocketTimeoutException -> onApiLoadError(BaseApplication.get().getString(R.string.state_network_timeout))
+                is NetworkErrorException -> onApiLoadError(BaseApplication.get().getString(R.string.state_network_error))
+                is UnknownHostException -> onApiLoadError(BaseApplication.get().getString(R.string.state_network_unknown_host))
+                is ConnectException -> onApiLoadError(BaseApplication.get().getString(R.string.state_network_unknown_host))
                 is IOException -> onApiLoadError(e.message.safe())
                 else -> throw e
             }

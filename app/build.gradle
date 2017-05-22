@@ -66,6 +66,7 @@ kapt {
 
 dependencies {
     compile project(':androidLib:androidLib')
+    compile project(':library')
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
 //        exclude group: 'com.android.support', module: 'support-annotations'
@@ -84,7 +85,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    
+
     /*view*/
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
