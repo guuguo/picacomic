@@ -1,33 +1,32 @@
 package com.guuguo.android.pikacomic.app.viewModel
 
 import android.databinding.BaseObservable
-import com.guuguo.android.pikacomic.app.activity.LoginActivity
-import com.guuguo.android.pikacomic.app.activity.MainActivity
-import com.guuguo.android.pikacomic.constant.LocalData
-import com.guuguo.android.pikacomic.entity.TokenResponse
+import com.guuguo.android.pikacomic.app.fragment.HomeFragment
+import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
 import io.reactivex.disposables.Disposable
 
+
 /**
- * guode 创造于 2017-05-21.
+ * mimi 创造于 2017-05-22.
  * 项目 pika
  */
-class LoginViewModel(val activity: LoginActivity) : BaseObservable() {
-    fun sign_in(userName:String,password:String) {
+class HomeViewModel(val fragment: HomeFragment) : BaseObservable() {
+    val activity = fragment.activity
+    fun getAnnouncements() {
         activity.dialogLoadingShow("正在登录中")
-        MyApiServer.signIn(userName,password).subscribe(object : BaseCallback<ResponseModel<TokenResponse>>() {
+        MyApiServer.getAnnouncements().subscribe(object : BaseCallback<ResponseModel<AnnouncementsResponse>>() {
             override fun onSubscribe(d: Disposable?) {
                 activity.addApiCall(d)
             }
 
-            override fun onSuccess(t: ResponseModel<TokenResponse>) {
+            override fun onSuccess(t: ResponseModel<AnnouncementsResponse>) {
                 super.onSuccess(t)
                 activity.dialogDismiss()
-                t.data?.let {
-                    LocalData.token = t.data!!.token
-                    MainActivity.intentTo(activity)
+                t.data?.announcements?.let {
+                    fragment.setUpAnnouncementsBanner(t.data!!.announcements!!)
                 }
             }
 

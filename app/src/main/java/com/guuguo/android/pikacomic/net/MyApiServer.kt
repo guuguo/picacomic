@@ -2,9 +2,10 @@ package com.guuguo.gank.net
 
 import com.google.gson.GsonBuilder
 import com.guuguo.android.lib.net.LBaseCallback
+import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
 import com.guuguo.android.pikacomic.entity.TokenResponse
 import com.guuguo.android.pikacomic.net.ApiConfig
-import com.guuguo.android.pikacomic.net.ResponseModel
+import com.guuguo.android.pikacomic.net.http.ResponseModel
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -24,6 +25,11 @@ object MyApiServer {
         map.put("password", password)
 
         return service.signIn(getRequestJsonBody(map))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+    fun getAnnouncements(): Single<ResponseModel<AnnouncementsResponse>> {
+        return service.getAnnouncements(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }

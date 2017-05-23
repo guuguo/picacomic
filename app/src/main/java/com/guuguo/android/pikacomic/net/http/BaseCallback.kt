@@ -1,4 +1,4 @@
-package com.guuguo.android.pikacomic.net
+package com.guuguo.android.pikacomic.net.http
 
 import android.accounts.NetworkErrorException
 import com.guuguo.android.R

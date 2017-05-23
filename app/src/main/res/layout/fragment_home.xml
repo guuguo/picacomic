@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.guuguo.android.pikacomic.app.viewModel.HomeViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,14 +47,14 @@
                 <ImageView
                     android:id="@+id/blurView"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="150dp"
                     android:background="#3f000000"
                     android:scaleType="centerCrop" />
 
                 <com.view.jameson.library.SpeedRecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+                    android:layout_height="180dp" />
             </FrameLayout>
         </android.support.v4.widget.NestedScrollView>
 

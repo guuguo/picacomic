@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by gaohailong on 2016/5/17.
@@ -15,22 +16,25 @@ import java.util.*
 object MyRetrofit {
     val pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     val httpClient = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.MINUTES)
+            .retryOnConnectionFailure(true)
             .addInterceptor({
-        chain ->
-        val original = chain.request();
-        val request = original.newBuilder()
-                .header("api-key", "C69BAF41DA5ABD1FFEDC6D2FEA56B")
-                .header("accept", "application/vnd.picacomic.com.v1+json")
-                .header("app-version", "2.0.3.13")
-                .header("app-uuid", UUID.randomUUID().toString())
-                .header("app-platform", "android")
-                .header("app-build-version", "29")
-                .header("User-Agent", "okhttp/3.2.0")
-                .header("authorization", LocalData.token)
-                .method(original.method(), original.body())
-                .build();
-        chain.proceed(request);
-    }).build()
+                chain ->
+                val original = chain.request();
+                val request = original.newBuilder()
+                        .header("api-key", "C69BAF41DA5ABD1FFEDC6D2FEA56B")
+                        .header("accept", "application/vnd.picacomic.com.v1+json")
+                        .header("app-version", "2.0.3.13")
+                        .header("app-uuid", UUID.randomUUID().toString())
+                        .header("app-platform", "android")
+                        .header("app-build-version", "29")
+                        .header("User-Agent", "okhttp/3.2.0")
+                        .header("authorization", LocalData.token)
+                        .method(original.method(), original.body())
+                        .build();
+                chain.proceed(request);
+            }).build()
 
     fun getGsonConverter(gsonBuilder: GsonBuilder?): GsonConverterFactory {
         val gson: Gson
@@ -60,9 +64,9 @@ object MyRetrofit {
 //        //CertificateFactory用来证书生成
 //        val certificateFactory: CertificateFactory
 //        try {
-//            certificateFactory = CertificateFactory.getInstance("X.509")
+//            certificateFactory = CertificateFactory.get("X.509")
 //            //Create a KeyStore containing our trusted CAs
-//            val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
+//            val keyStore = KeyStore.get(KeyStore.getDefaultType())
 //            keyStore.load(null, null)
 //
 //            for (i in certificates.indices) {
@@ -75,11 +79,11 @@ object MyRetrofit {
 //                }
 //            }
 //            //Create a TrustManager that trusts the CAs in our keyStore
-//            val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+//            val trustManagerFactory = TrustManagerFactory.get(TrustManagerFactory.getDefaultAlgorithm())
 //            trustManagerFactory.init(keyStore)
 //
 //            //Create an SSLContext that uses our TrustManager
-//            val sslContext = SSLContext.getInstance("TLS")
+//            val sslContext = SSLContext.get("TLS")
 //            sslContext.init(null, trustManagerFactory.getTrustManagers(), SecureRandom())
 //            return sslContext.getSocketFactory()
 //
