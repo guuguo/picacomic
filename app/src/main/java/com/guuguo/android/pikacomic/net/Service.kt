@@ -1,6 +1,7 @@
 package com.guuguo.gank.net
 
 import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
+import com.guuguo.android.pikacomic.entity.CategoryResponse
 import com.guuguo.android.pikacomic.entity.TokenResponse
 import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.http.ResponseModel
@@ -19,4 +20,6 @@ interface Service {
     fun signIn(@Body  requestBody: RequestBody): Single<ResponseModel<TokenResponse>>
     @GET(ApiConfig.url_announcements)
     fun getAnnouncements(@Query("page") page:Int): Single<ResponseModel<AnnouncementsResponse>>
+    @GET(ApiConfig.url_category)
+    fun getCategory(): Single<ResponseModel<CategoryResponse>>
 }

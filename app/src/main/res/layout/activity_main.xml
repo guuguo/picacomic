@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".app.activity.MainActivity">
 
         <FrameLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -22,14 +24,14 @@
 
             <com.flyco.tablayout.CommonTabLayout
                 android:id="@+id/tab_main"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 app:tl_iconWidth="30dp"
                 app:tl_indicator_height="0dp"
                 app:tl_textSelectColor="@color/colorPrimary"
                 app:tl_textUnselectColor="@color/bottom_navigation_unSelected" />
         </android.support.design.widget.AppBarLayout>
-    </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
 </layout>

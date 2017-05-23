@@ -7,8 +7,9 @@ import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.GlideModule
-import com.guuguo.gank.net.MyRetrofit
+import okhttp3.OkHttpClient
 import java.io.InputStream
+import java.util.concurrent.TimeUnit
 
 /**
  * mimi 创造于 2017-05-23.
@@ -18,7 +19,10 @@ import java.io.InputStream
 class MyGlideModule : GlideModule {
     override fun registerComponents(context: Context, glide: Glide) {
         // 设置长时间读取和断线重连
-        val client = MyRetrofit.httpClient
+        val client = OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.MINUTES)
+                .readTimeout(10, TimeUnit.MINUTES)
+                .retryOnConnectionFailure(true).build()
         glide.register(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(client))
     }
 

@@ -20,16 +20,4 @@ class AnnouncementsEntity {
     var content: String? = null
     var created_at: String? = null
     var thumb: ThumbEntity? = null
-
-    class ThumbEntity {
-        /**
-         * originalName : serverkun.jpg
-         * path : 2593f839-e231-43d5-9068-f5ef42997764.jpg
-         * fileServer : https://storage1.picacomic.com
-         */
-        var originalName: String? = null
-        var path: String? = null
-        var fileServer: String? = null
-        fun getOriginUrl():String= fileServer+"/"+path
-    }
 }

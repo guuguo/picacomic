@@ -25,7 +25,6 @@ class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
 
     val STATE_FRAGMENT_SHOW = "STATE_FRAGMENT_SHOW"
-    private var currentFragment: Fragment? = null
     private val mTitles = arrayOf("首页", "游戏", "我的", "设置")
     private val mUnselectedIcons = arrayOf(R.drawable.ic_homepage, R.drawable.ic_manage, R.drawable.ic_mine, R.drawable.ic_setup)
     private val mSelectedIcons = arrayOf(R.drawable.ic_homepage_fill, R.drawable.ic_manage_fill, R.drawable.ic_mine_fill, R.drawable.ic_setup_fill)

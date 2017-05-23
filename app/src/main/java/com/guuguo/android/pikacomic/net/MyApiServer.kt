@@ -3,6 +3,7 @@ package com.guuguo.gank.net
 import com.google.gson.GsonBuilder
 import com.guuguo.android.lib.net.LBaseCallback
 import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
+import com.guuguo.android.pikacomic.entity.CategoryResponse
 import com.guuguo.android.pikacomic.entity.TokenResponse
 import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.http.ResponseModel
@@ -28,14 +29,20 @@ object MyApiServer {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
+
     fun getAnnouncements(): Single<ResponseModel<AnnouncementsResponse>> {
         return service.getAnnouncements(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
-
-    fun getRequestJsonBody(map: HashMap<String, String>): RequestBody = RequestBody.create(
+    fun getCategory(): Single<ResponseModel<CategoryResponse>> {
+        return service.getCategory()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+    
+    private fun getRequestJsonBody(map: HashMap<String, String>): RequestBody = RequestBody.create(
             MediaType.parse("application/json; charset=UTF-8"),
             LBaseCallback.gson.toJson(map))
 }

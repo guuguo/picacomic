@@ -1,5 +1,6 @@
 package com.guuguo.android.pikacomic.app.adapter
 
+import am.drawable.DoubleCircleDrawable
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ImageView
@@ -9,35 +10,30 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.guuguo.android.lib.extension.safe
 import com.guuguo.android.pikacomic.R
-import com.guuguo.android.pikacomic.entity.AnnouncementsEntity
+import com.guuguo.android.pikacomic.entity.CategoryEntity
 import com.view.jameson.library.CardAdapterHelper
 
-class AnnouncementsCardAdapter : BaseQuickAdapter<AnnouncementsEntity, AnnouncementsCardAdapter.ViewHolder> {
+class CategoryAdapter : BaseQuickAdapter<CategoryEntity, CategoryAdapter.ViewHolder> {
 
-    private val mCardAdapterHelper = CardAdapterHelper()
 
-    constructor(data: List<AnnouncementsEntity>) : super(R.layout.item_announcement, data)
+    constructor(data: List<CategoryEntity>) : super(R.layout.item_category, data)
 
-    constructor() : super(R.layout.item_announcement, null)
+    constructor() : super(R.layout.item_category, null)
 
     inner class ViewHolder(view: View) : BaseViewHolder(view) {
         val iv_banner = getView<ImageView>(R.id.iv_banner)
         val tv_title = getView<TextView>(R.id.tv_title)
-        val tv_content = getView<TextView>(R.id.tv_content)
     }
 
     override fun createBaseViewHolder(view: View): ViewHolder {
         val holder = ViewHolder(view)
-        mCardAdapterHelper.onCreateViewHolder(recyclerView, holder.itemView)
         return holder
     }
 
     val loading by lazy { ContextCompat.getDrawable(mContext,R.drawable.placeholder_loading)}
-    override fun convert(helper: ViewHolder, item: AnnouncementsEntity) {
+    override fun convert(helper: ViewHolder, item: CategoryEntity) {
 
-        mCardAdapterHelper.onBindViewHolder(helper.itemView, helper.layoutPosition, itemCount)
         Glide.with(mContext).load(item.thumb?.getOriginUrl().safe()).centerCrop().placeholder(loading).into(helper.iv_banner)
         helper.tv_title.text = item.title
-        helper.tv_content.text = item.content
     }
 }
