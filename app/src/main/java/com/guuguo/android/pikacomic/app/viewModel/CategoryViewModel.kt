@@ -2,10 +2,7 @@ package com.guuguo.android.pikacomic.app.viewModel
 
 import android.databinding.BaseObservable
 import com.guuguo.android.pikacomic.app.fragment.CategoryFragment
-import com.guuguo.android.pikacomic.app.fragment.HomeFragment
-import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
 import com.guuguo.android.pikacomic.entity.CategoryResponse
-import com.guuguo.android.pikacomic.entity.ComicsResponse
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer

@@ -26,21 +26,25 @@ class CategoryFragment : BaseFragment() {
 
     override fun setLayoutResId(inflater: LayoutInflater?, resId: Int, container: ViewGroup?): View {
         binding = DataBindingUtil.inflate(inflater, resId, container, false)
-        binding.viewModel=viewModel
+        binding.viewModel = viewModel
         return binding.root
     }
 
     override fun initView() {
         super.initView()
         binding.llCategory.setAdapter(categoryAdapter)
-        tv_title_bar.text="漫画分类"
+        tv_title_bar.text = "漫画分类"
 
+        categoryAdapter.setOnItemClickListener { _, _, i ->
+            ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_CATEGORY, categoryAdapter.getItem(i))
+        }
     }
 
     override fun loadData() {
         super.loadData()
         viewModel.getCategory()
     }
+
     fun setUpCategory(categories: List<CategoryEntity>) {
         categoryAdapter.setNewData(categories)
     }

@@ -2,10 +2,7 @@ package com.guuguo.gank.net
 
 import com.google.gson.GsonBuilder
 import com.guuguo.android.lib.net.LBaseCallback
-import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
-import com.guuguo.android.pikacomic.entity.CategoryResponse
-import com.guuguo.android.pikacomic.entity.ComicsResponse
-import com.guuguo.android.pikacomic.entity.TokenResponse
+import com.guuguo.android.pikacomic.entity.*
 import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import io.reactivex.Single
@@ -47,7 +44,7 @@ object MyApiServer {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-    fun getComicsRandom(page:Int): Single<ResponseModel<ComicsResponse>> {
+    fun getComicsRandom(page:Int): Single<ResponseModel<ComicsRandomResponse>> {
         return service.getComicsRandom(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

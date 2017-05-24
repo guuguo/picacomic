@@ -1,11 +1,13 @@
 package com.guuguo.android.pikacomic.entity
 
+import java.io.Serializable
+
 /**
  * mimi 创造于 2017-05-23.
  * 项目 pika
  */
 
-class CategoryEntity {
+class CategoryEntity:Serializable {
     /**
      * _id : 5821859b5f6b9a4f93dbf6e9
      * title : 嗶咔漢化

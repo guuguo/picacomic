@@ -31,7 +31,7 @@ abstract class BaseCallback<T> : SingleObserver<T> {
                 is UnknownHostException -> onApiLoadError(BaseApplication.get().getString(R.string.state_network_unknown_host))
                 is ConnectException -> onApiLoadError(BaseApplication.get().getString(R.string.state_network_unknown_host))
                 is IOException -> onApiLoadError(e.message.safe())
-                else -> throw e
+                else -> onApiLoadError(e.message.safe())
             }
         }
     }

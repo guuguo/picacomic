@@ -1,9 +1,6 @@
 package com.guuguo.gank.net
 
-import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
-import com.guuguo.android.pikacomic.entity.CategoryResponse
-import com.guuguo.android.pikacomic.entity.ComicsResponse
-import com.guuguo.android.pikacomic.entity.TokenResponse
+import com.guuguo.android.pikacomic.entity.*
 import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import io.reactivex.Single
@@ -30,7 +27,7 @@ interface Service {
     fun getComics(@Query("page") page: Int, @Query("c") category: String?, @Query("s") s: String): Single<ResponseModel<ComicsResponse>>
 
     @GET(ApiConfig.url_comics_random)
-    fun getComicsRandom(@Query("page") page: Int): Single<ResponseModel<ComicsResponse>>
+    fun getComicsRandom(@Query("page") page: Int): Single<ResponseModel<ComicsRandomResponse>>
 
     @GET(ApiConfig.url_comics_search)
     fun getComicsSearch(@Query("page") page: Int, @Query("q") query: String): Single<ResponseModel<ComicsResponse>>
