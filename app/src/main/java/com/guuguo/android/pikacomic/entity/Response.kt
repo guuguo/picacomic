@@ -5,5 +5,5 @@ package com.guuguo.android.pikacomic.entity
  * 项目 pika
  */
 data class TokenResponse(var token: String)
-
 data class CategoryResponse(var categories: List<CategoryEntity>? = arrayListOf())
+data class ComicsResponse(var comics: List<ComicsEntity>? = arrayListOf())

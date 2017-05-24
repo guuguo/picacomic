@@ -16,11 +16,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/white">
+       
 
             <com.flyco.tablayout.CommonTabLayout
                 android:id="@+id/tab_main"
@@ -28,10 +24,12 @@
                 android:layout_height="60dp"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
+                app:tl_underline_gravity="TOP"
+                app:tl_underline_color="@color/black20"
+                app:tl_underline_height="2px"
                 app:tl_iconWidth="30dp"
                 app:tl_indicator_height="0dp"
                 app:tl_textSelectColor="@color/colorPrimary"
                 app:tl_textUnselectColor="@color/bottom_navigation_unSelected" />
-        </android.support.design.widget.AppBarLayout>
     </LinearLayout>
 </layout>

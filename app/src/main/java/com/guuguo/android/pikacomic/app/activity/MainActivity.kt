@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat
 import com.flyco.systembar.SystemBarHelper
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.guuguo.android.pikacomic.R
-import com.guuguo.android.pikacomic.app.fragment.GameFragment
+import com.guuguo.android.pikacomic.app.fragment.CategoryFragment
 import com.guuguo.android.pikacomic.app.fragment.HomeFragment
 import com.guuguo.android.pikacomic.app.fragment.MineFragment
 import com.guuguo.android.pikacomic.app.fragment.SettingFragment
@@ -25,7 +25,8 @@ class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
 
     val STATE_FRAGMENT_SHOW = "STATE_FRAGMENT_SHOW"
-    private val mTitles = arrayOf("首页", "游戏", "我的", "设置")
+    override val isBackExit=true
+    private val mTitles = arrayOf("首页", "分类", "我的", "设置")
     private val mUnselectedIcons = arrayOf(R.drawable.ic_homepage, R.drawable.ic_manage, R.drawable.ic_mine, R.drawable.ic_setup)
     private val mSelectedIcons = arrayOf(R.drawable.ic_homepage_fill, R.drawable.ic_manage_fill, R.drawable.ic_mine_fill, R.drawable.ic_setup_fill)
     protected var mFragments = ArrayList<Fragment>()
@@ -45,7 +46,7 @@ class MainActivity : BaseActivity() {
     override fun initVariable(savedInstanceState: Bundle?) {
         super.initVariable(savedInstanceState)
         mFragments.add(HomeFragment())
-        mFragments.add(GameFragment())
+        mFragments.add(CategoryFragment())
         mFragments.add(MineFragment())
         mFragments.add(SettingFragment())
     }

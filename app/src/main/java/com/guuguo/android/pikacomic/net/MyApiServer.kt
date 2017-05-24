@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.guuguo.android.lib.net.LBaseCallback
 import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
 import com.guuguo.android.pikacomic.entity.CategoryResponse
+import com.guuguo.android.pikacomic.entity.ComicsResponse
 import com.guuguo.android.pikacomic.entity.TokenResponse
 import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.http.ResponseModel
@@ -41,7 +42,16 @@ object MyApiServer {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-    
+    fun getComics(page:Int,category:String?): Single<ResponseModel<ComicsResponse>> {
+        return service.getComics(page,category,"ua")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+    fun getComicsRandom(page:Int): Single<ResponseModel<ComicsResponse>> {
+        return service.getComicsRandom(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
     private fun getRequestJsonBody(map: HashMap<String, String>): RequestBody = RequestBody.create(
             MediaType.parse("application/json; charset=UTF-8"),
             LBaseCallback.gson.toJson(map))

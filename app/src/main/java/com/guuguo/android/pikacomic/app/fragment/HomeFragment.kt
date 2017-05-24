@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.adapter.AnnouncementsCardAdapter
-import com.guuguo.android.pikacomic.app.adapter.CategoryAdapter
+import com.guuguo.android.pikacomic.app.adapter.ComicsAdapter
 import com.guuguo.android.pikacomic.app.viewModel.HomeViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.databinding.FragmentHomeBinding
 import com.guuguo.android.pikacomic.entity.AnnouncementsEntity
 import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
-import com.guuguo.android.pikacomic.entity.CategoryEntity
+import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.utils.BlurBitmapUtils
 import com.guuguo.android.pikacomic.utils.ViewSwitchUtils
 import com.view.jameson.library.CardScaleHelper
@@ -28,7 +28,7 @@ class HomeFragment : BaseFragment() {
     lateinit var binding: FragmentHomeBinding
     val viewModel by lazy { HomeViewModel(this) }
     val announcementsCardAdapter = AnnouncementsCardAdapter()
-    val categoryAdapter = CategoryAdapter()
+    val comicsAdapter = ComicsAdapter()
 
     override fun getLayoutResId() = R.layout.fragment_home
 
@@ -46,7 +46,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initCategory() {
-        binding.llCategory.setAdapter(categoryAdapter)
+        binding.llComics.setAdapter(comicsAdapter)
     }
 
     private fun initAnnouncement() {
@@ -65,15 +65,17 @@ class HomeFragment : BaseFragment() {
         announcementsCardAdapter.setNewData(response.docs)
     }
 
-    fun setUpCategory(categories: List<CategoryEntity>) {
-        categoryAdapter.setNewData(categories)
-    }
 
 
     override fun loadData() {
         super.loadData()
         viewModel.getAnnouncements()
-        viewModel.getCategory()
+        viewModel.getComicsRandom()
+//        viewModel.getCategory()
+    }
+
+    fun setUpComics(comics: List<ComicsEntity>) {
+        comicsAdapter.setNewData(comics)
     }
 
 }

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/id_tool_bar"
+    <TextView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tv_title_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        android:theme="@style/Toolbar.Light"
-        app:titleTextColor="@color/black"
-        app:popupTheme="@style/ToolbarPopupTheme" />
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        tools:text="漫画分类" />
 </android.support.design.widget.AppBarLayout>
