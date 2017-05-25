@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.constant.loadingPlaceHolder
 import com.guuguo.android.pikacomic.databinding.FragmentComicDetailBinding
 import com.guuguo.android.pikacomic.entity.ComicsEntity
+import com.hesheng.orderpad.db.UOrm
 
 /**
  * mimi 创造于 2017-05-22.
@@ -35,7 +37,7 @@ class ComicDetailFragment : BaseFragment() {
     lateinit var comicEntity: ComicsEntity
 
     override fun getHeaderTitle(): String {
-        return comicEntity.title
+        return comicEntity._id
     }
 
     override fun setLayoutResId(inflater: LayoutInflater?, resId: Int, container: ViewGroup?): View {
@@ -72,7 +74,11 @@ class ComicDetailFragment : BaseFragment() {
         binding.rtvRead.setOnClickListener {
 
         }
+        val tempComic = UOrm.db().queryById(comicEntity._id, ComicsEntity::class.java)
+        if (tempComic != null)
+            comicEntity = tempComic
         setUpComic(comicEntity)
+        ViewCompat.setElevation(activity.getAppBar(), 0f)
     }
 
 

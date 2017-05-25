@@ -6,6 +6,7 @@ import com.guuguo.android.pikacomic.entity.ComicDetailResponse
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
+import com.hesheng.orderpad.db.UOrm
 import io.reactivex.disposables.Disposable
 
 
@@ -24,6 +25,7 @@ class ComicDetailModel(val fragment: ComicDetailFragment) : BaseObservable() {
             override fun onSuccess(t: ResponseModel<ComicDetailResponse>) {
                 super.onSuccess(t)
                 t.data?.comic?.let {
+                    UOrm.db().save(t.data?.comic)
                     fragment.setUpComic(t.data!!.comic!!)
                 }
             }

@@ -1,5 +1,6 @@
 package com.guuguo.android.pikacomic.app.activity
 
+import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
 import com.flyco.systembar.SystemBarHelper
@@ -18,18 +19,12 @@ class BaseTitleFragmentActivity : BaseActivity() {
     override fun initToolBar() {
         super.initToolBar()
         getToolBar()?.navigationIcon = ContextCompat.getDrawable(activity, R.drawable.ic_arrowleft)
-        supportActionBar?.title=""
+        supportActionBar?.title = ""
     }
 
-//    override fun initToolBar() {
-//        if (isNavigationBack()) {
-//            iv_navigation.visibility =View.VISIBLE
-//            iv_navigation.setOnClickListener { onBackPressed() }
-//        } else {
-//            iv_navigation.visibility =View.GONE
-//        }
-//    }
-//
+    override fun getAppBar(): AppBarLayout? {
+        return appbar
+    }
     override fun setTitle(title: CharSequence?) {
         tv_title_bar.text = title
     }

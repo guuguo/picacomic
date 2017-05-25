@@ -8,12 +8,12 @@ package com.guuguo.android.pikacomic.entity
 class ComicsResponse {
 
     var comics: ComicsBean? = null
-    class ComicsBean {
 
+    class ComicsBean {
         var total: Int = 0
         var limit: Int = 0
         var page: Int = 0
         var pages: Int = 0
-        var docs: List<ComicsEntity> = arrayListOf()
+        var docs: ArrayList<ComicsEntity> = ArrayList<ComicsEntity>()
     }
 }
