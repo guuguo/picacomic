@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.guuguo.android.pikacomic.app.viewModel.HomeViewModel" />
@@ -39,12 +40,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-          
+
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-        
+                android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/iv_blurView"
                     android:layout_width="0dp"
@@ -58,7 +58,7 @@
                 <View
                     android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/bg_grafual_2white"
+                    android:background="@drawable/bg_gradual_2white"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_blurView"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent" />
@@ -75,15 +75,14 @@
                     android:id="@+id/tv_category_tip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:text="随机漫画"
                     android:textColor="@color/colorPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="15dp" />
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
 
                 <View
                     android:id="@+id/line_category"
@@ -94,17 +93,29 @@
                     app:layout_constraintLeft_toLeftOf="@+id/tv_category_tip"
                     app:layout_constraintRight_toRightOf="@+id/tv_category_tip"
                     app:layout_constraintTop_toBottomOf="@+id/tv_category_tip" />
+
+                <ImageButton
+                    android:id="@+id/ib_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/line_category"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_category_tip"
+                    app:srcCompat="@drawable/ic_refresh" />
+
                 <com.guuguo.android.lib.view.LinearList
+                    android:layout_marginTop="10dp"
                     android:id="@+id/ll_comics"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:columnNum="3"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/line_category" 
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
-       
+                    app:layout_constraintTop_toBottomOf="@+id/line_category" />
+
             </android.support.constraint.ConstraintLayout>
 
 

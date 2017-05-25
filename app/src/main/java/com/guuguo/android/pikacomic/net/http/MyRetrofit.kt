@@ -1,8 +1,7 @@
 package com.guuguo.gank.net
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.guuguo.android.pikacomic.constant.LocalData
+import com.guuguo.android.pikacomic.constant.myGson
 import com.guuguo.android.pikacomic.net.ApiConfig
 import okhttp3.OkHttpClient
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -14,7 +13,6 @@ import java.util.concurrent.TimeUnit
  * Created by gaohailong on 2016/5/17.
  */
 object MyRetrofit {
-    val pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     val httpClient = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.MINUTES)
             .readTimeout(10, TimeUnit.MINUTES)
@@ -36,20 +34,21 @@ object MyRetrofit {
                 chain.proceed(request);
             }).build()
 
-    fun getGsonConverter(gsonBuilder: GsonBuilder?): GsonConverterFactory {
-        val gson: Gson
-        if (gsonBuilder != null)
-            gson = gsonBuilder.setDateFormat(pattern).create()
-        else {
-            gson = GsonBuilder().setDateFormat(pattern).create()
-        }
-        return retrofit2.converter.gson.GsonConverterFactory.create(gson)
+    fun getGsonConverter(): GsonConverterFactory {
+//        val gson: Gson
+//        if (gsonBuilder != null)
+//            gson = gsonBuilder.setDateFormat(dataPattern).create()
+//        else {
+//            gson =myGson
+//        }
+        return retrofit2.converter.gson.GsonConverterFactory.create(myGson)
     }
 
-    fun getRetrofit(gsonBuilder: com.google.gson.GsonBuilder? = null): retrofit2.Retrofit {
+
+    fun getRetrofit(): retrofit2.Retrofit {
         return retrofit2.Retrofit.Builder()
                 .baseUrl(ApiConfig.baseUrl)
-                .addConverterFactory(getGsonConverter(gsonBuilder))
+                .addConverterFactory(getGsonConverter())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(MyRetrofit.httpClient)
                 .build()

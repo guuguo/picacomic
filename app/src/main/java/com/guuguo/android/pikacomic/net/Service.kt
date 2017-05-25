@@ -5,10 +5,7 @@ import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import io.reactivex.Single
 import okhttp3.RequestBody
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * Created by gaohailong on 2016/5/17.
@@ -25,6 +22,12 @@ interface Service {
 
     @GET(ApiConfig.url_comics)
     fun getComics(@Query("page") page: Int, @Query("c") category: String?, @Query("s") s: String): Single<ResponseModel<ComicsResponse>>
+
+    @GET(ApiConfig.url_comics + "/{id}")
+    fun getComicDetail(@Path("id") id: String): Single<ResponseModel<ComicDetailResponse>>
+    
+    @GET(ApiConfig.url_comics + "/{id}" + "/favourite")
+    fun favoriteComic(@Path("id") id: String): Single<ResponseModel<ActionResponse>>
 
     @GET(ApiConfig.url_comics_random)
     fun getComicsRandom(@Query("page") page: Int): Single<ResponseModel<ComicsRandomResponse>>

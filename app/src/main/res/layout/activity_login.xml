@@ -130,9 +130,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:rv_backgroundColor="@color/colorPrimary"
-                    app:rv_backgroundPressColor="@color/colorPrimaryBlue"
+                    app:rv_backgroundPressColor="@color/colorPrimaryDark"
                     app:rv_cornerRadius="5dp"
-                    app:rv_isRippleEnable="false"
                     tools:layout_editor_absoluteX="8dp" />
 
                 <TextView

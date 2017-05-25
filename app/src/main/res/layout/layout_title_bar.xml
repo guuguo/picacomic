@@ -5,10 +5,12 @@
     android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary"
-    >
+    android:background="@color/colorPrimary">
 
-    <FrameLayout
+    <android.support.v7.widget.Toolbar
+        android:theme="@style/Toolbar.Dark"
+        android:id="@+id/id_toolbar"
+        android:title=""
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,6 +25,9 @@
             app:srcCompat="@drawable/ic_arrowleft" />
 
         <TextView
+            android:maxEms="13"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:id="@+id/tv_title_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,5 +36,6 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             tools:text="漫画分类" />
-    </FrameLayout>
+
+    </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>

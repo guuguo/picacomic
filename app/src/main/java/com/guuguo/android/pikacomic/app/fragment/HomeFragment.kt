@@ -43,6 +43,12 @@ class HomeFragment : BaseFragment() {
         super.initView()
         initAnnouncement()
         initCategory()
+        binding.ibRefresh.setOnClickListener {
+            viewModel.getComicRandomFromNet()
+        }
+        comicsAdapter.setOnItemClickListener { _, _, position ->
+            ComicDetailFragment.intentTo(activity, comicsAdapter.getItem(position))
+        }
     }
 
     private fun initCategory() {
@@ -51,7 +57,7 @@ class HomeFragment : BaseFragment() {
 
     private fun initAnnouncement() {
         val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerView.setLayoutManager(linearLayoutManager)
+        binding.recyclerView.layoutManager = linearLayoutManager
         announcementsCardAdapter.bindToRecyclerView(binding.recyclerView)
         // mRecyclerView绑定scale效果
         mCardScaleHelper.attachToRecyclerView(binding.recyclerView)
@@ -66,12 +72,11 @@ class HomeFragment : BaseFragment() {
     }
 
 
-
     override fun loadData() {
         super.loadData()
         viewModel.getAnnouncements()
         viewModel.getComicsRandom()
-//        viewModel.getCategory()
+
     }
 
     fun setUpComics(comics: List<ComicsEntity>) {

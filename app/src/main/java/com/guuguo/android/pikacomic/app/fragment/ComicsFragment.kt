@@ -32,6 +32,13 @@ class ComicsFragment : BaseFragment() {
     var getComicsType = 0
     var categoryEntity: CategoryEntity? = null
 
+    override fun getHeaderTitle(): String {
+        return when (getComicsType) {
+            TYPE_COMICS_CATEGORY -> categoryEntity?.title.safe()
+            TYPE_COMICS_RECENTLY -> "最近更新"
+            else -> ""
+        }
+    }
 
     override fun setLayoutResId(inflater: LayoutInflater?, resId: Int, container: ViewGroup?): View {
         binding = DataBindingUtil.inflate(inflater, resId, container, false)
@@ -64,10 +71,7 @@ class ComicsFragment : BaseFragment() {
         super.initVariable(savedInstanceState)
         getComicsType = arguments.getInt(ARG_GET_COMICS)
         categoryEntity = arguments.getSerializable(ARG_CATEGORY) as CategoryEntity?
-        when (getComicsType) {
-            TYPE_COMICS_CATEGORY ->activity.title= categoryEntity?.title.safe()
-            TYPE_COMICS_RECENTLY -> activity.title="最近更新"
-          }
+
     }
 
     override fun initView() {
@@ -78,6 +82,9 @@ class ComicsFragment : BaseFragment() {
             page++
             loadData()
         }, binding.recycler)
+        comicsAdapter.setOnItemClickListener { _, _, position ->
+            ComicDetailFragment.intentTo(activity, comicsAdapter.getItem(position))
+        }
     }
 
 
@@ -85,7 +92,7 @@ class ComicsFragment : BaseFragment() {
         super.loadData()
         if (page == 1)
             activity.dialogLoadingShow("正在加载漫画列表")
-        comicsAdapter.setEnableLoadMore(false)
+//        comicsAdapter.setEnableLoadMore(false)
         when (getComicsType) {
             TYPE_COMICS_CATEGORY -> viewModel.getComics(page, categoryEntity?.title)
         }
@@ -96,8 +103,9 @@ class ComicsFragment : BaseFragment() {
         activity.dialogDismiss()
         if (comics.pages <= comics.page)
             comicsAdapter.loadMoreEnd()
-        else
-            comicsAdapter.setEnableLoadMore(true)
+        else {
+            comicsAdapter.loadMoreComplete()
+        }
         if (page == 1)
             comicsAdapter.setNewData(comics.docs)
         else

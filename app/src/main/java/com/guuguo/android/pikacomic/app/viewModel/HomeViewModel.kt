@@ -1,9 +1,13 @@
 package com.guuguo.android.pikacomic.app.viewModel
 
 import android.databinding.BaseObservable
+import com.google.gson.reflect.TypeToken
 import com.guuguo.android.pikacomic.app.fragment.HomeFragment
+import com.guuguo.android.pikacomic.constant.LocalData
+import com.guuguo.android.pikacomic.constant.myGson
 import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
 import com.guuguo.android.pikacomic.entity.CategoryResponse
+import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.entity.ComicsRandomResponse
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
@@ -38,7 +42,18 @@ class HomeViewModel(val fragment: HomeFragment) : BaseObservable() {
             }
         })
     }
+
     fun getComicsRandom() {
+        val randomComicsStr = LocalData.randomComics
+        try {
+            val comics: List<ComicsEntity> = myGson.fromJson(randomComicsStr, object : TypeToken<ArrayList<ComicsEntity>>() {}.type)
+            fragment.setUpComics(comics)
+        } catch (e: Exception) {
+            getComicRandomFromNet()
+        }
+    }
+
+    fun getComicRandomFromNet() {
         activity.dialogLoadingShow("正在加载中")
         MyApiServer.getComicsRandom(1).subscribe(object : BaseCallback<ResponseModel<ComicsRandomResponse>>() {
             override fun onSubscribe(d: Disposable?) {
@@ -49,6 +64,7 @@ class HomeViewModel(val fragment: HomeFragment) : BaseObservable() {
                 super.onSuccess(t)
                 activity.dialogDismiss()
                 t.data?.comics?.let {
+                    LocalData.randomComics = myGson.toJson(t.data?.comics)
                     fragment.setUpComics(t.data!!.comics!!)
                 }
             }
@@ -59,6 +75,7 @@ class HomeViewModel(val fragment: HomeFragment) : BaseObservable() {
             }
         })
     }
+
     fun getCategory() {
         activity.dialogLoadingShow("正在加载中")
         MyApiServer.getCategory().subscribe(object : BaseCallback<ResponseModel<CategoryResponse>>() {
@@ -70,7 +87,7 @@ class HomeViewModel(val fragment: HomeFragment) : BaseObservable() {
                 super.onSuccess(t)
                 activity.dialogDismiss()
                 t.data?.categories?.let {
-//                    fragment.setUpCategory(t.data!!.categories!!)
+                    //                    fragment.setUpCategory(t.data!!.categories!!)
                 }
             }
 

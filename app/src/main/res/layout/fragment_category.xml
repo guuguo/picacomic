@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.guuguo.android.pikacomic.app.viewModel.CategoryViewModel" />
@@ -33,7 +32,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:drawableTop="@drawable/ic_vip_power_ticket"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/ic_cat_recently"
+                    android:gravity="center_horizontal"
                     android:text="最近更新"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/tv_rank"
@@ -44,7 +45,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="0dp"
-                    android:drawableTop="@drawable/ic_vip_power_mark"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/ic_cat_rank_mark"
+                    android:gravity="center_horizontal"
                     android:text="排行榜"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_recently"
                     app:layout_constraintLeft_toRightOf="@+id/tv_recently"
@@ -58,7 +61,9 @@
                     android:layout_marginBottom="0dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
-                    android:drawableTop="@drawable/ic_vip_power_free"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@drawable/ic_cat_knight"
+                    android:gravity="center_horizontal"
                     android:text="骑士榜"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_recently"
                     app:layout_constraintLeft_toRightOf="@id/tv_rank"

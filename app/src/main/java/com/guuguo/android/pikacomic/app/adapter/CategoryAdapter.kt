@@ -27,7 +27,6 @@ class CategoryAdapter : BaseQuickAdapter<CategoryEntity, CategoryAdapter.ViewHol
         return holder
     }
 
-//    val loading by lazy { ContextCompat.getDrawable(mContext, R.drawable.placeholder_loading) }
     override fun convert(helper: ViewHolder, item: CategoryEntity) {
         Glide.with(mContext).load(item.thumb?.getOriginUrl().safe()).asBitmap().centerCrop().dontAnimate().into(helper.iv_banner)
 //                .into(object : BitmapImageViewTarget(helper.iv_banner) {

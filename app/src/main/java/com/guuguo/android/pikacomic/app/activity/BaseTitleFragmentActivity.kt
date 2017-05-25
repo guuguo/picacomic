@@ -1,7 +1,7 @@
 package com.guuguo.android.pikacomic.app.activity
 
 import android.support.v4.content.ContextCompat
-import android.view.View
+import android.support.v7.widget.Toolbar
 import com.flyco.systembar.SystemBarHelper
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.base.BaseActivity
@@ -11,19 +11,29 @@ class BaseTitleFragmentActivity : BaseActivity() {
 
     override fun getLayoutResId() = R.layout.activity_title_fragment
     override fun isNavigationBack() = true
+    override fun getToolBar(): Toolbar? {
+        return id_toolbar
+    }
 
     override fun initToolBar() {
-        if (isNavigationBack()) {
-            iv_navigation.visibility =View.VISIBLE
-            iv_navigation.setOnClickListener { onBackPressed() }
-        } else {
-            iv_navigation.visibility =View.GONE
-        }
+        super.initToolBar()
+        getToolBar()?.navigationIcon = ContextCompat.getDrawable(activity, R.drawable.ic_arrowleft)
+        supportActionBar?.title=""
     }
 
+//    override fun initToolBar() {
+//        if (isNavigationBack()) {
+//            iv_navigation.visibility =View.VISIBLE
+//            iv_navigation.setOnClickListener { onBackPressed() }
+//        } else {
+//            iv_navigation.visibility =View.GONE
+//        }
+//    }
+//
     override fun setTitle(title: CharSequence?) {
-        tv_title_bar.text=title
+        tv_title_bar.text = title
     }
+
     override fun initView() {
         super.initView()
         SystemBarHelper.tintStatusBar(activity, ContextCompat.getColor(activity, R.color.colorPrimary), 0f)
