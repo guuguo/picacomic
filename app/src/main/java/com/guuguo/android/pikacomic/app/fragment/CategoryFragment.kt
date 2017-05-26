@@ -57,10 +57,14 @@ class CategoryFragment : BaseFragment() {
     override fun initView() {
         super.initView()
         binding.llCategory.setAdapter(categoryAdapter)
-//        tv_title_bar.text = "漫画分类"
-
         categoryAdapter.setOnItemClickListener { _, _, i ->
             ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_CATEGORY, categoryAdapter.getItem(i))
+        }
+        binding.tvRecently.setOnClickListener {
+            ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_RECENTLY)
+        }
+        binding.tvRank.setOnClickListener {
+            ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_RANK)
         }
     }
 

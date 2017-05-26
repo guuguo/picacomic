@@ -29,10 +29,13 @@ interface Service {
     fun favoriteComic(@Path("id") id: String): Single<ResponseModel<ActionResponse>>
 
     @GET("/comics/{id}/order/{ep}/pages")
-    fun getComicContent(@Path("id") id: String, @Path("ep") ep: Int, @Query("page") page: Int): Single<ResponseModel<ActionResponse>>
+    fun getComicContent(@Path("id") id: String, @Path("ep") ep: Int, @Query("page") page: Int): Single<ResponseModel<ComicsContentResponse>>
 
     @GET("/comics/random")
     fun getComicsRandom(@Query("page") page: Int): Single<ResponseModel<ComicsRandomResponse>>
+
+    @GET("/comics/leaderboard")
+    fun getComicsRank(@Query("tt") tt: String = "H24", @Query("ct") ct: String = "VC"): Single<ResponseModel<ComicsRandomResponse>>
 
     @GET("/comics/search")
     fun getComicsSearch(@Query("page") page: Int, @Query("q") query: String): Single<ResponseModel<ComicsResponse>>

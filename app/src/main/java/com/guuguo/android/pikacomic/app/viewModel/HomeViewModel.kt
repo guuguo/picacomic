@@ -1,12 +1,13 @@
 package com.guuguo.android.pikacomic.app.viewModel
 
 import android.databinding.BaseObservable
+import android.view.View
 import com.google.gson.reflect.TypeToken
+import com.guuguo.android.lib.extension.toast
 import com.guuguo.android.pikacomic.app.fragment.HomeFragment
 import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.constant.myGson
 import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
-import com.guuguo.android.pikacomic.entity.CategoryResponse
 import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.entity.ComicsRandomResponse
 import com.guuguo.android.pikacomic.net.http.BaseCallback
@@ -21,8 +22,8 @@ import io.reactivex.disposables.Disposable
  */
 class HomeViewModel(val fragment: HomeFragment) : BaseObservable() {
     val activity = fragment.activity
-    fun getAnnouncements() {
-        activity.dialogLoadingShow("正在加载中")
+    fun getAnnouncementsFromNet() {
+        fragment.binding.spbSmooth.visibility = View.VISIBLE
         MyApiServer.getAnnouncements().subscribe(object : BaseCallback<ResponseModel<AnnouncementsResponse>>() {
             override fun onSubscribe(d: Disposable?) {
                 activity.addApiCall(d)
@@ -30,17 +31,28 @@ class HomeViewModel(val fragment: HomeFragment) : BaseObservable() {
 
             override fun onSuccess(t: ResponseModel<AnnouncementsResponse>) {
                 super.onSuccess(t)
-                activity.dialogDismiss()
+                fragment.binding.spbSmooth.visibility = View.GONE
                 t.data?.announcements?.let {
+                    LocalData.announcement = myGson.toJson(t.data?.announcements!!)
                     fragment.setUpAnnouncementsBanner(t.data!!.announcements!!)
                 }
             }
 
             override fun onApiLoadError(msg: String) {
-                activity.dialogDismiss()
-                activity.dialogErrorShow(msg, null)
+                fragment.binding.spbSmooth.visibility = View.GONE
+                msg.toast()
             }
         })
+    }
+
+    fun getAnnouncements() {
+//        val announcementStr = LocalData.announcement
+//        try {
+//            val announcement: AnnouncementsResponse.Response = myGson.fromJson(announcementStr, AnnouncementsResponse.Response::class.java)
+//            fragment.setUpAnnouncementsBanner(announcement)
+//        } catch (e: Exception) {
+//        }
+        getAnnouncementsFromNet()
     }
 
     fun getComicsRandom() {
@@ -66,28 +78,6 @@ class HomeViewModel(val fragment: HomeFragment) : BaseObservable() {
                 t.data?.comics?.let {
                     LocalData.randomComics = myGson.toJson(t.data?.comics)
                     fragment.setUpComics(t.data!!.comics!!)
-                }
-            }
-
-            override fun onApiLoadError(msg: String) {
-                activity.dialogDismiss()
-                activity.dialogErrorShow(msg, null)
-            }
-        })
-    }
-
-    fun getCategory() {
-        activity.dialogLoadingShow("正在加载中")
-        MyApiServer.getCategory().subscribe(object : BaseCallback<ResponseModel<CategoryResponse>>() {
-            override fun onSubscribe(d: Disposable?) {
-                activity.addApiCall(d)
-            }
-
-            override fun onSuccess(t: ResponseModel<CategoryResponse>) {
-                super.onSuccess(t)
-                activity.dialogDismiss()
-                t.data?.categories?.let {
-                    //                    fragment.setUpCategory(t.data!!.categories!!)
                 }
             }
 

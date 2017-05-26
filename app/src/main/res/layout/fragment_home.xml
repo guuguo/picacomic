@@ -37,6 +37,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -57,6 +58,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/blur_announce" />
 
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="50dp"
@@ -73,6 +75,26 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/item_announcement" />
+
+                <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                    android:id="@+id/spb_smooth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:spb_color="@color/colorPrimaryBlue"
+                    app:spb_mirror_mode="false"
+                    app:spb_progressiveStart_activated="true"
+                    app:spb_progressiveStart_speed="1.5"
+                    app:spb_progressiveStop_speed="3.4"
+                    app:spb_reversed="false"
+                    app:spb_sections_count="4"
+                    app:spb_speed="2.0"
+                    app:spb_stroke_separator_length="4dp"
+                    app:spb_stroke_width="2dp" />
 
                 <TextView
                     android:id="@+id/tv_category_tip"

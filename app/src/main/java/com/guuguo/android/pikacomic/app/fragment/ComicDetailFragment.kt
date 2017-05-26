@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.guuguo.android.lib.app.LNBaseActivity
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.activity.BaseTitleFragmentActivity
+import com.guuguo.android.pikacomic.app.activity.ComicContentActivity
 import com.guuguo.android.pikacomic.app.adapter.EpAdapter
 import com.guuguo.android.pikacomic.app.fragment.ComicsFragment.Companion.ARG_GET_COMICS
 import com.guuguo.android.pikacomic.app.viewModel.ComicDetailModel
@@ -44,7 +45,6 @@ class ComicDetailFragment : BaseFragment() {
         return binding.root
     }
 
-
     companion object {
         val ARG_COMIC = "ARG_COMIC"
 
@@ -70,12 +70,17 @@ class ComicDetailFragment : BaseFragment() {
     override fun initView() {
         super.initView()
         binding.rtvRead.setOnClickListener {
-
         }
         val tempComic = UOrm.db().queryById(comicEntity._id, ComicsEntity::class.java)
         if (tempComic != null)
             comicEntity = tempComic
         recycler_ep.setAdapter(epAdapter)
+        epAdapter.setOnItemClickListener { _, _, i ->
+            ComicContentActivity.intentTo(activity, comicEntity, i + 1)
+        }
+        binding.rtvRead.setOnClickListener {
+            ComicContentActivity.intentTo(activity, comicEntity, 1)
+        }
     }
 
 

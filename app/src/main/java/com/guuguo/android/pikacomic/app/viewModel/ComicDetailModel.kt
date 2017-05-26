@@ -51,6 +51,7 @@ class ComicDetailModel(val fragment: ComicDetailFragment) : BaseObservable() {
     }
 
     fun getComic(id: String) {
+        fragment.binding.spbSmooth.visibility=View.VISIBLE
         MyApiServer.getComicDetail(id).subscribe(object : BaseCallback<ResponseModel<ComicDetailResponse>>() {
             override fun onSubscribe(d: Disposable?) {
                 activity.addApiCall(d)
@@ -58,14 +59,15 @@ class ComicDetailModel(val fragment: ComicDetailFragment) : BaseObservable() {
 
             override fun onSuccess(t: ResponseModel<ComicDetailResponse>) {
                 super.onSuccess(t)
+                fragment.binding.spbSmooth.visibility=View.GONE
                 t.data?.comic?.let {
                     UOrm.db().save(t.data?.comic)
-//                    bindResult(t.data?.comic!!)
-//                    fragment.setUpComic(t.data!!.comic!!)
+                    bindResult(t.data?.comic!!)
                 }
             }
 
             override fun onApiLoadError(msg: String) {
+                fragment.binding.spbSmooth.visibility=View.GONE
                 activity.dialogDismiss()
                 msg.toast()
             }

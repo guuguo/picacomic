@@ -44,6 +44,11 @@ object MyApiServer {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
+    fun getComicsContent(id:String,ep:Int,page:Int): Single<ResponseModel<ComicsContentResponse>> {
+        return service.getComicContent(id,ep,page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
     fun getComicDetail(id:String): Single<ResponseModel<ComicDetailResponse>> {
         return service.getComicDetail(id)
                 .subscribeOn(Schedulers.io())
@@ -51,6 +56,11 @@ object MyApiServer {
     }
     fun getComicsRandom(page:Int): Single<ResponseModel<ComicsRandomResponse>> {
         return service.getComicsRandom(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+    fun getComicsRank(): Single<ResponseModel<ComicsRandomResponse>> {
+        return service.getComicsRank()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }

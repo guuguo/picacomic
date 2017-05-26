@@ -39,6 +39,25 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                        android:id="@+id/spb_smooth"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/v_comic_color"
+                        app:spb_color="@color/colorPrimaryBlue"
+                        app:spb_mirror_mode="false"
+                        app:spb_progressiveStart_activated="true"
+                        app:spb_progressiveStart_speed="1.5"
+                        app:spb_progressiveStop_speed="3.4"
+                        app:spb_reversed="false"
+                        app:spb_sections_count="4"
+                        app:spb_speed="2.0"
+                        app:spb_stroke_separator_length="4dp"
+                        app:spb_stroke_width="2dp" />
 
                     <ImageView
                         android:id="@+id/iv_banner"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.guuguo.android.pikacomic.app.viewModel.CategoryViewModel" />
@@ -29,43 +30,53 @@
 
                 <TextView
                     android:id="@+id/tv_recently"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:drawablePadding="5dp"
+                    android:background="@color/white"
+                    android:drawablePadding="8dp"
                     android:drawableTop="@drawable/ic_cat_recently"
                     android:gravity="center_horizontal"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
                     android:text="最近更新"
+                    android:textStyle="bold"
+                    app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/tv_rank"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_rank"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:drawablePadding="5dp"
+                    android:background="@color/white"
+                    android:drawablePadding="8dp"
                     android:drawableTop="@drawable/ic_cat_rank_mark"
                     android:gravity="center_horizontal"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
                     android:text="排行榜"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_recently"
+                    app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintLeft_toRightOf="@+id/tv_recently"
                     app:layout_constraintRight_toLeftOf="@+id/tv_knight"
                     app:layout_constraintTop_toTopOf="@+id/tv_recently" />
 
                 <TextView
                     android:id="@+id/tv_knight"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
-                    android:drawablePadding="5dp"
+                    android:background="@color/white"
+                    android:drawablePadding="8dp"
                     android:drawableTop="@drawable/ic_cat_knight"
                     android:gravity="center_horizontal"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
                     android:text="骑士榜"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_recently"
+                    app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintLeft_toRightOf="@id/tv_rank"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_recently" />
@@ -74,7 +85,7 @@
                     android:id="@+id/ll_Category"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     app:columnNum="3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"

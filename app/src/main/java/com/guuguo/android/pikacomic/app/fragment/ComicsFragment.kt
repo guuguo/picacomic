@@ -17,6 +17,7 @@ import com.guuguo.android.pikacomic.app.viewModel.ComicsViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.databinding.FragmentComicsBinding
 import com.guuguo.android.pikacomic.entity.CategoryEntity
+import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.entity.ComicsResponse
 
 /**
@@ -35,6 +36,7 @@ class ComicsFragment : BaseFragment() {
         return when (getComicsType) {
             TYPE_COMICS_CATEGORY -> categoryEntity?.title.safe()
             TYPE_COMICS_RECENTLY -> "最近更新"
+            TYPE_COMICS_RANK -> "排行榜"
             else -> ""
         }
     }
@@ -51,6 +53,7 @@ class ComicsFragment : BaseFragment() {
         val ARG_CATEGORY = "ARG_CATEGORY"
         val TYPE_COMICS_RECENTLY = 0
         val TYPE_COMICS_CATEGORY = 1
+        val TYPE_COMICS_RANK = 2
 
         fun intentTo(activity: Activity, type: Int, category: CategoryEntity? = null) {
             val intent = Intent(activity, BaseTitleFragmentActivity::class.java)
@@ -90,16 +93,18 @@ class ComicsFragment : BaseFragment() {
     override fun loadData() {
         super.loadData()
         if (page == 1)
-            activity.dialogLoadingShow("正在加载漫画列表")
-//        comicsAdapter.setEnableLoadMore(false)
-        when (getComicsType) {
-            TYPE_COMICS_CATEGORY -> viewModel.getComics(page, categoryEntity?.title)
-        }
+            when (getComicsType) {
+                TYPE_COMICS_CATEGORY -> viewModel.getComics(page, categoryEntity?.title)
+                TYPE_COMICS_RECENTLY -> viewModel.getComics(page)
+                TYPE_COMICS_RANK -> {
+                    comicsAdapter.setEnableLoadMore(false)
+                    viewModel.getComicsRank()
+                }
+            }
     }
 
     var page = 1;
-    fun setUpComics(comics: ComicsResponse.ComicsBean) {
-        activity.dialogDismiss()
+    fun setUpComicsPage(comics: ComicsResponse.ComicsBean) {
         if (comics.pages <= comics.page)
             comicsAdapter.loadMoreEnd()
         else {
@@ -109,5 +114,10 @@ class ComicsFragment : BaseFragment() {
             comicsAdapter.setNewData(comics.docs)
         else
             comicsAdapter.addData(comics.docs)
+    }
+
+    fun setUpComics(comics: List<ComicsEntity>) {
+        activity.dialogDismiss()
+        comicsAdapter.setNewData(comics)
     }
 }
