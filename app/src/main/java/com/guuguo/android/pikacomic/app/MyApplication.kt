@@ -26,6 +26,6 @@ class MyApplication : BaseApplication() {
     private fun initBugly() {
         Beta.upgradeDialogLayoutId = R.layout.dialog_upgrade
         Beta.tipsDialogLayoutId = R.layout.dialog_tips
-        Bugly.init(this, "b01f77bd60", false);
+        Bugly.init(this, "b01f77bd60", false)
     }
 }

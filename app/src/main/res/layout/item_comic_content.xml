@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/riv_content"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="140dp"
     android:layout_marginBottom="2dp"
     android:background="#DDDDDD"
     android:scaleType="centerCrop"

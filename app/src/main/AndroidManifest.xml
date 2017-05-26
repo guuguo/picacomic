@@ -27,18 +27,37 @@
             android:name="com.guuguo.android.pikacomic.net.http.MyGlideModule"
             android:value="GlideModule" />
 
-        <activity android:name=".app.activity.LoginActivity">
+        <activity
+            android:name=".app.activity.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".app.activity.MainActivity" >
-            </activity>
-        <activity android:name=".app.activity.BaseTitleFragmentActivity" />
-        <activity android:name=".app.activity.ComicContentActivity" />
+        <activity
+            android:name=".app.activity.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.activity.BaseTitleFragmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.activity.ComicContentActivity"
+            android:screenOrientation="portrait" />
 
-        
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.guuguo.android.pikacomic.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>
