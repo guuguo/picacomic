@@ -26,7 +26,7 @@ object UOrm : SQLiteHelper.OnUpdateListener {
     internal var isDbUpdate = false
 
     init {
-        config.dbVersion = 1//新增拼音字段,拼音首字母大写模式
+        config.dbVersion = 2//新增拼音字段,拼音首字母大写模式
         config.debugged = true
         config.onUpdateListener = this
         mLiteOrm = LiteOrm.newCascadeInstance(config)

@@ -21,8 +21,10 @@ class LoginActivity : BaseActivity() {
         binding.viewModel = viewModel
     }
 
-    override fun initView() {
+    override fun initStatusBar() {
         SystemBarHelper.immersiveStatusBar(activity, 0f)
+    }
+    override fun initView() {
         binding.edtUsername.setText("1152168009@qq.com")
         binding.edtPassword.setText("200996GDQ")
 

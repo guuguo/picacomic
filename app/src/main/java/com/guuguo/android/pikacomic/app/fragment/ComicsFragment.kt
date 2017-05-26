@@ -27,7 +27,6 @@ class ComicsFragment : BaseFragment() {
     lateinit var binding: FragmentComicsBinding
     val viewModel by lazy { ComicsViewModel(this) }
     val comicsAdapter = ComicsAdapter()
-
     override fun getLayoutResId() = R.layout.fragment_comics
     var getComicsType = 0
     var categoryEntity: CategoryEntity? = null

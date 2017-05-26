@@ -19,7 +19,8 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize">
+            android:layout_height="?actionBarSize"
+            app:elevation="0dp">
 
             <com.flyco.roundview.RoundTextView
                 android:layout_width="match_parent"
@@ -53,7 +54,8 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/blur_announce" />
 
                 <View
                     android:layout_width="0dp"
@@ -69,7 +71,8 @@
                     android:layout_height="224dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_announcement" />
 
                 <TextView
                     android:id="@+id/tv_category_tip"
@@ -100,16 +103,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:background="@color/white"
+                    android:tint="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/line_category"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_category_tip"
                     app:srcCompat="@drawable/ic_refresh" />
 
                 <com.guuguo.android.lib.view.LinearList
-                    android:layout_marginTop="10dp"
                     android:id="@+id/ll_comics"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     app:columnNum="3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"

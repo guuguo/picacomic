@@ -34,8 +34,8 @@ class ComicsEntity : Serializable {
     var created_at: Date? = null
     var viewsCount: Int = 0
     var likesCount: Int = 0
-    var isIsFavourite: Boolean = false
-    var isIsLiked: Boolean = false
+    var isFavourite: Boolean = false
+    var isLiked: Boolean = false
     var commentsCount: Int = 0
     //    @Mapping(Relation.OneToMany)
     @Ignore

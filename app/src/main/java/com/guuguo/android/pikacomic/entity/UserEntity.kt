@@ -23,6 +23,7 @@ class UserEntity : Serializable {
     var level: Int = 0
     @Mapping(Relation.OneToOne)
     var avatar: ThumbEntity? = null
-    @Mapping(Relation.OneToMany)
+//    @Mapping(Relation.OneToMany)
+    @Ignore
     var characters: ArrayList<String>? = ArrayList<String>()
 }

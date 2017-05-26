@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.guuguo.android.lib.view.RatioImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scaleType="centerCrop"
+    android:src="@drawable/placeholder_loading"
+    app:riv_origin_height="3dp"
+    app:riv_origin_width="2dp" />
+

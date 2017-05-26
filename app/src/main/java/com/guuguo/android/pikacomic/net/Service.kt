@@ -1,7 +1,6 @@
 package com.guuguo.gank.net
 
 import com.guuguo.android.pikacomic.entity.*
-import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import io.reactivex.Single
 import okhttp3.RequestBody
@@ -11,27 +10,30 @@ import retrofit2.http.*
  * Created by gaohailong on 2016/5/17.
  */
 interface Service {
-    @POST(ApiConfig.url_sign_in)
+    @POST("/auth/sign-in")
     fun signIn(@Body requestBody: RequestBody): Single<ResponseModel<TokenResponse>>
 
-    @GET(ApiConfig.url_announcements)
+    @GET("/announcements")
     fun getAnnouncements(@Query("page") page: Int): Single<ResponseModel<AnnouncementsResponse>>
 
-    @GET(ApiConfig.url_category)
+    @GET("/categories")
     fun getCategory(): Single<ResponseModel<CategoryResponse>>
 
-    @GET(ApiConfig.url_comics)
+    @GET("/comics")
     fun getComics(@Query("page") page: Int, @Query("c") category: String?, @Query("s") s: String): Single<ResponseModel<ComicsResponse>>
 
-    @GET(ApiConfig.url_comics + "/{id}")
+    @GET("/comics/{id}")
     fun getComicDetail(@Path("id") id: String): Single<ResponseModel<ComicDetailResponse>>
-    
-    @GET(ApiConfig.url_comics + "/{id}" + "/favourite")
+
+    @GET("/comics/{id}/favourite")
     fun favoriteComic(@Path("id") id: String): Single<ResponseModel<ActionResponse>>
 
-    @GET(ApiConfig.url_comics_random)
+    @GET("/comics/{id}/order/{ep}/pages")
+    fun getComicContent(@Path("id") id: String, @Path("ep") ep: Int, @Query("page") page: Int): Single<ResponseModel<ActionResponse>>
+
+    @GET("/comics/random")
     fun getComicsRandom(@Query("page") page: Int): Single<ResponseModel<ComicsRandomResponse>>
 
-    @GET(ApiConfig.url_comics_search)
+    @GET("/comics/search")
     fun getComicsSearch(@Query("page") page: Int, @Query("q") query: String): Single<ResponseModel<ComicsResponse>>
 }

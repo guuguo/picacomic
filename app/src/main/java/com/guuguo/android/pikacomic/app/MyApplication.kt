@@ -1,17 +1,18 @@
 package com.guuguo.android.pikacomic.app
 
-import android.support.multidex.MultiDexApplication
+import android.support.multidex.MultiDex
 import android.support.v7.app.AppCompatDelegate
+import com.guuguo.android.lib.BaseApplication
 
 /**
  * Created by guodeqing on 16/3/7.
  */
-class MyApplication : MultiDexApplication() {
-    override fun onCreate() {
-        super.onCreate()
+class MyApplication : BaseApplication() {
+    override fun init() {
         instance = this;
+        MultiDex.install(this)
         initBugly()
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true); 
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     companion object {

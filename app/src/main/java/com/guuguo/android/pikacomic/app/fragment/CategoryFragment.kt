@@ -1,7 +1,9 @@
 package com.guuguo.android.pikacomic.app.fragment
 
 import android.databinding.DataBindingUtil
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.guuguo.android.pikacomic.R
@@ -22,7 +24,24 @@ class CategoryFragment : BaseFragment() {
     val categoryAdapter = CategoryAdapter()
 
     override fun getLayoutResId() = R.layout.fragment_category
+    override fun getToolBar(): Toolbar? {
+        return id_toolbar
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_refresh -> {
+                viewModel.getCategoryFromNet()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun setTitle(title: String) {
+        activity.supportActionBar?.title = ""
+        tv_title_bar.text = title
+    }
 
     override fun setLayoutResId(inflater: LayoutInflater?, resId: Int, container: ViewGroup?): View {
         binding = DataBindingUtil.inflate(inflater, resId, container, false)
@@ -30,10 +49,15 @@ class CategoryFragment : BaseFragment() {
         return binding.root
     }
 
+    override fun getMenuResId() = R.menu.refresh
+    override fun getHeaderTitle(): String {
+        return "漫画分类"
+    }
+
     override fun initView() {
         super.initView()
         binding.llCategory.setAdapter(categoryAdapter)
-        tv_title_bar.text = "漫画分类"
+//        tv_title_bar.text = "漫画分类"
 
         categoryAdapter.setOnItemClickListener { _, _, i ->
             ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_CATEGORY, categoryAdapter.getItem(i))

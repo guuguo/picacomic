@@ -36,7 +36,7 @@ class ComicsViewModel(val fragment: ComicsFragment) : BaseObservable() {
     }
 //    fun getComicsCategory(category:String) {
 //        activity.dialogLoadingShow("正在加载中")
-//        MyApiServer.getCategory(1).subscribe(object : BaseCallback<ResponseModel<ComicsResponse>>() {
+//        MyApiServer.getCategoryFromNet(1).subscribe(object : BaseCallback<ResponseModel<ComicsResponse>>() {
 //            override fun onSubscribe(d: Disposable?) {
 //                activity.addApiCall(d)
 //            }

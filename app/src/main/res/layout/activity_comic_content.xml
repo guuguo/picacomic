@@ -7,12 +7,18 @@
 
         <variable
             name="viewModel"
-            type="com.guuguo.android.pikacomic.app.viewModel.ComicsViewModel" />
+            type="com.guuguo.android.pikacomic.app.viewModel.ComicContentViewModel" />
     </data>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_comics" />
+        tools:listitem="@layout/item_ciomic_content" />
+    <!--</LinearLayout>-->
 </layout>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">pikacomic</string>
+    <string name="views_count">战斗力：</string>
+    
 </resources>

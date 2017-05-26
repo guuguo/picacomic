@@ -4,9 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.guuguo.android.lib.app.LNBaseActivity
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.activity.BaseTitleFragmentActivity
-import com.guuguo.android.pikacomic.app.adapter.ComicsAdapter
+import com.guuguo.android.pikacomic.app.adapter.EpAdapter
 import com.guuguo.android.pikacomic.app.fragment.ComicsFragment.Companion.ARG_GET_COMICS
 import com.guuguo.android.pikacomic.app.viewModel.ComicDetailModel
 import com.guuguo.android.pikacomic.base.BaseFragment
@@ -22,6 +19,7 @@ import com.guuguo.android.pikacomic.constant.loadingPlaceHolder
 import com.guuguo.android.pikacomic.databinding.FragmentComicDetailBinding
 import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.hesheng.orderpad.db.UOrm
+import kotlinx.android.synthetic.main.fragment_comic_detail.*
 
 /**
  * mimi 创造于 2017-05-22.
@@ -30,7 +28,7 @@ import com.hesheng.orderpad.db.UOrm
 class ComicDetailFragment : BaseFragment() {
     lateinit var binding: FragmentComicDetailBinding
     val viewModel by lazy { ComicDetailModel(this) }
-    val comicsAdapter = ComicsAdapter()
+    val epAdapter = EpAdapter()
 
     override fun getLayoutResId() = R.layout.fragment_comic_detail
     var getComicsType = 0
@@ -77,39 +75,20 @@ class ComicDetailFragment : BaseFragment() {
         val tempComic = UOrm.db().queryById(comicEntity._id, ComicsEntity::class.java)
         if (tempComic != null)
             comicEntity = tempComic
-        setUpComic(comicEntity)
-        ViewCompat.setElevation(activity.getAppBar(), 0f)
+        recycler_ep.setAdapter(epAdapter)
     }
 
 
     override fun loadData() {
         super.loadData()
+        viewModel.bindResult(comicEntity)
         viewModel.getComic(comicEntity._id)
     }
 
     fun setUpComic(comic: ComicsEntity) {
-        val colorPrimary = ContextCompat.getColor(activity, R.color.colorPrimary)
-        val colorGray = ContextCompat.getColor(activity, R.color.black40)
-
-        binding.tvTitle.text = comic.title
-        binding.tvContent.text = comic.description
         Glide.with(activity).load(comic.thumb?.getOriginUrl()).asBitmap().placeholder(loadingPlaceHolder).centerCrop().into(binding.ivBanner)
-        if (comic.isIsLiked) {
-            binding.tvLike.setTextColor(colorPrimary)
-            DrawableCompat.setTint(binding.ivLike.drawable, colorPrimary)
-        } else {
-            binding.tvLike.setTextColor(colorGray)
-            DrawableCompat.setTint(binding.ivLike.drawable, colorGray)
-        }
-        if (comic.isIsFavourite) {
-            DrawableCompat.setTint(binding.ivCollect.drawable, colorPrimary)
-            binding.tvCollect.setTextColor(colorPrimary)
-            binding.tvCollect.text = "已收藏"
-        } else {
-            DrawableCompat.setTint(binding.ivCollect.drawable, colorGray)
-            binding.tvCollect.setTextColor(colorGray)
-            binding.tvCollect.text = "收藏"
-        }
-        binding.tvLike.text = comic.likesCount.toString()
+        val array: ArrayList<String> = arrayListOf()
+        (1..comic.epsCount).map { array.add(it.toString()) }
+        epAdapter.setNewData(array)
     }
 }

@@ -10,69 +10,131 @@
             type="com.guuguo.android.pikacomic.app.viewModel.ComicDetailModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:orientation="vertical">
 
-
-        <ImageView
-            android:id="@+id/iv_banner"
-            android:layout_width="130dp"
-            android:layout_height="180dp"
-            android:layout_margin="10dp"
-            android:background="@color/white"
-            android:elevation="3dp"
-            app:elevation="3dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@color/black20" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/text_item_title_bold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="20sp"
-            app:layout_constraintLeft_toRightOf="@+id/iv_banner"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="game" />
-
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="0dp"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_banner"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_title"
-            app:layout_constraintRight_toRightOf="@+id/tv_title"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="tv_content" />
+            android:layout_weight="1"
+            android:background="@color/white">
 
-        <!--<TextView-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="10dp"-->
-        <!--android:background="@drawable/bottom_shadow"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/rl_bar"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/v_comic_color"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:background="@color/colorPrimary"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_banner"
+                        android:layout_width="100dp"
+                        android:layout_height="150dp"
+                        android:layout_margin="15dp"
+                        android:background="@color/white"
+                        android:elevation="3dp"
+                        app:elevation="3dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@color/black20" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text='@{viewModel.getUpdateTime(viewModel.comic.created_at)}'
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/v_comic_color"
+                        app:layout_constraintRight_toRightOf="@+id/v_comic_color"
+                        app:layout_constraintTop_toTopOf="@+id/iv_banner"
+                        tools:text="2015/2/3更新" />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        style="@style/text_item_title_bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:text='@{viewModel.comic.title}'
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toRightOf="@+id/iv_banner"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/v_comic_color"
+                        tools:text="game" />
+
+                    <TextView
+                        android:id="@+id/tv_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text='@{viewModel.comic.author}'
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                        tools:text="日天君" />
+
+                    <TextView
+                        android:id="@+id/tv_view_num"
+                        style="@style/text_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text='@{@string/views_count+viewModel.comic.viewsCount}'
+                        app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_author"
+                        tools:text="战斗力：1111" />
+
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_edittext_normal"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text='@{viewModel.comic.description}'
+                        app:layout_constraintLeft_toLeftOf="@+id/iv_banner"
+                        app:layout_constraintRight_toRightOf="@+id/tv_title"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_banner"
+                        tools:text="tv_content" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <com.guuguo.android.lib.view.LinearList
+                    android:id="@+id/recycler_ep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    app:columnNum="4"
+                    app:divideWidth="20dp" />
+            </LinearLayout>
+        </ScrollView>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/rl_bar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="68dp"
             android:background="@drawable/bg_top_line"
-            app:elevation="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:elevation="5dp">
 
             <ImageView
                 android:id="@+id/iv_like"
@@ -80,6 +142,7 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="20dp"
                 android:padding="5dp"
+                android:tint="@{viewModel.comic.isLiked?@color/colorPrimary:@color/black40}"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_like"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_like"
@@ -90,25 +153,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
-                android:text="1000"
-                android:textColor="@color/colorPrimary"
+                android:text='@{viewModel.comic.likesCount+""}'
+                android:textColor='@{viewModel.comic.isLiked?@color/colorPrimary:@color/black40}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/iv_like"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="1000"
+                tools:textColor='@color/colorPrimary' />
 
-
-            <View
-                android:id="@+id/v_line_bar"
-                android:layout_width="2px"
-                android:layout_height="0dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:background="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/tv_like"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_collect"
@@ -117,8 +170,9 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
                 android:padding="5dp"
+                android:tint='@{viewModel.comic.isFavourite?@color/colorPrimary:@color/black40}'
                 app:layout_constraintBottom_toBottomOf="@+id/iv_like"
-                app:layout_constraintLeft_toRightOf="@+id/v_line_bar"
+                app:layout_constraintLeft_toRightOf="@+id/tv_like"
                 app:layout_constraintTop_toTopOf="@+id/iv_like"
                 app:srcCompat="@drawable/ic_collect" />
 
@@ -128,14 +182,14 @@
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
                 android:text="收藏"
-                android:textColor="@color/colorPrimary"
+                android:textColor='@{viewModel.comic.isFavourite?@color/colorPrimary:@color/black40}'
                 app:layout_constraintBottom_toBottomOf="@+id/tv_like"
                 app:layout_constraintLeft_toRightOf="@+id/iv_collect"
-                app:layout_constraintTop_toTopOf="@+id/tv_like" />
+                app:layout_constraintTop_toTopOf="@+id/tv_like"
+                tools:textColor="@color/colorPrimary" />
 
 
             <com.flyco.roundview.RoundTextView
-
                 android:id="@+id/rtv_read"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
@@ -155,5 +209,6 @@
                 app:rv_backgroundPressColor="@color/colorPrimaryDark"
                 app:rv_cornerRadius="2dp" />
         </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
 </layout>

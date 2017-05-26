@@ -28,12 +28,17 @@
             android:value="GlideModule" />
 
         <activity android:name=".app.activity.LoginActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".app.activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".app.activity.MainActivity" />
+            </activity>
         <activity android:name=".app.activity.BaseTitleFragmentActivity" />
 
         
