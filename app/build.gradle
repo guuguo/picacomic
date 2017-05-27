@@ -11,7 +11,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 3
-        versionName "1"
+        versionName "1.01"
         ndk {
             //设置支持的SO库架构
             abiFilters /*'armeabi',*/ 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
@@ -90,9 +90,8 @@ dependencies {
     /*view*/
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     compile 'com.flyco.banner:FlycoBanner_Lib:2.0.2@aar'
-    compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'com.github.castorflex.smoothprogressbar:library:1.0.1-SNAPSHOT@aar'
-
+    compile 'com.joooonho:selectableroundedimageview:1.0.1'
 //    compile ('com.alibaba.android:vlayout:1.0.6@aar') {
 //        transitive = true
 //    }

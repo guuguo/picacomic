@@ -14,7 +14,7 @@ import com.guuguo.android.pikacomic.app.activity.BaseTitleFragmentActivity
 import com.guuguo.android.pikacomic.app.activity.ComicContentActivity
 import com.guuguo.android.pikacomic.app.adapter.EpAdapter
 import com.guuguo.android.pikacomic.app.fragment.ComicsFragment.Companion.ARG_GET_COMICS
-import com.guuguo.android.pikacomic.app.viewModel.ComicDetailModel
+import com.guuguo.android.pikacomic.app.viewModel.ComicDetailViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.constant.loadingPlaceHolder
 import com.guuguo.android.pikacomic.databinding.FragmentComicDetailBinding
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_comic_detail.*
  */
 class ComicDetailFragment : BaseFragment() {
     lateinit var binding: FragmentComicDetailBinding
-    val viewModel by lazy { ComicDetailModel(this) }
+    val viewModel by lazy { ComicDetailViewModel(this) }
     val epAdapter = EpAdapter()
 
     override fun getLayoutResId() = R.layout.fragment_comic_detail

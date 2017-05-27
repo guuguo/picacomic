@@ -3,17 +3,172 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.guuguo.android.pikacomic.app.viewModel.MineViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".app.activity.MainActivity">
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_knock" />
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:text="mine"
-            android:layout_gravity="center"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="0dp"
+            android:text="敲打哔咔"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/imageView2"
+            app:layout_constraintRight_toRightOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    </android.support.design.widget.CoordinatorLayout>
+        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+            android:id="@+id/spb_smooth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view"
+            app:spb_progressiveStart_activated="true" />
+
+        <com.joooonho.SelectableRoundedImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view"
+            app:sriv_border_color="@color/black20"
+            app:sriv_border_width="1px"
+            app:sriv_oval="true"
+            tools:background="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text='@{viewModel.user.name}'
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_avatar"
+            app:layout_constraintRight_toRightOf="@+id/iv_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/iv_avatar"
+            tools:text="guuguo"
+            tools:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_info_lv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="等级"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/v_line1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_lv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{viewModel.user.level+"("+viewModel.user.exp+"/"+viewModel.user.level*200+")"}'
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toLeftOf="@id/tv_info_lv"
+            app:layout_constraintRight_toRightOf="@id/tv_info_lv"
+            app:layout_constraintTop_toBottomOf="@id/tv_info_lv"
+            tools:text="lv1(50/100)" />
+
+        <View
+            android:id="@+id/v_line1"
+            android:layout_width="1px"
+            android:layout_height="70dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/tv_lv"
+            app:layout_constraintLeft_toRightOf="@+id/tv_info_lv"
+            app:layout_constraintRight_toLeftOf="@+id/tv_info_favorite"
+            app:layout_constraintTop_toTopOf="@+id/tv_info_lv" />
+
+        <TextView
+            android:id="@+id/tv_info_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="收藏"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toRightOf="@+id/v_line1"
+            app:layout_constraintRight_toLeftOf="@id/v_line2"
+            app:layout_constraintTop_toTopOf="@+id/tv_info_lv" />
+
+        <TextView
+            android:id="@+id/tv_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击查看"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/tv_lv"
+            app:layout_constraintLeft_toLeftOf="@id/tv_info_favorite"
+            app:layout_constraintRight_toRightOf="@id/tv_info_favorite" />
+
+        <View
+            android:id="@+id/v_line2"
+            android:layout_width="1px"
+            android:layout_height="70dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/tv_favorite"
+            app:layout_constraintLeft_toRightOf="@+id/tv_info_favorite"
+            app:layout_constraintRight_toLeftOf="@+id/tv_info_download"
+            app:layout_constraintTop_toTopOf="@+id/tv_info_favorite" />
+
+        <TextView
+            android:id="@+id/tv_info_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="下载"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toRightOf="@+id/v_line2"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_info_favorite" />
+
+        <TextView
+            android:id="@+id/tv_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lv1(50/100)"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/tv_lv"
+            app:layout_constraintLeft_toLeftOf="@id/tv_info_download"
+            app:layout_constraintRight_toRightOf="@id/tv_info_download" />
+    </android.support.constraint.ConstraintLayout>
 </layout>

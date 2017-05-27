@@ -28,6 +28,12 @@ object MyApiServer {
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
+    fun userProfile(): Single<ResponseModel<UserResponse>> {
+        return service.userProfile()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun getAnnouncements(): Single<ResponseModel<AnnouncementsResponse>> {
         return service.getAnnouncements(1)
                 .subscribeOn(Schedulers.io())
@@ -39,31 +45,49 @@ object MyApiServer {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-    fun getComics(page:Int,category:String?): Single<ResponseModel<ComicsResponse>> {
-        return service.getComics(page,category,"ua")
+
+    fun getComics(page: Int, category: String?): Single<ResponseModel<ComicsResponse>> {
+        return service.getComics(page, category, "ua")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-    fun getComicsContent(id:String,ep:Int,page:Int): Single<ResponseModel<ComicsContentResponse>> {
-        return service.getComicContent(id,ep,page)
+
+    fun getComicsContent(id: String, ep: Int, page: Int): Single<ResponseModel<ComicsContentResponse>> {
+        return service.getComicContent(id, ep, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-    fun getComicDetail(id:String): Single<ResponseModel<ComicDetailResponse>> {
+
+    fun getComicDetail(id: String): Single<ResponseModel<ComicDetailResponse>> {
         return service.getComicDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-    fun getComicsRandom(page:Int): Single<ResponseModel<ComicsRandomResponse>> {
+
+    fun favoriteComic(id: String): Single<ResponseModel<ActionResponse>> {
+        return service.favoriteComic(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun likeComic(id: String): Single<ResponseModel<ActionResponse>> {
+        return service.likeComic(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getComicsRandom(page: Int): Single<ResponseModel<ComicsRandomResponse>> {
         return service.getComicsRandom(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
+
     fun getComicsRank(): Single<ResponseModel<ComicsRandomResponse>> {
         return service.getComicsRank()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
+
     private fun getRequestJsonBody(map: HashMap<String, String>): RequestBody = RequestBody.create(
             MediaType.parse("application/json; charset=UTF-8"),
             LBaseCallback.gson.toJson(map))

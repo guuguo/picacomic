@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.guuguo.android.pikacomic.app.viewModel.ComicDetailModel" />
+            type="com.guuguo.android.pikacomic.app.viewModel.ComicDetailViewModel" />
     </data>
 
     <LinearLayout
@@ -75,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:text='@{viewModel.getUpdateTime(viewModel.comic.created_at)}'
+                        android:text='@{viewModel.getUpdateTime(viewModel.comic.updated_at)}'
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/v_comic_color"
                         app:layout_constraintRight_toRightOf="@+id/v_comic_color"
@@ -162,6 +162,7 @@
                 android:layout_marginStart="20dp"
                 android:padding="5dp"
                 android:tint="@{viewModel.comic.isLiked?@color/colorPrimary:@color/black40}"
+                android:onClick='@{viewModel::onClickLike}'
                 app:layout_constraintBottom_toBottomOf="@+id/tv_like"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_like"
@@ -173,6 +174,7 @@
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
                 android:text='@{viewModel.comic.likesCount+""}'
+                android:onClick='@{viewModel::onClickLike}'
                 android:textColor='@{viewModel.comic.isLiked?@color/colorPrimary:@color/black40}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/iv_like"
@@ -189,6 +191,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
                 android:padding="5dp"
+                android:onClick='@{viewModel::onClickFavorite}'
                 android:tint='@{viewModel.comic.isFavourite?@color/colorPrimary:@color/black40}'
                 app:layout_constraintBottom_toBottomOf="@+id/iv_like"
                 app:layout_constraintLeft_toRightOf="@+id/tv_like"
@@ -198,6 +201,7 @@
             <TextView
                 android:id="@+id/tv_collect"
                 android:layout_width="wrap_content"
+                android:onClick='@{viewModel::onClickFavorite}'
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
                 android:text="收藏"

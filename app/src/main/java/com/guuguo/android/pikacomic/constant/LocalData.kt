@@ -14,6 +14,7 @@ object LocalData {
     var randomComics by Preference<String>(mContext, "")
     var categories by Preference<String>(mContext, "")
     var announcement by Preference<String>(mContext, "")
+    var mine by Preference<String>(mContext, "")
 
     fun initSps() {
         token = ""

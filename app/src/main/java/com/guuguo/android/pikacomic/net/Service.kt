@@ -13,6 +13,9 @@ interface Service {
     @POST("/auth/sign-in")
     fun signIn(@Body requestBody: RequestBody): Single<ResponseModel<TokenResponse>>
 
+    @GET("/users/profile")
+    fun userProfile(): Single<ResponseModel<UserResponse>>
+
     @GET("/announcements")
     fun getAnnouncements(@Query("page") page: Int): Single<ResponseModel<AnnouncementsResponse>>
 
@@ -25,8 +28,11 @@ interface Service {
     @GET("/comics/{id}")
     fun getComicDetail(@Path("id") id: String): Single<ResponseModel<ComicDetailResponse>>
 
-    @GET("/comics/{id}/favourite")
+    @POST("/comics/{id}//favourite")
     fun favoriteComic(@Path("id") id: String): Single<ResponseModel<ActionResponse>>
+
+    @POST("/comics/{id}//like")
+    fun likeComic(@Path("id") id: String): Single<ResponseModel<ActionResponse>>
 
     @GET("/comics/{id}/order/{ep}/pages")
     fun getComicContent(@Path("id") id: String, @Path("ep") ep: Int, @Query("page") page: Int): Single<ResponseModel<ComicsContentResponse>>
