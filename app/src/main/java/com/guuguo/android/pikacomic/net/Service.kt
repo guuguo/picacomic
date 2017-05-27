@@ -45,4 +45,8 @@ interface Service {
 
     @GET("/comics/search")
     fun getComicsSearch(@Query("page") page: Int, @Query("q") query: String): Single<ResponseModel<ComicsResponse>>
+
+    @POST("/users/punch-in")
+    fun punch_in(): Single<ResponseModel<PunchInResponse>>
+
 }

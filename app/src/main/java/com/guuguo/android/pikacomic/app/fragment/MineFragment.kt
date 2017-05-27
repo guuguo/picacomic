@@ -35,6 +35,7 @@ class MineFragment : BaseFragment() {
     }
     fun setUpMine(result: UserEntity) {
         Glide.with(activity).load(result.avatar?.getOriginUrl()).asBitmap().placeholder(loadingPlaceHolder).centerCrop().into(binding.ivAvatar)
+        
     }
 
 }

@@ -87,7 +87,11 @@ object MyApiServer {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-
+    fun punchIn(): Single<ResponseModel<PunchInResponse>> {
+        return service.punch_in()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
     private fun getRequestJsonBody(map: HashMap<String, String>): RequestBody = RequestBody.create(
             MediaType.parse("application/json; charset=UTF-8"),
             LBaseCallback.gson.toJson(map))
