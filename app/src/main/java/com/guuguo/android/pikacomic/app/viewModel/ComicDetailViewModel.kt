@@ -7,13 +7,13 @@ import com.guuguo.android.lib.extension.date
 import com.guuguo.android.lib.extension.safe
 import com.guuguo.android.lib.extension.toast
 import com.guuguo.android.pikacomic.app.fragment.ComicDetailFragment
+import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ActionResponse
 import com.guuguo.android.pikacomic.entity.ComicDetailResponse
 import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
-import com.hesheng.orderpad.db.UOrm
 import io.reactivex.disposables.Disposable
 import java.util.*
 
@@ -101,6 +101,7 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
                 super.onSuccess(t)
                 fragment.binding.spbSmooth.visibility = View.GONE
                 t.data?.comic?.let {
+                    t.data?.comic?.readEp=fragment.comicEntity.readEp
                     UOrm.db().save(t.data?.comic)
                     bindResult(t.data?.comic!!)
                 }

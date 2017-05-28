@@ -33,9 +33,16 @@ class MineFragment : BaseFragment() {
         super.loadData()
         viewModel.getUserProfile()
     }
+
     fun setUpMine(result: UserEntity) {
         Glide.with(activity).load(result.avatar?.getOriginUrl()).asBitmap().placeholder(loadingPlaceHolder).centerCrop().into(binding.ivAvatar)
-        
+        if (result.isPunched) {
+            binding.tvKnock.visibility = View.GONE
+            binding.ivKnock.visibility = View.GONE
+        } else {
+            binding.tvKnock.visibility = View.VISIBLE
+            binding.ivKnock.visibility = View.VISIBLE
+        }
     }
 
 }

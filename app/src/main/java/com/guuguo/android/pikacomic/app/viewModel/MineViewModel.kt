@@ -4,16 +4,17 @@ import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.view.View
 import com.guuguo.android.lib.extension.toast
+import com.guuguo.android.pikacomic.app.fragment.ComicsFragment
 import com.guuguo.android.pikacomic.app.fragment.MineFragment
 import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.constant.myGson
+import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.PunchInResponse
 import com.guuguo.android.pikacomic.entity.UserEntity
 import com.guuguo.android.pikacomic.entity.UserResponse
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
-import com.hesheng.orderpad.db.UOrm
 import io.reactivex.disposables.Disposable
 
 
@@ -32,6 +33,9 @@ class MineViewModel(val fragment: MineFragment) : BaseObservable() {
 
     fun onPunchInClick(v: View) {
         punchIn()
+    }
+    fun onFavoriteClick(v: View) {
+        ComicsFragment.intentTo(activity,ComicsFragment.TYPE_COMICS_MY_FAVORITE)
     }
 
     fun punchIn() {

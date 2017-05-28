@@ -18,6 +18,10 @@ class ComicContentAdapter : BaseQuickAdapter<ImageEntity, ComicContentAdapter.Vi
 
     constructor() : super(R.layout.item_comic_content, null)
 
+    var firstEpList = arrayListOf<ImageEntity>()
+    var secondEpList = arrayListOf<ImageEntity>()
+//    var epInvisibleSize = 0
+
     inner class ViewHolder(view: View) : BaseViewHolder(view) {
         val rivContent = getView<RatioImageView>(R.id.riv_content)
     }
@@ -28,7 +32,7 @@ class ComicContentAdapter : BaseQuickAdapter<ImageEntity, ComicContentAdapter.Vi
     }
 
     override fun convert(helper: ViewHolder, item: ImageEntity) {
-        val drawable = TextDrawable(mContext, 300f, Color.GRAY, (helper.layoutPosition + 1).toString())
+        val drawable = TextDrawable(mContext, 300f, Color.GRAY, item.position.toString())
         Glide.with(mContext).load(item.media?.getOriginUrl()).centerCrop().placeholder(drawable).into(MyScaleImageViewTarget(helper.rivContent))
     }
 }

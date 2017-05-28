@@ -16,6 +16,7 @@ import com.guuguo.android.pikacomic.app.adapter.ComicsAdapter
 import com.guuguo.android.pikacomic.app.viewModel.ComicsViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.databinding.FragmentComicsBinding
+import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.CategoryEntity
 import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.entity.ComicsResponse
@@ -37,6 +38,7 @@ class ComicsFragment : BaseFragment() {
             TYPE_COMICS_CATEGORY -> categoryEntity?.title.safe()
             TYPE_COMICS_RECENTLY -> "最近更新"
             TYPE_COMICS_RANK -> "排行榜"
+            TYPE_COMICS_MY_FAVORITE -> "我的收藏"
             else -> ""
         }
     }
@@ -54,6 +56,7 @@ class ComicsFragment : BaseFragment() {
         val TYPE_COMICS_RECENTLY = 0
         val TYPE_COMICS_CATEGORY = 1
         val TYPE_COMICS_RANK = 2
+        val TYPE_COMICS_MY_FAVORITE = 3
 
         fun intentTo(activity: Activity, type: Int, category: CategoryEntity? = null) {
             val intent = Intent(activity, BaseTitleFragmentActivity::class.java)
@@ -92,15 +95,14 @@ class ComicsFragment : BaseFragment() {
 
     override fun loadData() {
         super.loadData()
-        if (page == 1)
-            when (getComicsType) {
-                TYPE_COMICS_CATEGORY -> viewModel.getComics(page, categoryEntity?.title)
-                TYPE_COMICS_RECENTLY -> viewModel.getComics(page)
-                TYPE_COMICS_RANK -> {
-                    comicsAdapter.setEnableLoadMore(false)
-                    viewModel.getComicsRank()
-                }
+        when (getComicsType) {
+            TYPE_COMICS_CATEGORY -> viewModel.getComics(page, categoryEntity?.title)
+            TYPE_COMICS_RECENTLY -> viewModel.getComics(page)
+            TYPE_COMICS_MY_FAVORITE -> viewModel.getComics(page, null, viewModel.TYPE_MY_FAVORITE)
+            TYPE_COMICS_RANK -> {
+                viewModel.getComicsRank()
             }
+        }
     }
 
     var page = 1;
@@ -110,14 +112,12 @@ class ComicsFragment : BaseFragment() {
         else {
             comicsAdapter.loadMoreComplete()
         }
-        if (page == 1)
-            comicsAdapter.setNewData(comics.docs)
-        else
-            comicsAdapter.addData(comics.docs)
+        comicsAdapter.disableLoadMoreIfNotFullPage()
+        setUpComics(comics.docs)
     }
 
     fun setUpComics(comics: List<ComicsEntity>) {
-        activity.dialogDismiss()
-        comicsAdapter.setNewData(comics)
+        UOrm.db().save(comics)
+        comicsAdapter.addData(comics)
     }
 }

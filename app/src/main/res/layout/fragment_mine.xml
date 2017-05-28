@@ -26,29 +26,29 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="8dp"
+            android:id="@+id/iv_knock"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
             android:onClick='@{viewModel::onPunchInClick}'
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_knock" />
 
         <TextView
+            android:id="@+id/tv_knock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0dp"
-            android:layout_marginRight="8dp"
             android:layout_marginTop="0dp"
             android:onClick='@{viewModel::onPunchInClick}'
-            android:text="敲打哔咔"
+            android:text="打哔咔"
             android:textColor="@color/white"
             android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="@+id/imageView2"
-            app:layout_constraintRight_toRightOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintLeft_toLeftOf="@+id/iv_knock"
+            app:layout_constraintRight_toRightOf="@+id/iv_knock"
+            app:layout_constraintTop_toBottomOf="@+id/iv_knock" />
 
         <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
             android:id="@+id/spb_smooth"
@@ -125,6 +125,7 @@
             android:id="@+id/tv_info_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{viewModel::onFavoriteClick}"
             android:padding="10dp"
             android:text="收藏"
             android:textColor="@color/white"
@@ -136,6 +137,7 @@
             android:id="@+id/tv_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{viewModel::onFavoriteClick}"
             android:text="点击查看"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/tv_lv"
@@ -157,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="下载"
+            android:text="评论"
             android:textColor="@color/white"
             app:layout_constraintLeft_toRightOf="@+id/v_line2"
             app:layout_constraintRight_toRightOf="parent"
@@ -167,7 +169,7 @@
             android:id="@+id/tv_download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="lv1(50/100)"
+            android:text="点击查看"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/tv_lv"
             app:layout_constraintLeft_toLeftOf="@id/tv_info_download"

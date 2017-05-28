@@ -92,6 +92,8 @@ dependencies {
     compile 'com.flyco.banner:FlycoBanner_Lib:2.0.2@aar'
     compile 'com.github.castorflex.smoothprogressbar:library:1.0.1-SNAPSHOT@aar'
     compile 'com.joooonho:selectableroundedimageview:1.0.1'
+    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    compile 'com.github.florent37:viewanimator:1.0.5'
 //    compile ('com.alibaba.android:vlayout:1.0.6@aar') {
 //        transitive = true
 //    }

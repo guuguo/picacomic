@@ -12,7 +12,7 @@ import com.tencent.bugly.beta.Beta
  */
 class MyApplication : BaseApplication() {
     override fun init() {
-        instance = this;
+        instance = this; 
         MultiDex.install(this)
         initBugly()
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);

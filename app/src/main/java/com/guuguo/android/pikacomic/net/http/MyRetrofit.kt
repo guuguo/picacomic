@@ -3,6 +3,7 @@ package com.guuguo.gank.net
 import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.constant.myGson
 import com.guuguo.android.pikacomic.net.ApiConfig
+import com.guuguo.android.pikacomic.net.https.TrustAllCerts
 import okhttp3.OkHttpClient
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -14,6 +15,8 @@ import java.util.concurrent.TimeUnit
  */
 object MyRetrofit {
     val httpClient = OkHttpClient.Builder()
+            .sslSocketFactory(TrustAllCerts.createSSLSocketFactory())
+            .hostnameVerifier(TrustAllCerts.TrustAllHostnameVerifier())
             .connectTimeout(10, TimeUnit.MINUTES)
             .readTimeout(10, TimeUnit.MINUTES)
             .retryOnConnectionFailure(true)
@@ -35,12 +38,6 @@ object MyRetrofit {
             }).build()
 
     fun getGsonConverter(): GsonConverterFactory {
-//        val gson: Gson
-//        if (gsonBuilder != null)
-//            gson = gsonBuilder.setDateFormat(dataPattern).create()
-//        else {
-//            gson =myGson
-//        }
         return retrofit2.converter.gson.GsonConverterFactory.create(myGson)
     }
 
@@ -54,42 +51,4 @@ object MyRetrofit {
                 .build()
     }
 
-//    protected fun getSSLSocketFactory(context: Context?, certificates: IntArray): SSLSocketFactory? {
-//
-//        if (context == null) {
-//            throw NullPointerException("context == null")
-//        }
-//
-//        //CertificateFactory用来证书生成
-//        val certificateFactory: CertificateFactory
-//        try {
-//            certificateFactory = CertificateFactory.get("X.509")
-//            //Create a KeyStore containing our trusted CAs
-//            val keyStore = KeyStore.get(KeyStore.getDefaultType())
-//            keyStore.load(null, null)
-//
-//            for (i in certificates.indices) {
-//                //读取本地证书
-//                val `is` = context!!.getResources().openRawResource(certificates[i])
-//                keyStore.setCertificateEntry(i.toString(), certificateFactory.generateCertificate(`is`))
-//
-//                if (`is` != null) {
-//                    `is`!!.close()
-//                }
-//            }
-//            //Create a TrustManager that trusts the CAs in our keyStore
-//            val trustManagerFactory = TrustManagerFactory.get(TrustManagerFactory.getDefaultAlgorithm())
-//            trustManagerFactory.init(keyStore)
-//
-//            //Create an SSLContext that uses our TrustManager
-//            val sslContext = SSLContext.get("TLS")
-//            sslContext.init(null, trustManagerFactory.getTrustManagers(), SecureRandom())
-//            return sslContext.getSocketFactory()
-//
-//        } catch (e: Exception) {
-//
-//        }
-//
-//        return null
-//    }
 }

@@ -5,6 +5,7 @@ import com.flyco.systembar.SystemBarHelper
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.viewModel.LoginViewModel
 import com.guuguo.android.pikacomic.base.BaseActivity
+import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.databinding.ActivityLoginBinding
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -24,9 +25,12 @@ class LoginActivity : BaseActivity() {
     override fun initStatusBar() {
         SystemBarHelper.immersiveStatusBar(activity, 0f)
     }
+
     override fun initView() {
-        binding.edtUsername.setText("1152168009@qq.com")
-        binding.edtPassword.setText("200996GDQ")
+        if (LocalData.isLogin)
+            MainActivity.intentTo(activity)
+        binding.edtUsername.setText(LocalData.username)
+        binding.edtPassword.setText(LocalData.password)
 
         rtv_login.setOnClickListener({
             if (checkValidate()) {

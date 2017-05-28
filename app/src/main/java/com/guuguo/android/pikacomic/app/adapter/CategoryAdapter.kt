@@ -31,15 +31,6 @@ class CategoryAdapter : BaseQuickAdapter<CategoryEntity, CategoryAdapter.ViewHol
     override fun convert(helper: ViewHolder, item: CategoryEntity) {
         Glide.with(mContext).load(item.thumb?.getOriginUrl().safe()).asBitmap().centerCrop().placeholder(loadingPlaceHolder).dontAnimate()
                 .into(helper.iv_banner)
-//                .into(object : BitmapImageViewTarget(helper.iv_banner) {
-//                    override fun setResource(resource: Bitmap?) {
-//                        view.setImageDrawable(RoundedDrawable(resource!!))
-//                    }
-//
-//                    override fun onLoadStarted(placeholder: Drawable?) {
-//                        super.onLoadStarted(placeholder)
-//                    }
-//                })
         helper.tv_title.text = item.title
     }
 }

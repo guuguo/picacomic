@@ -37,6 +37,8 @@ class ComicsEntity : Serializable {
     var isFavourite: Boolean = false
     var isLiked: Boolean = false
     var commentsCount: Int = 0
+    var readEp: Int = 0
+
     //    @Mapping(Relation.OneToMany)
     @Ignore
     var categories: ArrayList<String> = ArrayList<String>()

@@ -16,9 +16,18 @@ import io.reactivex.disposables.Disposable
  */
 class ComicsViewModel(val fragment: ComicsFragment) : BaseObservable() {
     val activity = fragment.activity
-    fun getComics(page: Int, category: String? = null) {
-        activity.dialogLoadingShow("正在加载漫画列表")
-        MyApiServer.getComics(page, category).subscribe(object : BaseCallback<ResponseModel<ComicsResponse>>() {
+    val TYPE_CATEGORY = 0
+    val TYPE_MY_FAVORITE = 1
+    fun getComics(page: Int, category: String? = null, type: Int = TYPE_CATEGORY) {
+        if (page == 1) {
+            activity.dialogLoadingShow("正在加载漫画列表")
+        }
+        val sub = when (type) {
+            TYPE_CATEGORY -> MyApiServer.getComics(page, category)
+            TYPE_MY_FAVORITE -> MyApiServer.getMyFavorite(page)
+            else -> MyApiServer.getComics(page, category)
+        }
+        sub.subscribe(object : BaseCallback<ResponseModel<ComicsResponse>>() {
             override fun onSubscribe(d: Disposable?) {
                 activity.addApiCall(d)
             }

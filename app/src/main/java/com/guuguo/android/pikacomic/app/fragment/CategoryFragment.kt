@@ -1,7 +1,6 @@
 package com.guuguo.android.pikacomic.app.fragment
 
 import android.databinding.DataBindingUtil
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -24,9 +23,6 @@ class CategoryFragment : BaseFragment() {
     val categoryAdapter = CategoryAdapter()
 
     override fun getLayoutResId() = R.layout.fragment_category
-    override fun getToolBar(): Toolbar? {
-        return id_toolbar
-    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
@@ -38,8 +34,15 @@ class CategoryFragment : BaseFragment() {
         }
     }
 
+    override fun initToolbar() {
+        if (getMenuResId() != 0) {
+            id_toolbar.inflateMenu(getMenuResId())
+            id_toolbar.setOnMenuItemClickListener { item -> onOptionsItemSelected(item) }
+        }
+        setTitle(getHeaderTitle())
+    }
+
     override fun setTitle(title: String) {
-        activity.supportActionBar?.title = ""
         tv_title_bar.text = title
     }
 

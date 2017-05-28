@@ -16,6 +16,9 @@ interface Service {
     @GET("/users/profile")
     fun userProfile(): Single<ResponseModel<UserResponse>>
 
+    @GET("/users/favourite")
+    fun myFavorites(@Query("page") page: Int,@Query("rnd") rnd: Int = 8689): Single<ResponseModel<ComicsResponse>>
+
     @GET("/announcements")
     fun getAnnouncements(@Query("page") page: Int): Single<ResponseModel<AnnouncementsResponse>>
 

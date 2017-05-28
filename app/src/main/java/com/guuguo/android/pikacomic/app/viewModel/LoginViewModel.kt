@@ -27,6 +27,9 @@ class LoginViewModel(val activity: LoginActivity) : BaseObservable() {
                 activity.dialogDismiss()
                 t.data?.let {
                     LocalData.token = t.data!!.token
+                    LocalData.isLogin = true
+                    LocalData.username = userName
+                    LocalData.password = password
                     MainActivity.intentTo(activity)
                 }
             }

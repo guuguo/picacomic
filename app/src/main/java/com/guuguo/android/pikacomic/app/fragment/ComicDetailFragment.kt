@@ -18,8 +18,8 @@ import com.guuguo.android.pikacomic.app.viewModel.ComicDetailViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.constant.loadingPlaceHolder
 import com.guuguo.android.pikacomic.databinding.FragmentComicDetailBinding
+import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ComicsEntity
-import com.hesheng.orderpad.db.UOrm
 import kotlinx.android.synthetic.main.fragment_comic_detail.*
 
 /**
@@ -64,22 +64,24 @@ class ComicDetailFragment : BaseFragment() {
         super.initVariable(savedInstanceState)
         getComicsType = arguments.getInt(ARG_GET_COMICS)
         comicEntity = arguments.getSerializable(ARG_COMIC) as ComicsEntity
+        readDbComic()
+    }
 
+    private fun readDbComic() {
+        val tempComic = UOrm.db().queryById(comicEntity._id, ComicsEntity::class.java)
+        if (tempComic != null)
+            comicEntity = tempComic
     }
 
     override fun initView() {
         super.initView()
-        binding.rtvRead.setOnClickListener {
-        }
-        val tempComic = UOrm.db().queryById(comicEntity._id, ComicsEntity::class.java)
-        if (tempComic != null)
-            comicEntity = tempComic
+
         recycler_ep.setAdapter(epAdapter)
         epAdapter.setOnItemClickListener { _, _, i ->
             ComicContentActivity.intentTo(activity, comicEntity, i + 1)
         }
         binding.rtvRead.setOnClickListener {
-            ComicContentActivity.intentTo(activity, comicEntity, 1)
+            ComicContentActivity.intentTo(activity, comicEntity, if (epAdapter.readEp != 0) epAdapter.readEp else 1)
         }
     }
 
@@ -94,6 +96,15 @@ class ComicDetailFragment : BaseFragment() {
         Glide.with(activity).load(comic.thumb?.getOriginUrl()).asBitmap().placeholder(loadingPlaceHolder).centerCrop().into(binding.ivBanner)
         val array: ArrayList<String> = arrayListOf()
         (1..comic.epsCount).map { array.add(it.toString()) }
+        epAdapter.readEp = comic.readEp
         epAdapter.setNewData(array)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ComicContentActivity.ACTIVITY_COMIC_CONTENT) {
+            readDbComic()
+            viewModel.bindResult(comicEntity)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

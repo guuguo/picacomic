@@ -30,5 +30,5 @@ class UserEntity : Serializable {
     var birthday = ""
     var email = ""
     var created_at = ""
-    var isIsPunched: Boolean = false
+    var isPunched: Boolean = false
 }

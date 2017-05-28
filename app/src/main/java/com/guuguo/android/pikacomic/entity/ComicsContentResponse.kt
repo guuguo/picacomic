@@ -14,10 +14,15 @@ class ComicsContentResponse {
         var limit: Int = 0
         var page: Int = 0
         var pages: Int = 0
-        var docs: List<ImageEntity>? = null
+        var docs: List<ImageEntity> = arrayListOf()
     }
 }
+
 class ImageEntity {
     var _id: String? = null
     var media: ThumbEntity? = null
+
+    var ep: Int = 1
+    var position: Int = 0
+    var total: Int = 0
 }

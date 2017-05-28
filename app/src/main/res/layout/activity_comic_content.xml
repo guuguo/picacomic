@@ -4,18 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.guuguo.android.pikacomic.app.viewModel.ComicContentViewModel" />
     </data>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fastScrollEnabled="true"
-        android:scrollbars="vertical"
-        tools:listitem="@layout/item_comic_content" 
-        android:background="@color/black"/>
+        android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fastScrollEnabled="true"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_comic_content" />
+
+        <LinearLayout
+            android:id="@+id/ll_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/black80">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:onClick="@{viewModel::onBackClick}"
+                android:paddingLeft="10dp"
+                app:srcCompat="@drawable/ic_arrowleft" />
+
+            <TextView
+                android:id="@+id/tv_ep"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="@{viewModel::onBackClick}"
+                android:textColor="@color/white"
+                tools:text="第一话" />
+        </LinearLayout>
+    </FrameLayout>
 </layout>
