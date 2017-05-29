@@ -34,8 +34,9 @@ class MineViewModel(val fragment: MineFragment) : BaseObservable() {
     fun onPunchInClick(v: View) {
         punchIn()
     }
+
     fun onFavoriteClick(v: View) {
-        ComicsFragment.intentTo(activity,ComicsFragment.TYPE_COMICS_MY_FAVORITE)
+        ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_MY_FAVORITE)
     }
 
     fun punchIn() {
@@ -48,9 +49,11 @@ class MineViewModel(val fragment: MineFragment) : BaseObservable() {
             override fun onSuccess(t: ResponseModel<PunchInResponse>) {
                 super.onSuccess(t)
                 activity.dialogDismiss()
-                if (t.data?.res?.status == "ok")
+                if (t.data?.res?.status == "ok") {
                     activity.dialogCompleteShow("击打成功", null)
-                else
+                    user.get().isPunched = true
+                    fragment.setUpMine(user.get())
+                } else
                     activity.dialogErrorShow("击打失败", null)
             }
 
