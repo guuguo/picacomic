@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.guuguo.android.lib.extension.safe
 import com.guuguo.android.pikacomic.R
-import com.guuguo.android.pikacomic.constant.loadingPlaceHolder
 import com.guuguo.android.pikacomic.entity.CategoryEntity
 
 class CategoryAdapter : BaseQuickAdapter<CategoryEntity, CategoryAdapter.ViewHolder> {
@@ -29,7 +28,7 @@ class CategoryAdapter : BaseQuickAdapter<CategoryEntity, CategoryAdapter.ViewHol
     }
 
     override fun convert(helper: ViewHolder, item: CategoryEntity) {
-        Glide.with(mContext).load(item.thumb?.getOriginUrl().safe()).asBitmap().centerCrop().placeholder(loadingPlaceHolder).dontAnimate()
+        Glide.with(mContext).load(item.thumb?.getOriginUrl().safe()).asBitmap().centerCrop().placeholder(R.drawable.placeholder_loading).dontAnimate()
                 .into(helper.iv_banner)
         helper.tv_title.text = item.title
     }

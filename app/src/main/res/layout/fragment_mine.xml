@@ -10,169 +10,283 @@
             type="com.guuguo.android.pikacomic.app.viewModel.MineViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".app.activity.MainActivity">
+        android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="250dp"
-            android:background="@color/colorPrimary"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_knock"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="15dp"
-            android:onClick='@{viewModel::onPunchInClick}'
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_knock" />
-
-        <TextView
-            android:id="@+id/tv_knock"
-            android:layout_width="wrap_content"
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:onClick='@{viewModel::onPunchInClick}'
-            android:text="打哔咔"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="@+id/iv_knock"
-            app:layout_constraintRight_toRightOf="@+id/iv_knock"
-            app:layout_constraintTop_toBottomOf="@+id/iv_knock" />
+            android:orientation="vertical">
 
-        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
-            android:id="@+id/spb_smooth"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view"
-            app:spb_progressiveStart_activated="true" />
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_user_info"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:background="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|snap"
+                tools:context=".app.activity.MainActivity">
 
-        <com.joooonho.SelectableRoundedImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="40dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view"
-            app:sriv_border_color="@color/black20"
-            app:sriv_border_width="1px"
-            app:sriv_oval="true"
-            tools:background="@color/white" />
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text='@{viewModel.user.name}'
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintLeft_toLeftOf="@+id/iv_avatar"
-            app:layout_constraintRight_toRightOf="@+id/iv_avatar"
-            app:layout_constraintTop_toBottomOf="@+id/iv_avatar"
-            tools:text="guuguo" />
+                <ImageView
+                    android:id="@+id/iv_knock"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:onClick='@{viewModel::onPunchInClick}'
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_knock" />
 
-        <TextView
-            android:id="@+id/tv_info_lv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:text="等级"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/v_line1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+                <TextView
+                    android:id="@+id/tv_knock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick='@{viewModel::onPunchInClick}'
+                    android:text="打哔咔"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/iv_knock"
+                    app:layout_constraintRight_toRightOf="@+id/iv_knock"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_knock" />
 
-        <TextView
-            android:id="@+id/tv_lv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text='@{"lv"+viewModel.user.level+"("+viewModel.user.exp+"/"+viewModel.user.level*200+")"}'
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="@id/tv_info_lv"
-            app:layout_constraintRight_toRightOf="@id/tv_info_lv"
-            app:layout_constraintTop_toBottomOf="@id/tv_info_lv"
-            tools:text="lv1(50/100)" />
 
-        <View
-            android:id="@+id/v_line1"
-            android:layout_width="1px"
-            android:layout_height="70dp"
+                <com.joooonho.SelectableRoundedImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="30dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:sriv_border_color="@color/black20"
+                    app:sriv_border_width="1px"
+                    app:sriv_oval="true"
+                    tools:background="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text='@{viewModel.user.name}'
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/iv_avatar"
+                    app:layout_constraintRight_toRightOf="@+id/iv_avatar"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_avatar"
+                    tools:text="guuguo" />
+
+                <TextView
+                    android:id="@+id/tv_info_lv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="等级"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_lv"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/v_line1" />
+
+                <TextView
+                    android:id="@+id/tv_lv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text='@{"lv"+viewModel.user.level}'
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_info_lv"
+                    app:layout_constraintRight_toRightOf="@+id/tv_info_lv"
+                    tools:text="lv1" />
+
+                <View
+                    android:id="@+id/v_line1"
+                    android:layout_width="1px"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_lv"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_info_lv"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_info_exp"
+                    app:layout_constraintTop_toTopOf="@+id/tv_info_lv" />
+
+                <TextView
+                    android:id="@+id/tv_info_exp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="经验"
+                    android:textColor="@color/white"
+                    app:layout_constraintLeft_toRightOf="@+id/v_line1"
+                    app:layout_constraintRight_toLeftOf="@+id/v_line2"
+                    app:layout_constraintTop_toTopOf="@+id/tv_info_lv" />
+
+                <TextView
+                    android:id="@+id/tv_exp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{viewModel.user.exp+"/"+viewModel.user.level*200}'
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_lv"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_info_exp"
+                    app:layout_constraintRight_toRightOf="@+id/tv_info_exp"
+                    tools:text='50/100' />
+
+                <View
+                    android:id="@+id/v_line2"
+                    android:layout_width="1px"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_exp"
+                    app:layout_constraintLeft_toRightOf="@+id/tv_info_exp"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_info_download"
+                    app:layout_constraintTop_toTopOf="@+id/tv_info_exp" />
+
+                <TextView
+                    android:id="@+id/tv_info_download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="战力"
+                    android:textColor="@color/white"
+                    app:layout_constraintLeft_toRightOf="@+id/v_line2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_info_exp" />
+
+                <TextView
+                    android:id="@+id/tv_download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1000"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_lv"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_info_download"
+                    app:layout_constraintRight_toRightOf="@+id/tv_info_download" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cv_function"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@id/cl_user_info"
+                android:background="@color/white">
+
+                <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                    android:id="@+id/spb_smooth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:spb_progressiveStart_activated="true" />
+
+                <ImageView
+                    android:id="@+id/iv_collection"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="15dp"
+                    android:onClick="@{viewModel::onFavoriteClick}"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/iv_message"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_collection"
+                    tools:layout_editor_absoluteY="0dp" />
+
+                <TextView
+                    android:id="@+id/tv_collection"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:onClick="@{viewModel::onFavoriteClick}"
+                    android:paddingTop="12dp"
+                    android:text="收藏"
+                    app:layout_constraintLeft_toLeftOf="@+id/iv_collection"
+                    app:layout_constraintRight_toRightOf="@+id/iv_collection"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_collection" />
+
+
+                <ImageView
+                    android:id="@+id/iv_message"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_collection"
+                    app:layout_constraintRight_toLeftOf="@+id/iv_down"
+                    app:layout_constraintTop_toTopOf="@+id/iv_collection"
+                    app:srcCompat="@drawable/ic_message" />
+
+                <TextView
+                    android:id="@+id/tv_measage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="12dp"
+                    android:text="评论"
+                    app:layout_constraintLeft_toLeftOf="@+id/iv_message"
+                    app:layout_constraintRight_toRightOf="@+id/iv_message"
+                    app:layout_constraintTop_toTopOf="@+id/tv_collection" />
+
+                <ImageView
+                    android:id="@+id/iv_down"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_message"
+                    app:layout_constraintRight_toLeftOf="@+id/iv_about"
+                    app:layout_constraintTop_toTopOf="@+id/iv_collection"
+                    app:srcCompat="@drawable/ic_download" />
+
+                <TextView
+                    android:id="@+id/tv_down"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="12dp"
+                    android:text="下载"
+                    app:layout_constraintLeft_toLeftOf="@+id/iv_down"
+                    app:layout_constraintRight_toRightOf="@+id/iv_down"
+                    app:layout_constraintTop_toTopOf="@+id/tv_collection" />
+
+                <ImageView
+                    android:id="@+id/iv_about"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    app:layout_constraintLeft_toRightOf="@id/iv_down"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_collection"
+                    app:srcCompat="@drawable/ic_info" />
+
+                <TextView
+                    android:id="@+id/tv_about"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="12dp"
+                    android:text="关于"
+                    app:layout_constraintLeft_toLeftOf="@+id/iv_about"
+                    app:layout_constraintRight_toRightOf="@+id/iv_about"
+                    app:layout_constraintTop_toTopOf="@+id/tv_collection" />
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/tv_lv"
-            app:layout_constraintLeft_toRightOf="@+id/tv_info_lv"
-            app:layout_constraintRight_toLeftOf="@+id/tv_info_favorite"
-            app:layout_constraintTop_toTopOf="@+id/tv_info_lv" />
-
-        <TextView
-            android:id="@+id/tv_info_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{viewModel::onFavoriteClick}"
-            android:padding="10dp"
-            android:text="收藏"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toRightOf="@+id/v_line1"
-            app:layout_constraintRight_toLeftOf="@+id/v_line2"
-            app:layout_constraintTop_toTopOf="@+id/tv_info_lv" />
-
-        <TextView
-            android:id="@+id/tv_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{viewModel::onFavoriteClick}"
-            android:text="点击查看"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/tv_lv"
-            app:layout_constraintLeft_toLeftOf="@id/tv_info_favorite"
-            app:layout_constraintRight_toRightOf="@id/tv_info_favorite" />
-
-        <View
-            android:id="@+id/v_line2"
-            android:layout_width="1px"
-            android:layout_height="70dp"
-            android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/tv_favorite"
-            app:layout_constraintLeft_toRightOf="@+id/tv_info_favorite"
-            app:layout_constraintRight_toLeftOf="@+id/tv_info_download"
-            app:layout_constraintTop_toTopOf="@+id/tv_info_favorite" />
-
-        <TextView
-            android:id="@+id/tv_info_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="评论"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toRightOf="@+id/v_line2"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_info_favorite" />
-
-        <TextView
-            android:id="@+id/tv_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="点击查看"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/tv_lv"
-            app:layout_constraintLeft_toLeftOf="@id/tv_info_download"
-            app:layout_constraintRight_toRightOf="@id/tv_info_download" />
-    </android.support.constraint.ConstraintLayout>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/item_comics" />
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

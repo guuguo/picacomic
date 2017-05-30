@@ -19,7 +19,7 @@ object MyRetrofit {
             .hostnameVerifier(TrustAllCerts.TrustAllHostnameVerifier())
             .connectTimeout(10, TimeUnit.MINUTES)
             .readTimeout(10, TimeUnit.MINUTES)
-            .retryOnConnectionFailure(true)
+            .retryOnConnectionFailure(false)
             .addInterceptor({
                 chain ->
                 val original = chain.request();

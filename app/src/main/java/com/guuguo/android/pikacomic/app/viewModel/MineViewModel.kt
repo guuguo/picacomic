@@ -9,12 +9,14 @@ import com.guuguo.android.pikacomic.app.fragment.MineFragment
 import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.constant.myGson
 import com.guuguo.android.pikacomic.db.UOrm
+import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.entity.PunchInResponse
 import com.guuguo.android.pikacomic.entity.UserEntity
 import com.guuguo.android.pikacomic.entity.UserResponse
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
+import com.litesuits.orm.db.assit.QueryBuilder
 import io.reactivex.disposables.Disposable
 
 
@@ -37,6 +39,11 @@ class MineViewModel(val fragment: MineFragment) : BaseObservable() {
 
     fun onFavoriteClick(v: View) {
         ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_MY_FAVORITE)
+    }
+
+    fun getHistoryComics(page: Int,limit:Int) {
+        val comics = UOrm.db().query(QueryBuilder(ComicsEntity::class.java).whereNoEquals("lastReadTime",0).appendOrderDescBy("lastReadTime").limit(page*limit, limit))
+        fragment.setUpHistory(comics)
     }
 
     fun punchIn() {

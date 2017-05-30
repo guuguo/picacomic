@@ -16,7 +16,6 @@ import com.guuguo.android.pikacomic.app.adapter.ComicsAdapter
 import com.guuguo.android.pikacomic.app.viewModel.ComicsViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.databinding.FragmentComicsBinding
-import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.CategoryEntity
 import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.entity.ComicsResponse
@@ -117,7 +116,9 @@ class ComicsFragment : BaseFragment() {
     }
 
     fun setUpComics(comics: List<ComicsEntity>) {
-        UOrm.db().save(comics)
+        if (comicsAdapter.emptyViewCount < 1)
+            comicsAdapter.setEmptyView(R.layout.simple_empty_view)
+        comics.forEach { it.save() }
         comicsAdapter.addData(comics)
     }
 }

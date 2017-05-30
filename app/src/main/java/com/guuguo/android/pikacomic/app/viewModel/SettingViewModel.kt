@@ -1,5 +1,6 @@
 package com.guuguo.android.pikacomic.app.viewModel
 
+import android.app.Activity
 import android.databinding.BaseObservable
 import android.view.View
 import com.flyco.dialog.listener.OnBtnClickL
@@ -15,8 +16,10 @@ class SettingViewModel(val fragment: SettingFragment) : BaseObservable() {
     val activity = fragment.activity
 
     fun onLogoutClick(v: View) {
-        activity.dialogWarningShow("是否退出当前账号","否","是", OnBtnClickL{
-            LocalData.isLogin=false
+        activity.dialogWarningShow("是否退出当前账号", "否", "是", OnBtnClickL {
+            LocalData.isLogin = false
+            LocalData.patternStr = ""
+            activity.setResult(Activity.RESULT_OK)
             activity.finish()
         })
     }

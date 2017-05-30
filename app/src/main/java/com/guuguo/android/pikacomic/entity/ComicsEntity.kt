@@ -1,5 +1,6 @@
 package com.guuguo.android.pikacomic.entity
 
+import com.guuguo.android.pikacomic.db.UOrm
 import com.litesuits.orm.db.annotation.Ignore
 import com.litesuits.orm.db.annotation.Mapping
 import com.litesuits.orm.db.annotation.PrimaryKey
@@ -37,7 +38,6 @@ class ComicsEntity : Serializable {
     var isFavourite: Boolean = false
     var isLiked: Boolean = false
     var commentsCount: Int = 0
-    var readEp: Int = 0
 
     //    @Mapping(Relation.OneToMany)
     @Ignore
@@ -45,4 +45,17 @@ class ComicsEntity : Serializable {
     //    @Mapping(Relation.OneToMany)
     @Ignore
     var tags: ArrayList<String> = ArrayList<String>()
+    var readEp: Int? = null
+    var lastReadTime: Date? = null
+    
+    fun save() {
+        val entity = UOrm.db().queryById(_id, ComicsEntity::class.java)
+        if (entity == null)
+            UOrm.db().insert(this)
+        else {
+            readEp = entity.readEp
+            lastReadTime = entity.lastReadTime
+            UOrm.db().update(this)
+        }
+    }
 }

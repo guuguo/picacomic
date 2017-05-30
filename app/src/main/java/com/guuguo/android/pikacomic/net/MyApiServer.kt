@@ -22,8 +22,35 @@ object MyApiServer {
         val map = HashMap<String, String>()
         map.put("email", email)
         map.put("password", password)
-
         return service.signIn(getRequestJsonBody(map))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun register(email: String, password: String, birthday: String, gender: String, name: String): Single<ResponseModel<String>> {
+        val map = HashMap<String, String>()
+        map.put("email", email)
+        map.put("password", password)
+        map.put("birthday", birthday)
+        map.put("gender", gender)
+        map.put("name", name)
+        return service.register(getRequestJsonBody(map))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun resend_activation(email: String): Single<ResponseModel<String>> {
+        val map = HashMap<String, String>()
+        map.put("email", email)
+        return service.resend_activation(getRequestJsonBody(map))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun forgot_password(email: String): Single<ResponseModel<String>> {
+        val map = HashMap<String, String>()
+        map.put("email", email)
+        return service.forgot_password(getRequestJsonBody(map))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }

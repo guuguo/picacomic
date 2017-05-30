@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.guuguo.android.lib.app.LNBaseActivity
+import com.guuguo.android.lib.extension.safe
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.activity.BaseTitleFragmentActivity
 import com.guuguo.android.pikacomic.app.activity.ComicContentActivity
@@ -16,7 +17,6 @@ import com.guuguo.android.pikacomic.app.adapter.EpAdapter
 import com.guuguo.android.pikacomic.app.fragment.ComicsFragment.Companion.ARG_GET_COMICS
 import com.guuguo.android.pikacomic.app.viewModel.ComicDetailViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
-import com.guuguo.android.pikacomic.constant.loadingPlaceHolder
 import com.guuguo.android.pikacomic.databinding.FragmentComicDetailBinding
 import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ComicsEntity
@@ -93,10 +93,10 @@ class ComicDetailFragment : BaseFragment() {
     }
 
     fun setUpComic(comic: ComicsEntity) {
-        Glide.with(activity).load(comic.thumb?.getOriginUrl()).asBitmap().placeholder(loadingPlaceHolder).centerCrop().into(binding.ivBanner)
+        Glide.with(activity).load(comic.thumb?.getOriginUrl()).asBitmap().placeholder(R.drawable.placeholder_loading).centerCrop().into(binding.ivBanner)
         val array: ArrayList<String> = arrayListOf()
         (1..comic.epsCount).map { array.add(it.toString()) }
-        epAdapter.readEp = comic.readEp
+        epAdapter.readEp = comic.readEp.safe()
         epAdapter.setNewData(array)
     }
 

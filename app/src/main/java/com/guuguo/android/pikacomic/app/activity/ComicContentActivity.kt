@@ -113,7 +113,7 @@ class ComicContentActivity : BaseActivity() {
 
     var firstLoad = true
     var page = 1
-    //漫画列表保存两个page数量的漫画内容，再有新的列表加载好会移除原先的第一个列表
+    //漫画列表保存三个page数量的漫画内容，再有新的列表加载好会移除原先的第一个列表
     fun setContent(data: ComicsContentResponse.PagesEntity) {
         firstLoad = false
         (0..data.docs.size - 1).map {

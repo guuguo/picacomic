@@ -166,7 +166,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tv_like"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_like"
-                app:srcCompat="@drawable/ic_like" />
+                app:srcCompat="@drawable/ic_like_red" />
 
             <TextView
                 android:id="@+id/tv_like"
@@ -196,7 +196,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/iv_like"
                 app:layout_constraintLeft_toRightOf="@+id/tv_like"
                 app:layout_constraintTop_toTopOf="@+id/iv_like"
-                app:srcCompat="@drawable/ic_collect" />
+                app:srcCompat="@drawable/ic_collect_red" />
 
             <TextView
                 android:id="@+id/tv_collect"

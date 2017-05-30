@@ -76,7 +76,6 @@ class HomeFragment : BaseFragment() {
         super.loadData()
         viewModel.getAnnouncements()
         viewModel.getComicsRandom()
-
     }
 
     fun setUpComics(comics: List<ComicsEntity>) {

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?containerBackgroundLayer1"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/h_line1"
+        style="@style/under_line"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/tv_info_history"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/ic_history_line"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="观看历史" />
+
+    <View
+        android:id="@+id/h_line2"
+        style="@style/under_line" />
+</LinearLayout>

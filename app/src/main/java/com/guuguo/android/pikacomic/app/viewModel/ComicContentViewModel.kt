@@ -17,6 +17,7 @@ import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
 import io.reactivex.disposables.Disposable
+import java.util.*
 
 
 /**
@@ -30,6 +31,7 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
 
     fun setReadStatus(ep: Int) {
         activity.comic.readEp = ep
+        activity.comic.lastReadTime = Date()
         UOrm.db().save(activity.comic)
     }
 

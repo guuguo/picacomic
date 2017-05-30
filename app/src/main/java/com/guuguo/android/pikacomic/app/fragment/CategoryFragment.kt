@@ -71,9 +71,10 @@ class CategoryFragment : BaseFragment() {
         }
     }
 
-    override fun loadData() {
-        super.loadData()
-        viewModel.getCategory()
+    override fun lazyLoad() {
+        super.lazyLoad()
+        if (mFirstLazyLoad)
+            viewModel.getCategory()
     }
 
     fun setUpCategory(categories: List<CategoryEntity>) {

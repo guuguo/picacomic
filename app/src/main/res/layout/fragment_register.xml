@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.guuguo.android.pikacomic.app.viewModel.RegisterViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/migray">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="29dp"
+            android:tint="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/tv_describe"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_comic" />
+
+        <TextView
+            android:id="@+id/tv_pica_comic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="52dp"
+            android:text="PICA COMIC"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_describe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="34dp"
+            android:text="让你轻松阅读本子·你懂得"
+            android:textColor="@color/black30"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="4dp"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pica_comic">
+
+            <LinearLayout
+                android:id="@+id/activity_main"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:context="com.guuguo.android.pikacomic.app.activity.LoginActivity">
+
+                <EditText
+                    android:id="@+id/edt_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_edittext_normal"
+                    android:gravity="center"
+                    android:hint="昵称"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/black80"
+                    android:textColorHint="@color/black20" />
+
+                <EditText
+                    android:id="@+id/edt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_edittext_normal"
+                    android:gravity="center"
+                    android:hint="电子邮箱(要收确认邮件)"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/black80"
+                    android:textColorHint="@color/black20" />
+
+                <EditText
+                    android:id="@+id/edt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_edittext_normal"
+                    android:gravity="center"
+                    android:hint="密码(8位及以上)"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/black80"
+                    android:textColorHint="@color/black20" />
+
+                <EditText
+                    android:id="@+id/edt_password_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_edittext_normal"
+                    android:gravity="center"
+                    android:hint="确认密码"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textColor="@color/black80"
+                    android:textColorHint="@color/black20" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:onClick="@{viewModel::onDateCheck}"
+                    android:text="@{viewModel.dateInfo.dateStr}"
+                    tools:text="点击选择出生日期" />
+
+                <RadioGroup
+                    android:id="@+id/rg_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@color/black20"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1px"
+                    android:paddingTop="1px">
+
+                    <RadioButton
+                        android:id="@+id/rb_male"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radio_style"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="绅士"
+                        android:textColor="@drawable/bg_radio_style" />
+
+                    <RadioButton
+                        android:id="@+id/rb_female"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="1px"
+                        android:layout_marginRight="1px"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radio_style"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="淑女"
+                        android:textColor="@drawable/bg_radio_style" />
+
+                    <RadioButton
+                        android:id="@+id/rb_robot"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radio_style"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="机器人"
+                        android:textColor="@drawable/bg_radio_style" />
+
+                </RadioGroup>
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/rtv_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="注册"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:rv_backgroundColor="@color/colorPrimary"
+                    app:rv_backgroundPressColor="@color/colorPrimaryDark" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
+</layout>

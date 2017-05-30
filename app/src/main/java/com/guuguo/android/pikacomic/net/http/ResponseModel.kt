@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 /**
  * Created by guodeqing on 16/3/12.
  */
-class ResponseModel<T>  {
+class ResponseModel<T> {
     var code: Int = 0
     var message: String = ""
     var error: String = ""

@@ -14,6 +14,7 @@ import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
+import com.litesuits.orm.db.model.ConflictAlgorithm
 import io.reactivex.disposables.Disposable
 import java.util.*
 
@@ -101,8 +102,7 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
                 super.onSuccess(t)
                 fragment.binding.spbSmooth.visibility = View.GONE
                 t.data?.comic?.let {
-                    t.data?.comic?.readEp=fragment.comicEntity.readEp
-                    UOrm.db().save(t.data?.comic)
+                    t.data?.comic!!.save()
                     bindResult(t.data?.comic!!)
                 }
             }

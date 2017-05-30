@@ -16,8 +16,9 @@ object LocalData {
     var announcement by Preference(mContext, "")
     var mine by Preference(mContext, "")
     var isLogin by Preference(mContext, false)
-    var username by Preference(mContext, "1152168009@qq.com")
-    var password by Preference(mContext, "200996GDQ")
+    var email by Preference(mContext, "")
+    var password by Preference(mContext, "")
+    var patternStr by Preference(mContext, "")
 
     fun initSps() {
         token = ""

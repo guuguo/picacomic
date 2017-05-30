@@ -13,11 +13,20 @@ interface Service {
     @POST("/auth/sign-in")
     fun signIn(@Body requestBody: RequestBody): Single<ResponseModel<TokenResponse>>
 
+    @POST("/auth/register")
+    fun register(@Body requestBody: RequestBody): Single<ResponseModel<String>>
+
+    @POST("/auth/resend-activation")
+    fun resend_activation(@Body requestBody: RequestBody): Single<ResponseModel<String>>
+
+    @POST("/auth/forgot-password")
+    fun forgot_password(@Body requestBody: RequestBody): Single<ResponseModel<String>>
+
     @GET("/users/profile")
     fun userProfile(): Single<ResponseModel<UserResponse>>
 
     @GET("/users/favourite")
-    fun myFavorites(@Query("page") page: Int,@Query("rnd") rnd: Int = 8689): Single<ResponseModel<ComicsResponse>>
+    fun myFavorites(@Query("page") page: Int, @Query("rnd") rnd: Int = 8689): Single<ResponseModel<ComicsResponse>>
 
     @GET("/announcements")
     fun getAnnouncements(@Query("page") page: Int): Single<ResponseModel<AnnouncementsResponse>>
