@@ -79,14 +79,14 @@ class ComicContentActivity : BaseActivity() {
     }
 
     fun setUpReadInfo(ep: Int, position: Int, total: Int) {
-        binding.tvEp.text = "第${ep}话 $position/$total"
+        binding.tvEp.text = "第${ep}/${comic.epsCount}话 $position/$total"
     }
 
     fun showBar(): Boolean {
         if (binding.llTopBar.translationY != 0f) {
-            setFullScreen(false)
             SystemBarHelper.immersiveStatusBar(activity, 0f)
-            ViewAnimator.animate(binding.llTopBar).translationY(-1 * binding.llTopBar.height.toFloat(), 0f).duration(200).start()
+            setFullScreen(false)
+            ViewAnimator.animate(binding.llTopBar).translationY(-1 * binding.llTopBar.height.toFloat(), 0f).decelerate().duration(200).startDelay(200).start()
             return true
         }
         return false
@@ -96,7 +96,7 @@ class ComicContentActivity : BaseActivity() {
         if (binding.llTopBar.translationY != -binding.llTopBar.height.toFloat()) {
             viewModel.unImmersiveStatusBar(activity.window)
             setFullScreen(true)
-            ViewAnimator.animate(binding.llTopBar).translationY(0f, -1 * binding.llTopBar.height.toFloat()).duration(200).start()
+            ViewAnimator.animate(binding.llTopBar).translationY(0f, -1 * binding.llTopBar.height.toFloat()).accelerate().duration(200).start()
             return true
         }
         return false
@@ -149,5 +149,9 @@ class ComicContentActivity : BaseActivity() {
         comicsContentAdapter.secondEpList.addAll(comicsContentAdapter.data.takeLast(comicsContentAdapter.itemCount - comicsContentAdapter.firstEpList.size))
 
         comicsContentAdapter.addData(data.docs)
+    }
+
+    fun scaleRecycler(rawX: Float, rawY: Float) {
+        ViewAnimator.animate(binding.recycler)
     }
 }

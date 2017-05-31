@@ -99,6 +99,7 @@ class ComicsFragment : BaseFragment() {
             TYPE_COMICS_RECENTLY -> viewModel.getComics(page)
             TYPE_COMICS_MY_FAVORITE -> viewModel.getComics(page, null, viewModel.TYPE_MY_FAVORITE)
             TYPE_COMICS_RANK -> {
+                comicsAdapter.setEnableLoadMore(false)
                 viewModel.getComicsRank()
             }
         }

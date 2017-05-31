@@ -64,32 +64,34 @@ class ComicDetailFragment : BaseFragment() {
         super.initVariable(savedInstanceState)
         getComicsType = arguments.getInt(ARG_GET_COMICS)
         comicEntity = arguments.getSerializable(ARG_COMIC) as ComicsEntity
-        readDbComic()
     }
 
-    private fun readDbComic() {
+    private fun readDbComic(): ComicsEntity? {
         val tempComic = UOrm.db().queryById(comicEntity._id, ComicsEntity::class.java)
-        if (tempComic != null)
-            comicEntity = tempComic
+        return tempComic
     }
 
     override fun initView() {
         super.initView()
+        val dbComic = readDbComic()
+        if (dbComic != null)
+            comicEntity = dbComic
+        viewModel.bindResult(comicEntity)
 
         recycler_ep.setAdapter(epAdapter)
         epAdapter.setOnItemClickListener { _, _, i ->
-            ComicContentActivity.intentTo(activity, comicEntity, i + 1)
+            ComicContentActivity.intentTo(activity, viewModel.comic.get(), i + 1)
         }
         binding.rtvRead.setOnClickListener {
-            ComicContentActivity.intentTo(activity, comicEntity, if (epAdapter.readEp != 0) epAdapter.readEp else 1)
+            ComicContentActivity.intentTo(activity, viewModel.comic.get(), if (epAdapter.readEp != 0) epAdapter.readEp else 1)
         }
     }
 
 
     override fun loadData() {
         super.loadData()
-        viewModel.bindResult(comicEntity)
-        viewModel.getComic(comicEntity._id)
+        viewModel.bindResult(viewModel.comic.get())
+        viewModel.getComic(viewModel.comic.get()._id)
     }
 
     fun setUpComic(comic: ComicsEntity) {
@@ -102,8 +104,7 @@ class ComicDetailFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ComicContentActivity.ACTIVITY_COMIC_CONTENT) {
-            readDbComic()
-            viewModel.bindResult(comicEntity)
+            viewModel.bindResult(readDbComic()!!)
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

@@ -79,6 +79,7 @@ class HomeFragment : BaseFragment() {
     }
 
     fun setUpComics(comics: List<ComicsEntity>) {
+        comics.forEach { it.save() }
         comicsAdapter.setNewData(comics)
     }
 
