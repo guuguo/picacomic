@@ -6,7 +6,6 @@ import android.os.Build
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import com.flyco.systembar.SystemBarHelper
@@ -123,6 +122,7 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
                 MotionEvent.ACTION_UP -> {
                     if (!isFirstClick && downX != 0f && downY != 0f && Math.abs(e.rawX - downX) < 3 && Math.abs(e.rawY - downY) < 3) {
                         if (activity.hideBar())
+                            isFirstClick = false
                         else {
                             Completable.complete().delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
                                 if (isFirstClick)
@@ -130,15 +130,12 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
                                 else {
                                     activity.scaleRecycler(e.rawX, e.rawY)
                                 }
-                                Log.i("actionUp", "delay " + isFirstClick)
                                 isFirstClick = false
                             }
-                            Log.i("actionUp", "firstUp")
+                            isFirstClick = !isFirstClick
                         }
-                        isFirstClick = !isFirstClick
                     } else if (isFirstClick) {
                         isFirstClick = !isFirstClick
-                        Log.i("actionUp", "secondUp")
                     }
 
 

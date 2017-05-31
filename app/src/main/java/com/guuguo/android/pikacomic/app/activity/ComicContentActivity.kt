@@ -122,7 +122,6 @@ class ComicContentActivity : BaseActivity() {
             data.docs[it].total = data.total
         }
         if (page == 1) {
-//            "第${ep}话".toast()
             setUpReadInfo(ep, 0, data.total)
             viewModel.setReadStatus(ep)
         }
@@ -152,6 +151,13 @@ class ComicContentActivity : BaseActivity() {
     }
 
     fun scaleRecycler(rawX: Float, rawY: Float) {
-        ViewAnimator.animate(binding.recycler)
+        if (binding.recycler.scaleX > 1)
+            ViewAnimator.animate(binding.recycler).scale(1f).accelerate().duration(200).start()
+        else
+            ViewAnimator.animate(binding.recycler).scale(1.5f).accelerate().duration(200).start()
+
+//        ViewAnimator.animate(binding.recycler).scale(1.5f).accelerate().duration(200).start()
+
+
     }
 }
