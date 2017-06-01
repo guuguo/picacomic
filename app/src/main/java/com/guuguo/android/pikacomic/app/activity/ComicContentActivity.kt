@@ -5,8 +5,12 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.view.GestureDetectorCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import com.flyco.systembar.SystemBarHelper
 import com.github.florent37.viewanimator.ViewAnimator
@@ -59,8 +63,10 @@ class ComicContentActivity : BaseActivity() {
         ep = intent.getIntExtra(ARG_EP, 1)
     }
 
+    lateinit var mDetector: GestureDetectorCompat
     override fun initView() {
         super.initView()
+        mDetector = GestureDetectorCompat(this, MyGestureListener());
         binding.recycler.layoutManager = LinearLayoutManager(activity)
         binding.recycler.addItemDecoration(HorizontalDividerItemDecoration.Builder(activity).color(Color.BLACK).build())
         comicsContentAdapter.bindToRecyclerView(binding.recycler)
@@ -76,6 +82,49 @@ class ComicContentActivity : BaseActivity() {
         binding.recycler.addOnItemTouchListener(viewModel.scrollShowBarListener)
 
         binding.recycler.addOnScrollListener(viewModel.scrollReadInfoChangeListener)
+    }
+
+    inner class MyGestureListener : GestureDetector.SimpleOnGestureListener() {
+        override fun onDown(event: MotionEvent): Boolean {
+            Log.d(DEBUG_TAG, "onDown: " + event.toString())
+            return false
+        }
+
+        override fun onFling(event1: MotionEvent, event2: MotionEvent,
+                             velocityX: Float, velocityY: Float): Boolean {
+            Log.d(DEBUG_TAG, "onFling: " + event1.toString() + event2.toString())
+            return false
+        }
+
+        override fun onContextClick(e: MotionEvent?): Boolean {
+
+            Log.d(DEBUG_TAG, "onContextClick: " + e.toString() + e.toString())
+            return super.onContextClick(e)
+        }
+
+        private val DEBUG_TAG = "Gestures"
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            scaleRecycler(e.rawX, e.rawY)
+            Log.d(DEBUG_TAG, "onDoubleTap: " + e.toString() + e.toString())
+            return super.onDoubleTap(e)
+        }
+
+        override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+            if (!showBar())
+                hideBar()
+            Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + e.toString() + e.toString())
+            return super.onSingleTapConfirmed(e)
+        }
+
+        override fun onLongPress(e: MotionEvent?) {
+            Log.d(DEBUG_TAG, "onLongPress: " + e.toString() + e.toString())
+            super.onLongPress(e)
+        }
+
+        override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+            return super.onDoubleTapEvent(e)
+            Log.d(DEBUG_TAG, "onDoubleTapEvent: " + e.toString() + e.toString())
+        }
     }
 
     fun setUpReadInfo(ep: Int, position: Int, total: Int) {

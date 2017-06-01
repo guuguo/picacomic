@@ -6,7 +6,6 @@ import android.os.Build
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import com.flyco.systembar.SystemBarHelper
@@ -17,11 +16,8 @@ import com.guuguo.android.pikacomic.entity.ImageEntity
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
-import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -107,6 +103,9 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
             }
         }
     }
+
+   
+
     val scrollShowBarListener = object : RecyclerView.OnItemTouchListener {
         var downX = 0f
         var downY = 0f
@@ -115,42 +114,44 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
         }
 
         override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent): Boolean {
-            when (e.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    downX = e.rawX
-                    downY = e.rawY
-                }
-                MotionEvent.ACTION_UP -> {
-                    if (!isFirstClick && downX != 0f && downY != 0f && Math.abs(e.rawX - downX) < 3 && Math.abs(e.rawY - downY) < 3) {
-                        if (activity.hideBar())
-                        else {
-                            Completable.complete().delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
-                                if (isFirstClick)
-                                    activity.showBar()
-                                else {
-                                    activity.scaleRecycler(e.rawX, e.rawY)
-                                }
-                                Log.i("actionUp", "delay " + isFirstClick)
-                                isFirstClick = false
-                            }
-                            Log.i("actionUp", "firstUp")
-                        }
-                        isFirstClick = !isFirstClick
-                    } else if (isFirstClick) {
-                        isFirstClick = !isFirstClick
-                        Log.i("actionUp", "secondUp")
-                    }
+            activity.mDetector.onTouchEvent(e);
 
-
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    if (downX != 0f && downY != 0f && (Math.abs(e.rawX - downX) >= 3 || Math.abs(e.rawY - downY) >= 3)) {
-                        activity.hideBar()
-                        downX = 0f
-                        downY = 0f
-                    }
-                }
-            }
+//            when (e.action) {
+//                MotionEvent.ACTION_DOWN -> {
+//                    downX = e.rawX
+//                    downY = e.rawY
+//                }
+//                MotionEvent.ACTION_UP -> {
+//                    if (!isFirstClick && downX != 0f && downY != 0f && Math.abs(e.rawX - downX) < 3 && Math.abs(e.rawY - downY) < 3) {
+//                        if (activity.hideBar())
+//                        else {
+//                            Completable.complete().delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
+//                                if (isFirstClick)
+//                                    activity.showBar()
+//                                else {
+//                                    activity.scaleRecycler(e.rawX, e.rawY)
+//                                }
+//                                Log.i("actionUp", "delay " + isFirstClick)
+//                                isFirstClick = false
+//                            }
+//                            Log.i("actionUp", "firstUp")
+//                        }
+//                        isFirstClick = !isFirstClick
+//                    } else if (isFirstClick) {
+//                        isFirstClick = !isFirstClick
+//                        Log.i("actionUp", "secondUp")
+//                    }
+//
+//
+//                }
+//                MotionEvent.ACTION_MOVE -> {
+//                    if (downX != 0f && downY != 0f && (Math.abs(e.rawX - downX) >= 3 || Math.abs(e.rawY - downY) >= 3)) {
+//                        activity.hideBar()
+//                        downX = 0f
+//                        downY = 0f
+//                    }
+//                }
+//            }
             return false
         }
 
