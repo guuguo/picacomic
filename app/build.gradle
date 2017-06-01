@@ -94,6 +94,7 @@ dependencies {
     compile 'com.joooonho:selectableroundedimageview:1.0.1'
     compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
+    compile 'com.bm.photoview:library:1.4.1'
 //    compile ('com.alibaba.android:vlayout:1.0.6@aar') {
 //        transitive = true
 //    }

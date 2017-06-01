@@ -12,6 +12,9 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AlphaAnimation
+import com.bm.library.Info
+import com.bm.library.PhotoView
 import com.flyco.systembar.SystemBarHelper
 import com.github.florent37.viewanimator.ViewAnimator
 import com.guuguo.android.pikacomic.R
@@ -63,6 +66,9 @@ class ComicContentActivity : BaseActivity() {
         ep = intent.getIntExtra(ARG_EP, 1)
     }
 
+    internal lateinit var mInfo: Info
+    internal var animationIn = AlphaAnimation(0f, 1f)
+    internal var animationOut = AlphaAnimation(1f, 0f)
     lateinit var mDetector: GestureDetectorCompat
     override fun initView() {
         super.initView()
@@ -70,6 +76,20 @@ class ComicContentActivity : BaseActivity() {
         binding.recycler.layoutManager = LinearLayoutManager(activity)
         binding.recycler.addItemDecoration(HorizontalDividerItemDecoration.Builder(activity).color(Color.BLACK).build())
         comicsContentAdapter.bindToRecyclerView(binding.recycler)
+        comicsContentAdapter.setOnItemLongClickListener { adapter, view, position ->
+            val p = view as PhotoView
+            mInfo = p.info
+
+            binding.photoView.setImageDrawable(p.drawable)
+            binding.bg.startAnimation(animationIn)
+            binding.bg.visibility = View.VISIBLE
+            binding.photoView.animaFrom(mInfo)
+            true
+        }
+        binding.photoView.setOnClickListener({
+            binding.bg.startAnimation(animationOut)
+            binding.photoView.animaTo(mInfo, { binding.bg.visibility = View.GONE })
+        })
         comicsContentAdapter.setOnLoadMoreListener({
             page++
             loadData()
@@ -85,45 +105,24 @@ class ComicContentActivity : BaseActivity() {
     }
 
     inner class MyGestureListener : GestureDetector.SimpleOnGestureListener() {
-        override fun onDown(event: MotionEvent): Boolean {
-            Log.d(DEBUG_TAG, "onDown: " + event.toString())
-            return false
-        }
+//        override fun onDoubleTap(e: MotionEvent): Boolean {
+//            scaleRecycler(e.rawX, e.rawY)
+//            return super.onDoubleTap(e)
+//        }
 
-        override fun onFling(event1: MotionEvent, event2: MotionEvent,
-                             velocityX: Float, velocityY: Float): Boolean {
-            Log.d(DEBUG_TAG, "onFling: " + event1.toString() + event2.toString())
-            return false
-        }
+//        override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+//            scrollRecycler(distanceX, distanceY)
+//            return true
+//        }
 
-        override fun onContextClick(e: MotionEvent?): Boolean {
-
-            Log.d(DEBUG_TAG, "onContextClick: " + e.toString() + e.toString())
-            return super.onContextClick(e)
-        }
-
-        private val DEBUG_TAG = "Gestures"
-        override fun onDoubleTap(e: MotionEvent): Boolean {
-            scaleRecycler(e.rawX, e.rawY)
-            Log.d(DEBUG_TAG, "onDoubleTap: " + e.toString() + e.toString())
-            return super.onDoubleTap(e)
-        }
-
+        //        override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
+////            scrollRecycler(distanceX, distanceY)
+//            return true
+//        }
         override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
             if (!showBar())
                 hideBar()
-            Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + e.toString() + e.toString())
             return super.onSingleTapConfirmed(e)
-        }
-
-        override fun onLongPress(e: MotionEvent?) {
-            Log.d(DEBUG_TAG, "onLongPress: " + e.toString() + e.toString())
-            super.onLongPress(e)
-        }
-
-        override fun onDoubleTapEvent(e: MotionEvent): Boolean {
-            return super.onDoubleTapEvent(e)
-            Log.d(DEBUG_TAG, "onDoubleTapEvent: " + e.toString() + e.toString())
         }
     }
 
@@ -171,7 +170,6 @@ class ComicContentActivity : BaseActivity() {
             data.docs[it].total = data.total
         }
         if (page == 1) {
-//            "第${ep}话".toast()
             setUpReadInfo(ep, 0, data.total)
             viewModel.setReadStatus(ep)
         }
@@ -201,6 +199,26 @@ class ComicContentActivity : BaseActivity() {
     }
 
     fun scaleRecycler(rawX: Float, rawY: Float) {
-        ViewAnimator.animate(binding.recycler)
+
+
+        if (binding.recycler.scaleX > 1) {
+            ViewAnimator.animate(binding.recycler).scale(1f).accelerate().duration(200).start()
+            ViewCompat.setTranslationX(binding.recycler, 0f)
+            ViewCompat.setTranslationY(binding.recycler, 0f)
+        } else
+            ViewAnimator.animate(binding.recycler).scale(1.5f).accelerate().duration(200).start()
+
+    }
+
+    fun scrollRecycler(distanceX: Float, distanceY: Float) {
+        with(binding.recycler) {
+            if (scaleX > 1) {
+                Log.i("scroll", ViewCompat.getTranslationX(this).toString())
+                ViewCompat.setTranslationX(this, ViewCompat.getTranslationX(this) - distanceX)
+
+//                ViewCompat.setTranslationY(this, ViewCompat.getTranslationY(this) - distanceY)
+//            binding.recycler.trn(distanceX.toInt(), distanceY.toInt())
+            }
+        }
     }
 }

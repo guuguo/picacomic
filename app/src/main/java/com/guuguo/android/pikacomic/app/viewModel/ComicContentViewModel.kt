@@ -115,43 +115,6 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
 
         override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent): Boolean {
             activity.mDetector.onTouchEvent(e);
-
-//            when (e.action) {
-//                MotionEvent.ACTION_DOWN -> {
-//                    downX = e.rawX
-//                    downY = e.rawY
-//                }
-//                MotionEvent.ACTION_UP -> {
-//                    if (!isFirstClick && downX != 0f && downY != 0f && Math.abs(e.rawX - downX) < 3 && Math.abs(e.rawY - downY) < 3) {
-//                        if (activity.hideBar())
-//                        else {
-//                            Completable.complete().delay(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
-//                                if (isFirstClick)
-//                                    activity.showBar()
-//                                else {
-//                                    activity.scaleRecycler(e.rawX, e.rawY)
-//                                }
-//                                Log.i("actionUp", "delay " + isFirstClick)
-//                                isFirstClick = false
-//                            }
-//                            Log.i("actionUp", "firstUp")
-//                        }
-//                        isFirstClick = !isFirstClick
-//                    } else if (isFirstClick) {
-//                        isFirstClick = !isFirstClick
-//                        Log.i("actionUp", "secondUp")
-//                    }
-//
-//
-//                }
-//                MotionEvent.ACTION_MOVE -> {
-//                    if (downX != 0f && downY != 0f && (Math.abs(e.rawX - downX) >= 3 || Math.abs(e.rawY - downY) >= 3)) {
-//                        activity.hideBar()
-//                        downX = 0f
-//                        downY = 0f
-//                    }
-//                }
-//            }
             return false
         }
 
