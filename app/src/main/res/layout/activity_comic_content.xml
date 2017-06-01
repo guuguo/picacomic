@@ -46,18 +46,18 @@
                 tools:text="第一话" />
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/bg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ff000000"
-            android:visibility="gone">
+        <!--<FrameLayout-->
+        <!--android:id="@+id/bg"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="#ff000000"-->
+        <!--android:visibility="gone">-->
 
-            <com.bm.library.PhotoView
-                android:id="@+id/photo_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <!--<com.bm.library.PhotoView-->
+        <!--android:id="@+id/photo_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
 
-        </FrameLayout>
+        <!--</FrameLayout>-->
     </FrameLayout>
 </layout>

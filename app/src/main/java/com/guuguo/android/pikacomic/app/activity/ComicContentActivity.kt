@@ -14,7 +14,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AlphaAnimation
 import com.bm.library.Info
-import com.bm.library.PhotoView
 import com.flyco.systembar.SystemBarHelper
 import com.github.florent37.viewanimator.ViewAnimator
 import com.guuguo.android.pikacomic.R
@@ -76,20 +75,16 @@ class ComicContentActivity : BaseActivity() {
         binding.recycler.layoutManager = LinearLayoutManager(activity)
         binding.recycler.addItemDecoration(HorizontalDividerItemDecoration.Builder(activity).color(Color.BLACK).build())
         comicsContentAdapter.bindToRecyclerView(binding.recycler)
-        comicsContentAdapter.setOnItemLongClickListener { adapter, view, position ->
-            val p = view as PhotoView
-            mInfo = p.info
-
-            binding.photoView.setImageDrawable(p.drawable)
-            binding.bg.startAnimation(animationIn)
-            binding.bg.visibility = View.VISIBLE
-            binding.photoView.animaFrom(mInfo)
-            true
-        }
-        binding.photoView.setOnClickListener({
-            binding.bg.startAnimation(animationOut)
-            binding.photoView.animaTo(mInfo, { binding.bg.visibility = View.GONE })
-        })
+//        comicsContentAdapter.setOnItemLongClickListener { adapter, view, position ->
+//            val p = view as PhotoView
+//            mInfo = p.info
+//
+//            binding.photoView.setImageDrawable(p.drawable)
+//            binding.bg.startAnimation(animationIn)
+//            binding.bg.visibility = View.VISIBLE
+//            binding.photoView.animaFrom(mInfo)
+//            true
+//        }
         comicsContentAdapter.setOnLoadMoreListener({
             page++
             loadData()
@@ -105,20 +100,16 @@ class ComicContentActivity : BaseActivity() {
     }
 
     inner class MyGestureListener : GestureDetector.SimpleOnGestureListener() {
-//        override fun onDoubleTap(e: MotionEvent): Boolean {
-//            scaleRecycler(e.rawX, e.rawY)
-//            return super.onDoubleTap(e)
-//        }
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            scaleRecycler(e.rawX, e.rawY)
+            return super.onDoubleTap(e)
+        }
 
-//        override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
-//            scrollRecycler(distanceX, distanceY)
-//            return true
-//        }
+        override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+            scrollRecycler(distanceX, distanceY)
+            return true
+        }
 
-        //        override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
-////            scrollRecycler(distanceX, distanceY)
-//            return true
-//        }
         override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
             if (!showBar())
                 hideBar()
@@ -200,12 +191,9 @@ class ComicContentActivity : BaseActivity() {
 
     fun scaleRecycler(rawX: Float, rawY: Float) {
 
-
         if (binding.recycler.scaleX > 1) {
-            ViewAnimator.animate(binding.recycler).scale(1f).accelerate().duration(200).start()
-            ViewCompat.setTranslationX(binding.recycler, 0f)
-            ViewCompat.setTranslationY(binding.recycler, 0f)
-        } else
+            ViewAnimator.animate(binding.recycler).scale(1f).translationX(0f).accelerate().duration(200).start()
+       } else
             ViewAnimator.animate(binding.recycler).scale(1.5f).accelerate().duration(200).start()
 
     }
@@ -215,9 +203,6 @@ class ComicContentActivity : BaseActivity() {
             if (scaleX > 1) {
                 Log.i("scroll", ViewCompat.getTranslationX(this).toString())
                 ViewCompat.setTranslationX(this, ViewCompat.getTranslationX(this) - distanceX)
-
-//                ViewCompat.setTranslationY(this, ViewCompat.getTranslationY(this) - distanceY)
-//            binding.recycler.trn(distanceX.toInt(), distanceY.toInt())
             }
         }
     }

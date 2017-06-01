@@ -6,7 +6,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.guuguo.android.lib.view.RatioPhotoView
+import com.guuguo.android.lib.view.RatioImageView
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.entity.ImageEntity
 import com.guuguo.android.pikacomic.utils.MyScaleImageViewTarget
@@ -23,7 +23,7 @@ class ComicContentAdapter : BaseQuickAdapter<ImageEntity, ComicContentAdapter.Vi
 //    var epInvisibleSize = 0
 
     inner class ViewHolder(view: View) : BaseViewHolder(view) {
-        val rivContent = getView<RatioPhotoView>(R.id.riv_content)
+        val rivContent = getView<RatioImageView>(R.id.riv_content)
     }
 
     override fun createBaseViewHolder(view: View): ViewHolder {

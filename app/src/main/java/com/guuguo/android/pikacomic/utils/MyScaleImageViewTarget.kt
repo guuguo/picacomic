@@ -8,7 +8,7 @@ import com.bumptech.glide.request.target.ImageViewTarget
 import com.bumptech.glide.request.target.SizeReadyCallback
 import com.bumptech.glide.request.target.SquaringDrawable
 import com.bumptech.glide.request.target.Target
-import com.guuguo.android.lib.view.RatioPhotoView
+import com.guuguo.android.lib.view.RatioImageView
 
 /**
  * mimi 创造于 2017-03-13.
@@ -31,7 +31,7 @@ class MyScaleImageViewTarget : ImageViewTarget<GlideDrawable> {
     private var maxLoopCount: Int = 0
     private var resource: GlideDrawable? = null
 
-    constructor(view: RatioPhotoView, maxLoopCount: Int = GlideDrawable.LOOP_FOREVER) : super(view) {
+    constructor(view: RatioImageView, maxLoopCount: Int = GlideDrawable.LOOP_FOREVER) : super(view) {
         this.maxLoopCount = maxLoopCount
     }
 
@@ -39,7 +39,7 @@ class MyScaleImageViewTarget : ImageViewTarget<GlideDrawable> {
         view.scaleType = scaleType
         val height = resource.intrinsicHeight
         val width = resource.intrinsicWidth
-        (view as RatioPhotoView).setOriginalSize(width, height)
+        (view as RatioImageView).setOriginalSize(width, height)
         var resource = resource
         if (!resource.isAnimated) {
             val viewRatio = view.getWidth() / view.getHeight().toFloat()
