@@ -12,10 +12,12 @@ import com.flyco.systembar.SystemBarHelper
 import com.guuguo.android.pikacomic.app.activity.ComicContentActivity
 import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ComicsContentResponse
+import com.guuguo.android.pikacomic.entity.EpPagesEntity
 import com.guuguo.android.pikacomic.entity.ImageEntity
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
+import com.litesuits.orm.db.assit.QueryBuilder
 import io.reactivex.disposables.Disposable
 import java.util.*
 
@@ -35,7 +37,10 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
         UOrm.db().save(activity.comic)
     }
 
-    fun getContent(id: String, ep: Int, page: Int) {
+    fun getContentFromNet(id: String, ep: Int, page: Int) {
+        if (activity.firstLoad) {
+            activity.dialogLoadingShow("正在加载中")
+        }
         MyApiServer.getComicsContent(id, ep, page).subscribe(object : BaseCallback<ResponseModel<ComicsContentResponse>>() {
             override fun onSubscribe(d: Disposable?) {
                 activity.addApiCall(d)
@@ -45,6 +50,10 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
                 super.onSuccess(t)
                 activity.dialogDismiss()
                 t.data?.pages?.let {
+                    t.data?.pages?.comic_id = activity.comic._id
+                    t.data?.pages?.ep = activity.ep
+                    UOrm.db().save(t.data!!.pages)
+
                     activity.setContent(t.data!!.pages!!)
                 }
             }
@@ -54,6 +63,14 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
                 activity.dialogErrorShow(msg, null)
             }
         })
+    }
+
+    fun getContent(id: String, ep: Int, page: Int) {
+        val pageEntices = UOrm.db().query(QueryBuilder(EpPagesEntity::class.java).whereEquals("comic_id", id).whereAppendAnd().whereEquals("ep", ep).whereAppendAnd().whereEquals("page", page))
+        if (pageEntices.isNotEmpty())
+            activity.setContent(pageEntices.first())
+        else
+            getContentFromNet(id, ep, page)
     }
 
     fun unImmersiveStatusBar(window: Window) {
@@ -104,16 +121,15 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
         }
     }
 
-   
 
-    val scrollShowBarListener = object : RecyclerView.OnItemTouchListener {
-        var downX = 0f
-        var downY = 0f
-        var isFirstClick = false
+    val onItemTouchListener = object : RecyclerView.OnItemTouchListener {
         override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
         }
 
         override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent): Boolean {
+            when (e.action) {
+                MotionEvent.ACTION_UP -> activity.fingerUp()
+            }
             activity.mDetector.onTouchEvent(e);
             return false
         }

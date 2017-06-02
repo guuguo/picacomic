@@ -2,8 +2,8 @@ package com.guuguo.gank.net
 
 import com.google.gson.GsonBuilder
 import com.guuguo.android.lib.net.LBaseCallback
+import com.guuguo.android.pikacomic.constant.jsonDataFormatStr
 import com.guuguo.android.pikacomic.entity.*
-import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,8 +16,8 @@ import java.util.*
  * Created by guodeqing on 7/14/16.
  */
 object MyApiServer {
-    val gson = GsonBuilder().setDateFormat(ApiConfig.jsonDataFormatStr).create()
-    val service by lazy { MyRetrofit.getRetrofit().create(Service::class.java) }
+    val gson = GsonBuilder().setDateFormat(jsonDataFormatStr).create()
+    val service by lazy { MyRetrofit.myRetrofit.create(Service::class.java) }
     fun signIn(email: String, password: String): Single<ResponseModel<TokenResponse>> {
         val map = HashMap<String, String>()
         map.put("email", email)

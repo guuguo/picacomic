@@ -41,8 +41,8 @@ class MineViewModel(val fragment: MineFragment) : BaseObservable() {
         ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_MY_FAVORITE)
     }
 
-    fun getHistoryComics(page: Int,limit:Int) {
-        val comics = UOrm.db().query(QueryBuilder(ComicsEntity::class.java).whereNoEquals("lastReadTime",0).appendOrderDescBy("lastReadTime").limit(page*limit, limit))
+    fun getHistoryComics(page: Int, limit: Int) {
+        val comics = UOrm.db().query(QueryBuilder(ComicsEntity::class.java).whereNoEquals("lastReadTime", 0).appendOrderDescBy("lastReadTime").limit(page * limit, limit))
         fragment.setUpHistory(comics)
     }
 
@@ -60,6 +60,8 @@ class MineViewModel(val fragment: MineFragment) : BaseObservable() {
                     activity.dialogCompleteShow("击打成功", null)
                     user.get().isPunched = true
                     fragment.setUpMine(user.get())
+                    getUserProfileFromNet()
+
                 } else
                     activity.dialogErrorShow("击打失败", null)
             }

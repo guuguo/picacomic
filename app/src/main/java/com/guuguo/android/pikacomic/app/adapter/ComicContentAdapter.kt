@@ -19,7 +19,7 @@ class ComicContentAdapter : BaseQuickAdapter<ImageEntity, ComicContentAdapter.Vi
     constructor() : super(R.layout.item_comic_content, null)
 
     var firstEpList = arrayListOf<ImageEntity>()
-    var secondEpList = arrayListOf<ImageEntity>()
+//    var secondEpList = arrayListOf<ImageEntity>()
 //    var epInvisibleSize = 0
 
     inner class ViewHolder(view: View) : BaseViewHolder(view) {

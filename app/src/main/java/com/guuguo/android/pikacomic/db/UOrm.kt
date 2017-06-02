@@ -9,11 +9,11 @@ import com.litesuits.orm.db.assit.SQLiteHelper
 object UOrm : SQLiteHelper.OnUpdateListener {
 
     private val mLiteOrm: LiteOrm
-    internal var config = DataBaseConfig(MyApplication.Companion.instance)
-    internal var isDbUpdate = false
+    private var config = DataBaseConfig(MyApplication.Companion.instance)
+    private var isDbUpdate = false
 
     init {
-        config.dbVersion = 3//新增拼音字段,拼音首字母大写模式
+        config.dbVersion = 5//新增拼音字段,拼音首字母大写模式
         config.debugged = true
         config.onUpdateListener = this
         mLiteOrm = LiteOrm.newCascadeInstance(config)

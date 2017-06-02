@@ -1,10 +1,11 @@
 package com.guuguo.gank.net
 
 import com.guuguo.android.pikacomic.constant.LocalData
+import com.guuguo.android.pikacomic.constant.baseUrl
 import com.guuguo.android.pikacomic.constant.myGson
-import com.guuguo.android.pikacomic.net.ApiConfig
 import com.guuguo.android.pikacomic.net.https.TrustAllCerts
 import okhttp3.OkHttpClient
+import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
@@ -42,9 +43,9 @@ object MyRetrofit {
     }
 
 
-    fun getRetrofit(): retrofit2.Retrofit {
-        return retrofit2.Retrofit.Builder()
-                .baseUrl(ApiConfig.baseUrl)
+    val myRetrofit: Retrofit by lazy {
+        retrofit2.Retrofit.Builder()
+                .baseUrl(baseUrl)
                 .addConverterFactory(getGsonConverter())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(MyRetrofit.httpClient)

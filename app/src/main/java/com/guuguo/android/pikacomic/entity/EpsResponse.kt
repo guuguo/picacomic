@@ -8,7 +8,7 @@ package com.guuguo.android.pikacomic.entity
 class EpsResponse {
 
     /**
-     * eps : {"docs":[{"_id":"58f408bb9036563f4e72f74f","title":"單行本","order":1,"updated_at":"2017-04-16T14:38:30.875Z"}],"total":1,"limit":40,"page":1,"pages":1}
+     * eps : {"docs":[{"_id":"58f408bb9036563f4e72f74f","title":"單行本","order":1,"updated_at":"2017-04-16T14:38:30.875Z"}],"total":1,"_limit":40,"page":1,"pages":1}
      */
 
     var eps: EpsBean? = null

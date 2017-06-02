@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <ScrollView
+            android:id="@+id/sv_scroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -89,6 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
+                        android:maxLines="3"
                         android:text='@{viewModel.comic.title}'
                         android:textSize="16sp"
                         app:layout_constraintLeft_toRightOf="@+id/iv_banner"
@@ -144,7 +146,8 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     app:columnNum="4"
-                    app:divideWidth="20dp" />
+                    app:divideWidth="21dp" />
+
             </LinearLayout>
         </ScrollView>
 
@@ -160,9 +163,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="20dp"
+                android:onClick='@{viewModel::onClickLike}'
                 android:padding="5dp"
                 android:tint="@{viewModel.comic.isLiked?@color/colorPrimary:@color/black40}"
-                android:onClick='@{viewModel::onClickLike}'
                 app:layout_constraintBottom_toBottomOf="@+id/tv_like"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_like"
@@ -173,8 +176,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
-                android:text='@{viewModel.comic.likesCount+""}'
                 android:onClick='@{viewModel::onClickLike}'
+                android:text='@{viewModel.comic.likesCount+""}'
                 android:textColor='@{viewModel.comic.isLiked?@color/colorPrimary:@color/black40}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/iv_like"
@@ -190,8 +193,8 @@
                 android:layout_height="0dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
-                android:padding="5dp"
                 android:onClick='@{viewModel::onClickFavorite}'
+                android:padding="5dp"
                 android:tint='@{viewModel.comic.isFavourite?@color/colorPrimary:@color/black40}'
                 app:layout_constraintBottom_toBottomOf="@+id/iv_like"
                 app:layout_constraintLeft_toRightOf="@+id/tv_like"
@@ -201,9 +204,9 @@
             <TextView
                 android:id="@+id/tv_collect"
                 android:layout_width="wrap_content"
-                android:onClick='@{viewModel::onClickFavorite}'
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
+                android:onClick='@{viewModel::onClickFavorite}'
                 android:text="收藏"
                 android:textColor='@{viewModel.comic.isFavourite?@color/colorPrimary:@color/black40}'
                 app:layout_constraintBottom_toBottomOf="@+id/tv_like"
@@ -223,7 +226,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text='@{viewModel.comic.readEp==0?@string/start_read:@string/continue_read}'
+                android:text='@{viewModel.comic.readEp==0?@string/start_read:(@string/continue_read+viewModel.comic.readEp)}'
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

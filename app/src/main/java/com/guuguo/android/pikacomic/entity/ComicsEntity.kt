@@ -45,9 +45,10 @@ class ComicsEntity : Serializable {
     //    @Mapping(Relation.OneToMany)
     @Ignore
     var tags: ArrayList<String> = ArrayList<String>()
+
     var readEp: Int? = null
     var lastReadTime: Date? = null
-    
+
     fun save() {
         val entity = UOrm.db().queryById(_id, ComicsEntity::class.java)
         if (entity == null)

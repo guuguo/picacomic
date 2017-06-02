@@ -70,7 +70,6 @@ class MineFragment : BaseFragment() {
         comicsAdapter.data.clear()
         comicsAdapter.notifyDataSetChanged()
         loadHistory()
-
     }
 
     fun loadHistory() {
