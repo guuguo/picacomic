@@ -104,16 +104,15 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
         }
     }
 
-   
 
-    val scrollShowBarListener = object : RecyclerView.OnItemTouchListener {
-        var downX = 0f
-        var downY = 0f
-        var isFirstClick = false
+    val onItemTouchListener = object : RecyclerView.OnItemTouchListener {
         override fun onTouchEvent(rv: RecyclerView?, e: MotionEvent?) {
         }
 
         override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent): Boolean {
+            when(e.action){
+                MotionEvent.ACTION_UP->activity.fingerUp()
+            }
             activity.mDetector.onTouchEvent(e);
             return false
         }

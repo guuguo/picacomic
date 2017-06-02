@@ -5,6 +5,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
@@ -21,6 +22,7 @@ import com.guuguo.android.pikacomic.databinding.FragmentComicDetailBinding
 import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ComicsEntity
 import kotlinx.android.synthetic.main.fragment_comic_detail.*
+import zlc.season.rxdownload2.RxDownload
 
 /**
  * mimi 创造于 2017-05-22.
@@ -37,6 +39,19 @@ class ComicDetailFragment : BaseFragment() {
 
     override fun getHeaderTitle(): String {
         return comicEntity._id
+    }
+
+    override fun getMenuResId(): Int {
+        return R.menu.download
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_download -> {
+                viewModel.downLoadComic(1);
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun setLayoutResId(inflater: LayoutInflater?, resId: Int, container: ViewGroup?): View {
@@ -76,7 +91,6 @@ class ComicDetailFragment : BaseFragment() {
         val dbComic = readDbComic()
         if (dbComic != null)
             comicEntity = dbComic
-        viewModel.bindResult(comicEntity)
 
         recycler_ep.setAdapter(epAdapter)
         epAdapter.setOnItemClickListener { _, _, i ->
@@ -90,7 +104,7 @@ class ComicDetailFragment : BaseFragment() {
 
     override fun loadData() {
         super.loadData()
-        viewModel.bindResult(viewModel.comic.get())
+        viewModel.bindResult(comicEntity)
         viewModel.getComic(viewModel.comic.get()._id)
     }
 

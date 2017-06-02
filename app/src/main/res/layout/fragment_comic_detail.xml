@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <ScrollView
+            android:id="@+id/sv_scroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -223,7 +224,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text='@{viewModel.comic.readEp==0?@string/start_read:@string/continue_read}'
+                android:text='@{viewModel.comic.readEp==0?@string/start_read:(@string/continue_read+viewModel.comic.readEp)}'
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

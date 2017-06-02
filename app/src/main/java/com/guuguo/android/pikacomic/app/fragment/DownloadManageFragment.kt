@@ -17,13 +17,13 @@ import kotlinx.android.synthetic.main.layout_title_bar.*
  * mimi 创造于 2017-05-22.
  * 项目 pika
  */
-class SettingFragment : BaseFragment() {
+class DownloadManageFragment : BaseFragment() {
     lateinit var binding: FragmentSettingBinding
     val viewModel by lazy { SettingViewModel(this) }
 
     override fun getLayoutResId() = R.layout.fragment_setting
     override fun getHeaderTitle(): String {
-        return "设置"
+        return "下载管理"
     }
 
     override fun setTitle(title: String) {

@@ -7,15 +7,15 @@ import com.guuguo.android.lib.extension.date
 import com.guuguo.android.lib.extension.safe
 import com.guuguo.android.lib.extension.toast
 import com.guuguo.android.pikacomic.app.fragment.ComicDetailFragment
-import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ActionResponse
 import com.guuguo.android.pikacomic.entity.ComicDetailResponse
+import com.guuguo.android.pikacomic.entity.ComicsContentResponse
 import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
-import com.litesuits.orm.db.model.ConflictAlgorithm
 import io.reactivex.disposables.Disposable
+import zlc.season.rxdownload2.RxDownload
 import java.util.*
 
 
@@ -113,5 +113,31 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
                 msg.toast()
             }
         })
+    }
+
+    fun getContent(id: String, ep: Int, page: Int) {
+        MyApiServer.getComicsContent(id, ep, page).subscribe(object : BaseCallback<ResponseModel<ComicsContentResponse>>() {
+            override fun onSubscribe(d: Disposable?) {
+                activity.addApiCall(d)
+            }
+
+            override fun onSuccess(t: ResponseModel<ComicsContentResponse>) {
+                super.onSuccess(t)
+                activity.dialogDismiss()
+                t.data?.pages?.let {
+                    activity.setContent(t.data!!.pages!!)
+                }
+            }
+
+            override fun onApiLoadError(msg: String) {
+                activity.dialogDismiss()
+                activity.dialogErrorShow(msg, null)
+            }
+        })
+    }
+
+    fun downLoadComic(i: Int) {
+        getContent(comic.get()._id, i, 0)
+        RxDownload.getInstance(activity).serviceDownload()
     }
 }
