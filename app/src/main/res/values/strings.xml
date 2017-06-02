@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">pikacomic</string>
     <string name="views_count">战斗力：</string>
-    <string name="start_read">开始阅读</string>
+    <string name="start_read">开始读</string>
     <string name="continue_read">继续阅读</string>
     start_read
 </resources>
