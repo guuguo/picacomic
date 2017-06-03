@@ -134,6 +134,7 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
 
                     t.data!!.pages!!.docs.map { it.media!! }.apply {
                         RxDownload.getInstance(activity).serviceMultiDownload(id + ep, *this.map { it.getOriginUrl() }.toTypedArray())
+                                .subscribe({ "开始下载".toast() })
                     }.forEach {
                         RxDownload.getInstance(activity).receiveDownloadStatus(it.getOriginUrl()).subscribe({ downloadEvent ->
                             val flag = downloadEvent.flag
@@ -142,16 +143,19 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
                                     val thumb = UOrm.db().query(QueryBuilder(ThumbEntity::class.java)
                                             .whereEquals("fileServer", it.fileServer).whereAppendAnd().whereEquals("path", it.path)).first()
                                     thumb.isDownload = true
-                                    downloadNum++
+//                                    downloadNum++
                                     "$downloadNum/${t.data?.pages?.total}".toast()
+//                                    totalDown += downloadEvent.downloadStatus.totalSize
                                 }
                             }
+//                            Utils.formatSize(totalDown + downloadEvent.downloadStatus.downloadSize).toast()
                         })
                     }
 
                 }
             }
 
+//            var totalDown = 0L
             override fun onApiLoadError(msg: String) {
                 activity.dialogDismiss()
                 activity.dialogErrorShow(msg, null)
@@ -162,7 +166,7 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
     fun downLoadComic(i: Int) {
         RxPermissions(activity)
                 .request(WRITE_EXTERNAL_STORAGE)
-                .doOnNext({ granted ->
+                .subscribe({ granted ->
                     if (!granted) {
                         "没有写入存储权限".toast()
                     } else {
