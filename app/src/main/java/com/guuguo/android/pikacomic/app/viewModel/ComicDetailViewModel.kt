@@ -1,5 +1,6 @@
 package com.guuguo.android.pikacomic.app.viewModel
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.view.View
@@ -7,14 +8,16 @@ import com.guuguo.android.lib.extension.date
 import com.guuguo.android.lib.extension.safe
 import com.guuguo.android.lib.extension.toast
 import com.guuguo.android.pikacomic.app.fragment.ComicDetailFragment
-import com.guuguo.android.pikacomic.entity.ActionResponse
-import com.guuguo.android.pikacomic.entity.ComicDetailResponse
-import com.guuguo.android.pikacomic.entity.ComicsContentResponse
-import com.guuguo.android.pikacomic.entity.ComicsEntity
+import com.guuguo.android.pikacomic.db.UOrm
+import com.guuguo.android.pikacomic.entity.*
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
+import com.litesuits.orm.db.assit.QueryBuilder
+import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.disposables.Disposable
+import zlc.season.rxdownload2.RxDownload
+import zlc.season.rxdownload2.entity.DownloadFlag
 import java.util.*
 
 
@@ -115,6 +118,7 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
     }
 
     fun getContent(id: String, ep: Int, page: Int) {
+        var downloadNum = 0
         MyApiServer.getComicsContent(id, ep, page).subscribe(object : BaseCallback<ResponseModel<ComicsContentResponse>>() {
             override fun onSubscribe(d: Disposable?) {
                 activity.addApiCall(d)
@@ -124,6 +128,27 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
                 super.onSuccess(t)
                 activity.dialogDismiss()
                 t.data?.pages?.let {
+                    t.data?.pages?.comicId = id
+                    t.data?.pages?.ep = ep
+                    UOrm.db().save(t.data!!.pages)
+
+                    t.data!!.pages!!.docs.map { it.media!! }.apply {
+                        RxDownload.getInstance(activity).serviceMultiDownload(id + ep, *this.map { it.getOriginUrl() }.toTypedArray())
+                    }.forEach {
+                        RxDownload.getInstance(activity).receiveDownloadStatus(it.getOriginUrl()).subscribe({ downloadEvent ->
+                            val flag = downloadEvent.flag
+                            when (flag) {
+                                DownloadFlag.COMPLETED -> {
+                                    val thumb = UOrm.db().query(QueryBuilder(ThumbEntity::class.java)
+                                            .whereEquals("fileServer", it.fileServer).whereAppendAnd().whereEquals("path", it.path)).first()
+                                    thumb.isDownload = true
+                                    downloadNum++
+                                    "$downloadNum/${t.data?.pages?.total}".toast()
+                                }
+                            }
+                        })
+                    }
+
                 }
             }
 
@@ -135,7 +160,14 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
     }
 
     fun downLoadComic(i: Int) {
-        getContent(comic.get()._id, i, 0)
-//        RxDownload.getInstance(activity).serviceDownload()
+        RxPermissions(activity)
+                .request(WRITE_EXTERNAL_STORAGE)
+                .doOnNext({ granted ->
+                    if (!granted) {
+                        "没有写入存储权限".toast()
+                    } else {
+                        getContent(comic.get()._id, i, 1)
+                    }
+                })
     }
 }

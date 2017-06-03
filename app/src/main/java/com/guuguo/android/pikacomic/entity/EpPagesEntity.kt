@@ -24,10 +24,10 @@ class EpPagesEntity {
     var docs: ArrayList<ImageEntity> = arrayListOf()
 
     @UniqueCombine(1)
-    var comic_id = ""
+    var comicId = ""
     
     @UniqueCombine(1)
     var ep = 1
 
-    val download_count = 0
+//    val download_count = 0
 }

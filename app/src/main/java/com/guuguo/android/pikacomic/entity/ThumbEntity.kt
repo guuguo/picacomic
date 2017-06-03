@@ -22,4 +22,6 @@ class ThumbEntity : Serializable {
     var path = ""
     var fileServer = ""
     fun getOriginUrl(): String = fileServer + "/static/" + path
+
+    var isDownload = false
 }

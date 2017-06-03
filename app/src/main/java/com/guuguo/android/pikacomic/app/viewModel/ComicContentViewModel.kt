@@ -50,7 +50,7 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
                 super.onSuccess(t)
                 activity.dialogDismiss()
                 t.data?.pages?.let {
-                    t.data?.pages?.comic_id = activity.comic._id
+                    t.data?.pages?.comicId = activity.comic._id
                     t.data?.pages?.ep = activity.ep
                     UOrm.db().save(t.data!!.pages)
 
@@ -66,7 +66,7 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
     }
 
     fun getContent(id: String, ep: Int, page: Int) {
-        val pageEntices = UOrm.db().query(QueryBuilder(EpPagesEntity::class.java).whereEquals("comic_id", id).whereAppendAnd().whereEquals("ep", ep).whereAppendAnd().whereEquals("page", page))
+        val pageEntices = UOrm.db().query(QueryBuilder(EpPagesEntity::class.java).whereEquals("comicId", id).whereAppendAnd().whereEquals("ep", ep).whereAppendAnd().whereEquals("page", page))
         if (pageEntices.isNotEmpty())
             activity.setContent(pageEntices.first())
         else
