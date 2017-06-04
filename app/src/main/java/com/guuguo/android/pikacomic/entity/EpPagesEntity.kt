@@ -1,6 +1,8 @@
 package com.guuguo.android.pikacomic.entity
 
+import com.guuguo.android.pikacomic.db.UOrm
 import com.litesuits.orm.db.annotation.*
+import com.litesuits.orm.db.assit.QueryBuilder
 import com.litesuits.orm.db.enums.AssignType
 import com.litesuits.orm.db.enums.Relation
 
@@ -25,9 +27,20 @@ class EpPagesEntity {
 
     @UniqueCombine(1)
     var comicId = ""
-    
+
     @UniqueCombine(1)
     var ep = 1
 
-//    val download_count = 0
+    companion object {
+        fun get(id: String, ep: Int, page: Int): EpPagesEntity? {
+            val entities = UOrm.db()
+                    .query(QueryBuilder(EpPagesEntity::class.java)
+                            .whereEquals("comicId", id).whereAppendAnd().whereEquals("ep", ep)
+                            .whereAppendAnd().whereEquals("page", page))
+            return if (entities.isNotEmpty())
+                entities.first()
+            else null
+
+        }
+    }
 }

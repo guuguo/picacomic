@@ -12,6 +12,7 @@ import com.guuguo.android.pikacomic.app.adapter.ComicsAdapter
 import com.guuguo.android.pikacomic.app.viewModel.HomeViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.databinding.FragmentHomeBinding
+import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.AnnouncementsEntity
 import com.guuguo.android.pikacomic.entity.AnnouncementsResponse
 import com.guuguo.android.pikacomic.entity.ComicsEntity
@@ -79,7 +80,7 @@ class HomeFragment : BaseFragment() {
     }
 
     fun setUpComics(comics: List<ComicsEntity>) {
-        comics.forEach { it.save() }
+        UOrm.db().insert(comics)
         comicsAdapter.setNewData(comics)
     }
 

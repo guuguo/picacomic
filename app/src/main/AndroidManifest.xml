@@ -27,7 +27,11 @@
         <meta-data
             android:name="com.guuguo.android.pikacomic.net.http.MyGlideModule"
             android:value="GlideModule" />
-
+        <service
+            android:name=".app.service.UpdateService"
+            android:enabled="true"
+            android:exported="true"/>
+        
         <activity
             android:name=".app.activity.LoginActivity"
             android:screenOrientation="portrait">

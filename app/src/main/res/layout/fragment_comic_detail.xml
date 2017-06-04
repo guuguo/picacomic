@@ -28,6 +28,7 @@
                 android:orientation="vertical">
 
                 <android.support.constraint.ConstraintLayout
+                    android:id="@+id/cl_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -127,6 +128,7 @@
                         android:background="@drawable/bg_edittext_normal"
                         android:ellipsize="end"
                         android:maxLines="2"
+                        android:minLines="2"
                         android:paddingBottom="15dp"
                         android:paddingTop="15dp"
                         android:text='@{viewModel.comic.description}'
@@ -141,10 +143,10 @@
                     android:id="@+id/recycler_ep"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp"
+                    android:background="@color/white"
+                    android:clipToPadding="false"
+                    android:minHeight="300dp"
+                    android:padding="15dp"
                     app:columnNum="4"
                     app:divideWidth="21dp" />
 

@@ -1,6 +1,7 @@
 package com.guuguo.android.pikacomic.constant
 
 import com.google.gson.GsonBuilder
+import com.guuguo.android.pikacomic.app.MyApplication
 
 /**
  * guode 创造于 2017-05-01.
@@ -12,3 +13,4 @@ val myGson by lazy {
 }
 const val baseUrl = "https://picaapi.picacomic.com"
 const val jsonDataFormatStr = "yyyy-MM-dd hh:mm:ss.0"
+fun getFileDir() = MyApplication.instance!!.filesDir.absolutePath!!

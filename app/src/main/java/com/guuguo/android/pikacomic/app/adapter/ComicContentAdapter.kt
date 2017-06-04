@@ -2,14 +2,17 @@ package com.guuguo.android.pikacomic.app.adapter
 
 import am.drawable.TextDrawable
 import android.graphics.Color
+import android.net.Uri
 import android.view.View
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.guuguo.android.lib.view.RatioImageView
 import com.guuguo.android.pikacomic.R
+import com.guuguo.android.pikacomic.constant.getFileDir
 import com.guuguo.android.pikacomic.entity.ImageEntity
-import com.guuguo.android.pikacomic.utils.MyScaleImageViewTarget
+import com.guuguo.android.pikacomic.utils.ScaleContentImageViewTarget
+import java.io.File
 
 class ComicContentAdapter : BaseQuickAdapter<ImageEntity, ComicContentAdapter.ViewHolder> {
 
@@ -19,8 +22,6 @@ class ComicContentAdapter : BaseQuickAdapter<ImageEntity, ComicContentAdapter.Vi
     constructor() : super(R.layout.item_comic_content, null)
 
     var firstEpList = arrayListOf<ImageEntity>()
-//    var secondEpList = arrayListOf<ImageEntity>()
-//    var epInvisibleSize = 0
 
     inner class ViewHolder(view: View) : BaseViewHolder(view) {
         val rivContent = getView<RatioImageView>(R.id.riv_content)
@@ -33,6 +34,14 @@ class ComicContentAdapter : BaseQuickAdapter<ImageEntity, ComicContentAdapter.Vi
 
     override fun convert(helper: ViewHolder, item: ImageEntity) {
         val drawable = TextDrawable(mContext, 300f, Color.GRAY, item.position.toString())
-        Glide.with(mContext).load(item.media?.getOriginUrl()).centerCrop().placeholder(drawable).into(MyScaleImageViewTarget(helper.rivContent))
+        if (item.media!!.isDownload) {
+            val file = File(getFileDir() + "/" + item.media!!.path)
+
+            Glide.with(mContext).load(Uri.fromFile(file))
+        } else {
+            Glide.with(mContext).load(item.media?.getOriginUrl())
+        }
+                .asBitmap().centerCrop().placeholder(drawable).into(ScaleContentImageViewTarget(helper.rivContent, item, comicId))
     }
+    var comicId = ""
 }

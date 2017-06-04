@@ -4,6 +4,7 @@ import android.support.multidex.MultiDex
 import android.support.v7.app.AppCompatDelegate
 import com.guuguo.android.lib.BaseApplication
 import com.guuguo.android.pikacomic.R
+import com.guuguo.android.pikacomic.constant.getFileDir
 import com.guuguo.gank.net.MyRetrofit.myRetrofit
 import com.tencent.bugly.Bugly
 import com.tencent.bugly.beta.Beta
@@ -24,10 +25,10 @@ class MyApplication : BaseApplication() {
     private fun initRxDownload() {
         RxDownload.getInstance(this)
                 .retrofit(myRetrofit)             //若需要自己的retrofit客户端,可在这里指定
-                .defaultSavePath(filesDir.absolutePath) //设置默认的下载路径
+                .defaultSavePath(getFileDir()) //设置默认的下载路径
                 .maxThread(5)                     //设置最大线程
-                .maxRetryCount(8)                 //设置下载失败重试次数
-                .maxDownloadNumber(10)             //Service同时下载数量
+                .maxRetryCount(4)                 //设置下载失败重试次数
+                .maxDownloadNumber(4)             //Service同时下载数量
     }
 
     companion object {

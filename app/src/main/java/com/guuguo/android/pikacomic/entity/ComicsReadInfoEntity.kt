@@ -19,9 +19,5 @@ class ComicsReadInfoEntity : Serializable {
     @Default("0")
     var lastReadTime: Long = 0
 
-//    fun addCustomInfo(comicEntity: ComicsEntity) {
-//        readEp = comicEntity.readEp
-//        lastReadTime = comicEntity.lastReadTime
-//    }
 
 }

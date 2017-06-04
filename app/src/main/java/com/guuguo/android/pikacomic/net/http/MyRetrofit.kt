@@ -15,11 +15,12 @@ import java.util.concurrent.TimeUnit
  * Created by gaohailong on 2016/5/17.
  */
 object MyRetrofit {
-    val httpClient = OkHttpClient.Builder()
+    val commonHttpBuilder = OkHttpClient.Builder()
             .sslSocketFactory(TrustAllCerts.createSSLSocketFactory())
             .hostnameVerifier(TrustAllCerts.TrustAllHostnameVerifier())
             .connectTimeout(10, TimeUnit.MINUTES)
             .readTimeout(10, TimeUnit.MINUTES)
+    val httpClient = commonHttpBuilder
             .retryOnConnectionFailure(false)
             .addInterceptor({
                 chain ->

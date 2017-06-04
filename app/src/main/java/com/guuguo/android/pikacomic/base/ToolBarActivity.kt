@@ -37,7 +37,7 @@
 //    }
 //
 //    protected fun hideOrShowToolBar() {
-//        appBar.animate().translationY((if (isToolBarHiding) 0 else -appBar!!.height).toFloat()).setInterpolator(DecelerateInterpolator(2f)).start()
+//        appBar.animate().translationY((if (isToolBarHiding) 0 else -appBar!!.height).toFloat()).setInterpolator(DecelerateInterpolator(2f)).intentStart()
 //        isToolBarHiding = !isToolBarHiding
 //    }
 //}

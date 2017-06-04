@@ -48,6 +48,8 @@ class ComicsEntity : Serializable {
 
     var readEp: Int? = null
     var lastReadTime: Date? = null
+    var isDownload = false
+
 
     fun save() {
         val entity = UOrm.db().queryById(_id, ComicsEntity::class.java)
@@ -56,6 +58,7 @@ class ComicsEntity : Serializable {
         else {
             readEp = entity.readEp
             lastReadTime = entity.lastReadTime
+            isDownload = entity.isDownload
             UOrm.db().update(this)
         }
     }

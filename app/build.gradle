@@ -100,7 +100,7 @@ dependencies {
 //    }
     /*animator*/
     compile 'com.github.florent37:viewanimator:1.0.5'
-//    compile 'com.github.florent37:expectanim:1.0.3'
+    compile 'com.github.florent37:expectanim:1.0.3'
     /*function*/
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.12'
     compile 'com.github.bumptech.glide:glide:3.8.0'

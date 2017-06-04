@@ -17,7 +17,6 @@ import com.guuguo.android.pikacomic.entity.ImageEntity
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
-import com.litesuits.orm.db.assit.QueryBuilder
 import io.reactivex.disposables.Disposable
 import java.util.*
 
@@ -50,10 +49,14 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
                 super.onSuccess(t)
                 activity.dialogDismiss()
                 t.data?.pages?.let {
+                    //保存epPageEntity
                     t.data?.pages?.comicId = activity.comic._id
                     t.data?.pages?.ep = activity.ep
                     UOrm.db().save(t.data!!.pages)
 
+                    //保存epEntity
+                    t.data?.ep?.comicId = activity.comic._id
+                    t.data!!.ep?.save()
                     activity.setContent(t.data!!.pages!!)
                 }
             }
@@ -66,9 +69,10 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
     }
 
     fun getContent(id: String, ep: Int, page: Int) {
-        val pageEntices = UOrm.db().query(QueryBuilder(EpPagesEntity::class.java).whereEquals("comicId", id).whereAppendAnd().whereEquals("ep", ep).whereAppendAnd().whereEquals("page", page))
-        if (pageEntices.isNotEmpty())
-            activity.setContent(pageEntices.first())
+        val pageEntity = EpPagesEntity.get(id, ep, page)
+
+        if (pageEntity != null)
+            activity.setContent(pageEntity)
         else
             getContentFromNet(id, ep, page)
     }

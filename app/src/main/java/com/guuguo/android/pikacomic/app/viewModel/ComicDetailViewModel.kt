@@ -8,16 +8,15 @@ import com.guuguo.android.lib.extension.date
 import com.guuguo.android.lib.extension.safe
 import com.guuguo.android.lib.extension.toast
 import com.guuguo.android.pikacomic.app.fragment.ComicDetailFragment
-import com.guuguo.android.pikacomic.db.UOrm
-import com.guuguo.android.pikacomic.entity.*
+import com.guuguo.android.pikacomic.app.service.UpdateService
+import com.guuguo.android.pikacomic.entity.ActionResponse
+import com.guuguo.android.pikacomic.entity.ComicDetailResponse
+import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
-import com.litesuits.orm.db.assit.QueryBuilder
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.disposables.Disposable
-import zlc.season.rxdownload2.RxDownload
-import zlc.season.rxdownload2.entity.DownloadFlag
 import java.util.*
 
 
@@ -68,7 +67,6 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
             override fun onSuccess(t: ResponseModel<ActionResponse>) {
                 super.onSuccess(t)
                 activity.dialogDismiss()
-//                "操作成功".toast()
                 when (action) {
                     ACTION_LIKE -> {
                         comic.get().isLiked = !comic.get().isLiked
@@ -117,60 +115,15 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
         })
     }
 
-    fun getContent(id: String, ep: Int, page: Int) {
-        var downloadNum = 0
-        MyApiServer.getComicsContent(id, ep, page).subscribe(object : BaseCallback<ResponseModel<ComicsContentResponse>>() {
-            override fun onSubscribe(d: Disposable?) {
-                activity.addApiCall(d)
-            }
 
-            override fun onSuccess(t: ResponseModel<ComicsContentResponse>) {
-                super.onSuccess(t)
-                activity.dialogDismiss()
-                t.data?.pages?.let {
-                    t.data?.pages?.comicId = id
-                    t.data?.pages?.ep = ep
-                    UOrm.db().save(t.data!!.pages)
-
-                    t.data!!.pages!!.docs.map { it.media!! }.apply {
-                        RxDownload.getInstance(activity).serviceMultiDownload(id + ep, *this.map { it.getOriginUrl() }.toTypedArray())
-                                .subscribe({ "开始下载".toast() })
-                    }.forEach {
-                        RxDownload.getInstance(activity).receiveDownloadStatus(it.getOriginUrl()).subscribe({ downloadEvent ->
-                            val flag = downloadEvent.flag
-                            when (flag) {
-                                DownloadFlag.COMPLETED -> {
-                                    val thumb = UOrm.db().query(QueryBuilder(ThumbEntity::class.java)
-                                            .whereEquals("fileServer", it.fileServer).whereAppendAnd().whereEquals("path", it.path)).first()
-                                    thumb.isDownload = true
-//                                    downloadNum++
-                                    "$downloadNum/${t.data?.pages?.total}".toast()
-//                                    totalDown += downloadEvent.downloadStatus.totalSize
-                                }
-                            }
-//                            Utils.formatSize(totalDown + downloadEvent.downloadStatus.downloadSize).toast()
-                        })
-                    }
-
-                }
-            }
-
-//            var totalDown = 0L
-            override fun onApiLoadError(msg: String) {
-                activity.dialogDismiss()
-                activity.dialogErrorShow(msg, null)
-            }
-        })
-    }
-
-    fun downLoadComic(i: Int) {
+    fun downLoadComic(eps: ArrayList<Int>) {
         RxPermissions(activity)
                 .request(WRITE_EXTERNAL_STORAGE)
                 .subscribe({ granted ->
                     if (!granted) {
                         "没有写入存储权限".toast()
                     } else {
-                        getContent(comic.get()._id, i, 1)
+                        UpdateService.intentStart(activity, eps, comic.get()._id)
                     }
                 })
     }

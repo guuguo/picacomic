@@ -1,7 +1,9 @@
 package com.guuguo.android.pikacomic.entity
 
+import com.guuguo.android.pikacomic.db.UOrm
 import com.litesuits.orm.db.annotation.PrimaryKey
 import com.litesuits.orm.db.annotation.Table
+import com.litesuits.orm.db.assit.QueryBuilder
 import com.litesuits.orm.db.enums.AssignType
 import java.io.Serializable
 
@@ -24,4 +26,14 @@ class ThumbEntity : Serializable {
     fun getOriginUrl(): String = fileServer + "/static/" + path
 
     var isDownload = false
+
+    companion object {
+        fun get(fileServer: String, path: String): ThumbEntity? {
+            val en = UOrm.db().query(QueryBuilder(ThumbEntity::class.java)
+                    .whereEquals("fileServer", fileServer).whereAppendAnd().whereEquals("path", path))
+            return if (en.isEmpty())
+                null else
+                en.first()
+        }
+    }
 }

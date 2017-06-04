@@ -9,8 +9,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.flyco.roundview.RoundTextView
+import com.github.florent37.expectanim.ExpectAnim
+import com.github.florent37.expectanim.core.Expectations.topOfParent
 import com.guuguo.android.lib.app.LNBaseActivity
 import com.guuguo.android.lib.extension.safe
+import com.guuguo.android.lib.extension.toast
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.activity.BaseTitleFragmentActivity
 import com.guuguo.android.pikacomic.app.activity.ComicContentActivity
@@ -21,8 +25,6 @@ import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.databinding.FragmentComicDetailBinding
 import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ComicsEntity
-import kotlinx.android.synthetic.main.fragment_comic_detail.*
-import zlc.season.rxdownload2.RxDownload
 
 /**
  * mimi 创造于 2017-05-22.
@@ -31,7 +33,7 @@ import zlc.season.rxdownload2.RxDownload
 class ComicDetailFragment : BaseFragment() {
     lateinit var binding: FragmentComicDetailBinding
     val viewModel by lazy { ComicDetailViewModel(this) }
-    val epAdapter = EpAdapter()
+    val epAdapter = EpAdapter(false)
 
     override fun getLayoutResId() = R.layout.fragment_comic_detail
     var getComicsType = 0
@@ -42,13 +44,61 @@ class ComicDetailFragment : BaseFragment() {
     }
 
     override fun getMenuResId(): Int {
-        return R.menu.download
+        if (epAdapter.canDownLoadSelect)
+            return R.menu.download_function
+        else {
+            return R.menu.download
+        }
+    }
+
+    val enterAnimator by lazy {
+        ExpectAnim().expect(binding.recyclerEp).toBe(topOfParent())
+                .toAnimation().setDuration(150)!!
+    }
+
+    override fun onBackPressed(): Boolean {
+        if (epAdapter.canDownLoadSelect) {
+            enterDownload(false)
+            return true
+        }
+        return super.onBackPressed()
+    }
+
+    fun enterDownload(isEnter: Boolean) {
+        if (isEnter) {
+            epAdapter.canDownLoadSelect = true
+            activity.invalidateOptionsMenu()
+            activity.title = "漫画下载"
+            if (epAdapter.readEp > 0)
+                epAdapter.notifyItemChanged(epAdapter.readEp - 1)
+
+            enterAnimator.start()
+        } else {
+            epAdapter.canDownLoadSelect = false
+            activity.invalidateOptionsMenu()
+            activity.title = getHeaderTitle()
+            epAdapter.notifyItemRangeChanged(0, epAdapter.data.size)
+            epAdapter.selectedEp.clear()
+            enterAnimator.reset()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_download -> {
-                viewModel.downLoadComic(1);
+                enterDownload(true)
+            }
+            R.id.menu_confirm -> {
+                if (epAdapter.selectedEp.isEmpty())
+                    "没有选中的章节".toast()
+                else
+                    viewModel.downLoadComic(epAdapter.selectedEp)
+            }
+            R.id.menu_select_all -> {
+                epAdapter.selectedEp.clear()
+                if (epAdapter.selectedEp.size != epAdapter.data.size)
+                    epAdapter.selectedEp.addAll(epAdapter.data)
+                epAdapter.notifyItemRangeChanged(0, epAdapter.data.size)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -92,9 +142,21 @@ class ComicDetailFragment : BaseFragment() {
         if (dbComic != null)
             comicEntity = dbComic
 
-        recycler_ep.setAdapter(epAdapter)
-        epAdapter.setOnItemClickListener { _, _, i ->
-            ComicContentActivity.intentTo(activity, viewModel.comic.get(), i + 1)
+        binding.recyclerEp.setAdapter(epAdapter)
+        epAdapter.setOnItemChildClickListener { _, view, i ->
+            val item = epAdapter.getItem(i)
+            if (epAdapter.canDownLoadSelect) {
+                if (view is RoundTextView) {
+                    if (epAdapter.selectedEp.contains(item)) {
+                        epAdapter.selectedEp.remove(item)
+                        epAdapter.notifyItemChanged(i)
+                    } else {
+                        epAdapter.selectedEp.add(item)
+                        epAdapter.notifyItemChanged(i)
+                    }
+                }
+            } else
+                ComicContentActivity.intentTo(activity, viewModel.comic.get(), i + 1)
         }
         binding.rtvRead.setOnClickListener {
             ComicContentActivity.intentTo(activity, viewModel.comic.get(), if (epAdapter.readEp != 0) epAdapter.readEp else 1)
@@ -110,8 +172,8 @@ class ComicDetailFragment : BaseFragment() {
 
     fun setUpComic(comic: ComicsEntity) {
         Glide.with(activity).load(comic.thumb?.getOriginUrl()).asBitmap().placeholder(R.drawable.placeholder_loading).centerCrop().into(binding.ivBanner)
-        val array: ArrayList<String> = arrayListOf()
-        (1..comic.epsCount).map { array.add(it.toString()) }
+        val array: ArrayList<Int> = arrayListOf()
+        (1..comic.epsCount).map { array.add(it) }
         epAdapter.readEp = comic.readEp.safe()
         epAdapter.setNewData(array)
     }

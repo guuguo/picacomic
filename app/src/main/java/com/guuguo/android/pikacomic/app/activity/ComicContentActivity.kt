@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.support.v4.view.GestureDetectorCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -76,6 +75,7 @@ class ComicContentActivity : BaseActivity() {
         binding.recycler.layoutManager = LinearLayoutManager(activity)
         binding.recycler.addItemDecoration(HorizontalDividerItemDecoration.Builder(activity).color(Color.BLACK).build())
         comicsContentAdapter.bindToRecyclerView(binding.recycler)
+        comicsContentAdapter.comicId=comic._id
         comicsContentAdapter.setOnLoadMoreListener({
             page++
             loadData()

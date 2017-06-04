@@ -1,6 +1,9 @@
 package com.guuguo.android.pikacomic.entity
 
-import com.litesuits.orm.db.annotation.*
+import com.litesuits.orm.db.annotation.Ignore
+import com.litesuits.orm.db.annotation.Mapping
+import com.litesuits.orm.db.annotation.PrimaryKey
+import com.litesuits.orm.db.annotation.Table
 import com.litesuits.orm.db.enums.AssignType
 import com.litesuits.orm.db.enums.Relation
 
@@ -9,6 +12,7 @@ import com.litesuits.orm.db.enums.Relation
  * 项目 pika
  */
 
+@Table("comic_content")
 class ComicsContentResponse {
     var pages: EpPagesEntity? = null
     var ep: EpEntity? = null
