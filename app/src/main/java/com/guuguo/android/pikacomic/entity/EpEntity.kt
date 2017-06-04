@@ -21,11 +21,13 @@ class EpEntity(var comicId: String = "", var order: Int = 0) : Serializable {
 
     fun save() {
         val entity = UOrm.db().queryById(_id, EpEntity::class.java)
-        if (entity != null) {
+        if (entity == null) {
+            UOrm.db().insert(this)
+        }else{
             this.comicId = entity.comicId
             this.downloadCount = entity.downloadCount
+            UOrm.db().insert(this)
         }
-        UOrm.db().save(this)
     }
 
     companion object {

@@ -41,7 +41,7 @@ class ComicContentAdapter : BaseQuickAdapter<ImageEntity, ComicContentAdapter.Vi
         } else {
             Glide.with(mContext).load(item.media?.getOriginUrl())
         }
-                .asBitmap().centerCrop().placeholder(drawable).into(ScaleContentImageViewTarget(helper.rivContent, item, comicId))
+                .centerCrop().placeholder(drawable).into(ScaleContentImageViewTarget(helper.rivContent, item, comicId))
     }
     var comicId = ""
 }
