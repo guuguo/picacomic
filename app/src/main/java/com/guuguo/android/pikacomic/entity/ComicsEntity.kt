@@ -47,8 +47,8 @@ class ComicsEntity : Serializable {
     var tags: ArrayList<String> = ArrayList<String>()
 
     var readEp: Int? = null
-    var lastReadTime: Date? = null
-    var isDownload = false
+    var lastReadTime: Long = 0L
+    var addDownloadTime = 0L
 
 
     fun save() {
@@ -58,7 +58,7 @@ class ComicsEntity : Serializable {
         else {
             readEp = entity.readEp
             lastReadTime = entity.lastReadTime
-            isDownload = entity.isDownload
+            addDownloadTime = entity.addDownloadTime
             UOrm.db().update(this)
         }
     }

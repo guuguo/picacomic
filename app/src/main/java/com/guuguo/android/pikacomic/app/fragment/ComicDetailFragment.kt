@@ -90,15 +90,17 @@ class ComicDetailFragment : BaseFragment() {
             R.id.menu_confirm -> {
                 if (epAdapter.selectedEp.isEmpty())
                     "没有选中的章节".toast()
-                else
+                else {
+                    viewModel.comic.get().addDownloadTime = System.currentTimeMillis()
+                    UOrm.db().save(viewModel.comic.get())
                     viewModel.downLoadComic(epAdapter.selectedEp)
+                }
             }
             R.id.menu_select_all -> {
-                if (epAdapter.selectedEp.size != epAdapter.data.size)
-                {
+                if (epAdapter.selectedEp.size != epAdapter.data.size) {
                     epAdapter.selectedEp.clear()
                     epAdapter.selectedEp.addAll(epAdapter.data)
-                }else{
+                } else {
                     epAdapter.selectedEp.clear()
                 }
                 epAdapter.notifyItemRangeChanged(0, epAdapter.data.size)

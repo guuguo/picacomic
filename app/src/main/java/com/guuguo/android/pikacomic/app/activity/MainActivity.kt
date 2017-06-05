@@ -46,7 +46,7 @@ class MainActivity : BaseActivity() {
         mFragments.add(HomeFragment())
         mFragments.add(CategoryFragment())
         mFragments.add(MineFragment())
-        mFragments.add(DownloadManageFragment())
+        mFragments.add(ComicDownloadManageFragment())
     }
 
     override fun initView() {

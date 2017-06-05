@@ -1,5 +1,4 @@
 package com.guuguo.android.pikacomic.app.fragment
-
 import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -12,24 +11,20 @@ import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.databinding.FragmentSettingBinding
 import kotlinx.android.synthetic.main.layout_title_bar.*
-
 /**
  * mimi 创造于 2017-05-22.
  * 项目 pika
  */
-class DownloadManageFragment : BaseFragment() {
+class SettingFragment : BaseFragment() {
     lateinit var binding: FragmentSettingBinding
     val viewModel by lazy { SettingViewModel(this) }
-
     override fun getLayoutResId() = R.layout.fragment_setting
     override fun getHeaderTitle(): String {
-        return "下载管理"
+        return "设置"
     }
-
     override fun setTitle(title: String) {
         tv_title_bar.text = title
     }
-
     override fun initToolbar() {
         if (getMenuResId() != 0) {
             id_toolbar.inflateMenu(getMenuResId())
@@ -37,13 +32,11 @@ class DownloadManageFragment : BaseFragment() {
         }
         setTitle(getHeaderTitle())
     }
-
     override fun setLayoutResId(inflater: LayoutInflater?, resId: Int, container: ViewGroup?): View {
         binding = DataBindingUtil.inflate(inflater, resId, container, false)
         binding.viewModel = viewModel
         return binding.root
     }
-
     override fun initView() {
         super.initView()
         binding.sSwitch.setOnClickListener {
@@ -54,7 +47,6 @@ class DownloadManageFragment : BaseFragment() {
         }
         binding.sSwitch.isChecked = !LocalData.patternStr.isNullOrEmpty()
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
