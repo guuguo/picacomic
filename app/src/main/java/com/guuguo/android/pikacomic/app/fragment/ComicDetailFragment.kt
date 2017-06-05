@@ -4,13 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bumptech.glide.Glide
 import com.flyco.roundview.RoundTextView
 import com.github.florent37.expectanim.ExpectAnim
+import com.github.florent37.expectanim.core.Expectations.outOfScreen
 import com.github.florent37.expectanim.core.Expectations.topOfParent
 import com.guuguo.android.lib.app.LNBaseActivity
 import com.guuguo.android.lib.extension.safe
@@ -53,6 +51,7 @@ class ComicDetailFragment : BaseFragment() {
 
     val enterAnimator by lazy {
         ExpectAnim().expect(binding.recyclerEp).toBe(topOfParent())
+                .expect(binding.rlBar).toBe(outOfScreen(Gravity.BOTTOM))
                 .toAnimation().setDuration(150)!!
     }
 
@@ -95,9 +94,13 @@ class ComicDetailFragment : BaseFragment() {
                     viewModel.downLoadComic(epAdapter.selectedEp)
             }
             R.id.menu_select_all -> {
-                epAdapter.selectedEp.clear()
                 if (epAdapter.selectedEp.size != epAdapter.data.size)
+                {
+                    epAdapter.selectedEp.clear()
                     epAdapter.selectedEp.addAll(epAdapter.data)
+                }else{
+                    epAdapter.selectedEp.clear()
+                }
                 epAdapter.notifyItemRangeChanged(0, epAdapter.data.size)
             }
         }
