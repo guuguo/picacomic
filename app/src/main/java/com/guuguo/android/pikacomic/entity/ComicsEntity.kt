@@ -41,14 +41,14 @@ class ComicsEntity : Serializable {
 
     //    @Mapping(Relation.OneToMany)
     @Ignore
-    var categories: ArrayList<String> = ArrayList<String>()
+    var categories: ArrayList<String> = ArrayList<String>()   
     //    @Mapping(Relation.OneToMany)
     @Ignore
     var tags: ArrayList<String> = ArrayList<String>()
 
     var readEp: Int? = null
     var lastReadTime: Long = 0L
-    var addDownloadTime = 0L
+    var addDownloadTime: Long = 0L
 
 
     fun save() {

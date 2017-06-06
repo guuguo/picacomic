@@ -54,8 +54,7 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
                     UOrm.db().save(t.data!!.pages)
 
                     //保存epEntity
-                    t.data?.ep?.comicId = activity.comic._id
-                    t.data!!.ep?.save()
+                    t.data!!.ep?.save(ep,id)
                     activity.setContent(t.data!!.pages!!)
                 }
             }

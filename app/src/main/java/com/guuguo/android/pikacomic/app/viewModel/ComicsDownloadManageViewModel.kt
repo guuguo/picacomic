@@ -1,7 +1,7 @@
 package com.guuguo.android.pikacomic.app.viewModel
 
 import android.databinding.BaseObservable
-import com.guuguo.android.pikacomic.app.fragment.ComicDownloadManageFragment
+import com.guuguo.android.pikacomic.app.fragment.ComicsDownloadManageFragment
 import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.litesuits.orm.db.assit.QueryBuilder
@@ -11,7 +11,7 @@ import com.litesuits.orm.db.assit.QueryBuilder
  * mimi 创造于 2017-05-22.
  * 项目 pika
  */
-class ComicDownloadManageViewModel(val fragment: ComicDownloadManageFragment) : BaseObservable() {
+class ComicsDownloadManageViewModel(val fragment: ComicsDownloadManageFragment) : BaseObservable() {
     val activity = fragment.activity
     fun getDownloadComics() {
         val comics = UOrm.db().query(QueryBuilder(ComicsEntity::class.java).whereNoEquals("addDownloadTime", 0).appendOrderDescBy("addDownloadTime"))

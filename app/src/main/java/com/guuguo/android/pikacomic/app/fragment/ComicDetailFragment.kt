@@ -91,9 +91,12 @@ class ComicDetailFragment : BaseFragment() {
                 if (epAdapter.selectedEp.isEmpty())
                     "没有选中的章节".toast()
                 else {
-                    viewModel.comic.get().addDownloadTime = System.currentTimeMillis()
-                    UOrm.db().save(viewModel.comic.get())
+//                    val comic = readDbComic()
+                    
+                    viewModel.comic.get()!!.addDownloadTime=System.currentTimeMillis()
+                    UOrm.db().update(viewModel.comic.get())
                     viewModel.downLoadComic(epAdapter.selectedEp)
+                    onBackPressed()
                 }
             }
             R.id.menu_select_all -> {

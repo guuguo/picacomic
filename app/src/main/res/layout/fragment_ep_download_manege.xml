@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.guuguo.android.pikacomic.app.viewModel.ComicsDownloadManageViewModel" />
+            type="com.guuguo.android.pikacomic.app.viewModel.EpsDownloadManageViewModel" />
     </data>
 
     <android.support.v7.widget.RecyclerView

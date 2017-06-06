@@ -70,8 +70,7 @@ class UpdateService : LNBaseService() {
                     UOrm.db().save(t.data?.pages)
 
                     //保存epEntity
-                    t.data?.ep?.comicId = id
-                    t.data?.ep?.save()
+                    t.data?.ep?.save(ep, id)
 
                     downloadImages(t.data?.ep!!, t.data!!.pages!!, id, ep, page)
 
@@ -84,7 +83,8 @@ class UpdateService : LNBaseService() {
     }
 
     private fun downloadImages(epEntity: EpEntity, epPagesEntity: EpPagesEntity, id: String, ep: Int, page: Int) {
-
+        if (epEntity.downloadCount == -1)
+            epEntity.downloadCount = 0
         epPagesEntity.docs.map { it.media!! }.filter { !it.isDownload }.apply {
             val dispose = RxDownload.getInstance(MyApplication.instance).serviceMultiDownload(id + ep,
                     *this.map { it.getOriginUrl() }.toTypedArray())

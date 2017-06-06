@@ -241,6 +241,7 @@
                 <ImageView
                     android:id="@+id/iv_down"
                     android:layout_width="0dp"
+                    android:onClick="@{viewModel::onDownloadClick}"
                     android:layout_height="25dp"
                     app:layout_constraintLeft_toRightOf="@+id/iv_message"
                     app:layout_constraintRight_toLeftOf="@+id/iv_about"
@@ -250,6 +251,7 @@
                 <TextView
                     android:id="@+id/tv_down"
                     android:layout_width="0dp"
+                    android:onClick="@{viewModel::onDownloadClick}"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingTop="12dp"

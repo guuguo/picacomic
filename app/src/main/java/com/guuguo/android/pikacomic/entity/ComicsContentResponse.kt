@@ -12,7 +12,6 @@ import com.litesuits.orm.db.enums.Relation
  * 项目 pika
  */
 
-@Table("comic_content")
 class ComicsContentResponse {
     var pages: EpPagesEntity? = null
     var ep: EpEntity? = null
