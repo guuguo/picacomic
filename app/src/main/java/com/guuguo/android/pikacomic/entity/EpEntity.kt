@@ -20,13 +20,13 @@ class EpEntity(var comicId: String = "", @Column("epOrder") var order: Int = 0) 
     var updated_at = ""
     var downloadCount = -1
 
-    fun save(order:Int,comicId: String) {
-        this.order=order
-        this.comicId=comicId
+    fun save(order: Int, comicId: String) {
+        this.order = order
+        this.comicId = comicId
         val entity = UOrm.db().queryById(_id, EpEntity::class.java)
         if (entity == null) {
             UOrm.db().insert(this)
-        }else{
+        } else {
             this.downloadCount = entity.downloadCount
             UOrm.db().update(this)
         }
@@ -38,6 +38,10 @@ class EpEntity(var comicId: String = "", @Column("epOrder") var order: Int = 0) 
             return if (entities.isNotEmpty())
                 entities.first()
             else null
+        }
+
+        fun queryByComicId(comicId:String): ArrayList<EpEntity>? {
+            return UOrm.db().query(QueryBuilder(EpEntity::class.java).whereEquals("comicId", comicId).appendOrderAscBy("epOrder"))
         }
     }
 }

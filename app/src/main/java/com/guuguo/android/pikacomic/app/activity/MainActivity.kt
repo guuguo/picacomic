@@ -22,7 +22,7 @@ import com.guuguo.android.pikacomic.databinding.ActivityMainBinding
 class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
 
-    override val isBackExit = true
+    override val backExitStyle=BACK_DIALOG_CONFIRM
     private val mTitles = arrayOf("首页", "分类", "我的", "设置")
     private val mUnselectedIcons = arrayOf(R.drawable.ic_homepage, R.drawable.ic_manage, R.drawable.ic_mine, R.drawable.ic_setup)
     private val mSelectedIcons = arrayOf(R.drawable.ic_homepage_fill, R.drawable.ic_manage_fill, R.drawable.ic_mine_fill, R.drawable.ic_setup_fill)

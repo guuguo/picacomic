@@ -10,7 +10,7 @@
             type="com.guuguo.android.pikacomic.app.viewModel.ComicDetailViewModel" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -19,7 +19,7 @@
         <ScrollView
             android:id="@+id/sv_scroll"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1">
 
             <LinearLayout
@@ -148,12 +148,14 @@
                     android:minHeight="300dp"
                     android:padding="15dp"
                     app:columnNum="4"
-                    app:divideWidth="21dp" />
+                    app:divideWidth="21dp" 
+                    android:paddingBottom="68dp"/>
 
             </LinearLayout>
         </ScrollView>
 
         <android.support.constraint.ConstraintLayout
+            android:layout_gravity="bottom"
             android:id="@+id/rl_bar"
             android:layout_width="match_parent"
             android:layout_height="68dp"
@@ -238,5 +240,5 @@
                 app:rv_cornerRadius="2dp" />
         </android.support.constraint.ConstraintLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 </layout>

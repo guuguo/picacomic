@@ -1,12 +1,10 @@
 package com.guuguo.android.pikacomic.app.viewModel
 
 import android.databinding.BaseObservable
-import com.guuguo.android.pikacomic.app.fragment.ComicsDownloadManageFragment
+import android.view.View
+import com.guuguo.android.pikacomic.app.fragment.ComicDetailFragment
 import com.guuguo.android.pikacomic.app.fragment.EpsDownloadManageFragment
-import com.guuguo.android.pikacomic.db.UOrm
-import com.guuguo.android.pikacomic.entity.ComicsEntity
 import com.guuguo.android.pikacomic.entity.EpEntity
-import com.litesuits.orm.db.assit.QueryBuilder
 
 
 /**
@@ -15,11 +13,13 @@ import com.litesuits.orm.db.assit.QueryBuilder
  */
 class EpsDownloadManageViewModel(val fragment: EpsDownloadManageFragment) : BaseObservable() {
     val activity = fragment.activity
-    fun getDownloadComics() {
-        val eps = UOrm.db().query(QueryBuilder(EpEntity::class.java).whereEquals("comicId", 0).appendOrderAscBy("epOrder"))
+    fun getDownloadEps(comicId:String) {
+        val eps =EpEntity.queryByComicId(comicId) 
         fragment.setUpDownload(eps)
     }
-
-
+  fun  onComicDetailClick(v: View){
+      ComicDetailFragment.intentTo(activity,fragment.comicEntity)
+  }
+   
 }
 

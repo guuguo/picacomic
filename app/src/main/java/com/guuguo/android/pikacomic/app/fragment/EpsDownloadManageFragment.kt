@@ -4,22 +4,25 @@ import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.guuguo.android.lib.app.LNBaseActivity
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.activity.BaseTitleFragmentActivity
-import com.guuguo.android.pikacomic.app.adapter.ComicsAdapter
-import com.guuguo.android.pikacomic.app.adapter.EpAdapter
-import com.guuguo.android.pikacomic.app.viewModel.ComicsDownloadManageViewModel
+import com.guuguo.android.pikacomic.app.adapter.EpDownloadAdapter
 import com.guuguo.android.pikacomic.app.viewModel.EpsDownloadManageViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
-import com.guuguo.android.pikacomic.databinding.FragmentComicDownloadManegeBinding
+import com.guuguo.android.pikacomic.constant.BUS_ACTION_URL_DOWNLOAD
 import com.guuguo.android.pikacomic.databinding.FragmentEpDownloadManegeBinding
 import com.guuguo.android.pikacomic.entity.ComicsEntity
-import kotlinx.android.synthetic.main.layout_title_bar.*
+import com.guuguo.android.pikacomic.entity.EpEntity
+import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.annotation.Tag
+import com.hwangjr.rxbus.thread.EventThread
+
 
 /**
  * mimi 创造于 2017-05-22.
@@ -28,23 +31,27 @@ import kotlinx.android.synthetic.main.layout_title_bar.*
 class EpsDownloadManageFragment : BaseFragment() {
     lateinit var binding: FragmentEpDownloadManegeBinding
     val viewModel by lazy { EpsDownloadManageViewModel(this) }
-    val comicsAdapter = ComicsAdapter()
+    val epsAdapter = EpDownloadAdapter()
+    lateinit var comicEntity: ComicsEntity
 
     override fun getLayoutResId() = R.layout.fragment_ep_download_manege
     override fun getHeaderTitle(): String {
-        return "下载管理"
+        return comicEntity.title
     }
 
     companion object {
-        val COMIC_DOWNLOAD_MANAGE_FRAGMENT = 0x9
-        fun intentTo(activity: Activity) {
+        val ARG_COMIC = "ARG_COMIC"
+        val EPS_DOWNLOAD_MANAGE_FRAGMENT = 0x53
+
+        fun intentTo(activity: Activity, comic: ComicsEntity) {
             val intent = Intent(activity, BaseTitleFragmentActivity::class.java)
             intent.putExtra(LNBaseActivity.SIMPLE_ACTIVITY_INFO, EpsDownloadManageFragment::class.java)
 
             val bundle = Bundle()
+            bundle.putSerializable(ARG_COMIC, comic)
 
             intent.putExtras(bundle)
-            activity.startActivityForResult(intent, COMIC_DOWNLOAD_MANAGE_FRAGMENT)
+            activity.startActivityForResult(intent, EPS_DOWNLOAD_MANAGE_FRAGMENT)
         }
     }
 
@@ -54,18 +61,42 @@ class EpsDownloadManageFragment : BaseFragment() {
         return binding.root
     }
 
+
+    override fun initVariable(savedInstanceState: Bundle?) {
+        super.initVariable(savedInstanceState)
+        comicEntity = arguments.getSerializable(ARG_COMIC) as ComicsEntity
+    }
+
     override fun loadData() {
         super.loadData()
-        viewModel.getDownloadComics()
+        viewModel.getDownloadEps(comicEntity._id)
     }
 
     override fun initView() {
         super.initView()
-        binding.recycler.layoutManager = GridLayoutManager(activity, 3)
-        comicsAdapter.bindToRecyclerView(binding.recycler)
+        RxBus.get().register(this)
+        binding.recycler.layoutManager = LinearLayoutManager(activity)
+        epsAdapter.bindToRecyclerView(binding.recycler)
     }
 
-    fun setUpDownload(comics: EpAdapter<ComicsEntity>?) {
-        comicsAdapter.setNewData(comics)
+
+    @Subscribe(
+            thread = EventThread.MAIN_THREAD,
+            tags = arrayOf(Tag(BUS_ACTION_URL_DOWNLOAD))
+    )
+    fun downloadNotify(epEntity: EpEntity) {
+        if (epEntity.comicId == comicEntity._id) {
+            val index = epsAdapter.data.indexOfFirst { it.order == epEntity.order }
+            epsAdapter.notifyItemChanged(index)
+        }
+    }
+
+    override fun onDestroyView() {
+        RxBus.get().unregister(this)
+        super.onDestroyView()
+    }
+
+    fun setUpDownload(comics: ArrayList<EpEntity>?) {
+        epsAdapter.setNewData(comics)
     }
 }

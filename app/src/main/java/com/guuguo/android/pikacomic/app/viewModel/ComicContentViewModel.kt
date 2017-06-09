@@ -67,7 +67,7 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
     }
 
     fun getContent(id: String, ep: Int, page: Int) {
-        val pageEntity = EpPagesEntity.get(id, ep, page)
+        val pageEntity = EpPagesEntity.query(id, ep, page)
 
         if (pageEntity != null)
             activity.setContent(pageEntity)

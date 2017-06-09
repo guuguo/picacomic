@@ -32,7 +32,7 @@ class EpPagesEntity {
     var ep = 1
 
     companion object {
-        fun get(id: String, ep: Int, page: Int): EpPagesEntity? {
+        fun query(id: String, ep: Int, page: Int): EpPagesEntity? {
             val entities = UOrm.db()
                     .query(QueryBuilder(EpPagesEntity::class.java)
                             .whereEquals("comicId", id).whereAppendAnd().whereEquals("ep", ep)
@@ -40,7 +40,14 @@ class EpPagesEntity {
             return if (entities.isNotEmpty())
                 entities.first()
             else null
+        }
 
+        fun queryByEpOrder(order: Int, comicId: String): ArrayList<EpPagesEntity> {
+            val entities = UOrm.db()
+                    .query(QueryBuilder(EpPagesEntity::class.java)
+                            .whereEquals("comicId", comicId).whereAppendAnd().whereEquals("ep", order)
+                            .appendOrderAscBy("page"))
+            return entities
         }
     }
 }

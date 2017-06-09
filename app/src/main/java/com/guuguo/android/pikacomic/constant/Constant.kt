@@ -14,3 +14,5 @@ val myGson by lazy {
 const val baseUrl = "https://picaapi.picacomic.com"
 const val jsonDataFormatStr = "yyyy-MM-dd hh:mm:ss.0"
 fun getFileDir() = MyApplication.instance!!.filesDir.absolutePath!!
+
+const val BUS_ACTION_URL_DOWNLOAD="BUS_ACTION_URL_DOWNLOAD"

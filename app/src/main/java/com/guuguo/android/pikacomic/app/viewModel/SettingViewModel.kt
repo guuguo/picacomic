@@ -4,7 +4,6 @@ import android.app.Activity
 import android.databinding.BaseObservable
 import android.view.View
 import com.flyco.dialog.listener.OnBtnClickL
-import com.guuguo.android.pikacomic.app.fragment.ComicDownloadManageFragment
 import com.guuguo.android.pikacomic.app.fragment.SettingFragment
 import com.guuguo.android.pikacomic.constant.LocalData
 

@@ -6,6 +6,7 @@ import android.os.IBinder
 import com.guuguo.android.lib.app.LNBaseService
 import com.guuguo.android.lib.extension.toast
 import com.guuguo.android.pikacomic.app.MyApplication
+import com.guuguo.android.pikacomic.constant.BUS_ACTION_URL_DOWNLOAD
 import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ComicsContentResponse
 import com.guuguo.android.pikacomic.entity.EpEntity
@@ -13,6 +14,7 @@ import com.guuguo.android.pikacomic.entity.EpPagesEntity
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
+import com.hwangjr.rxbus.RxBus
 import io.reactivex.disposables.Disposable
 import zlc.season.rxdownload2.RxDownload
 import zlc.season.rxdownload2.entity.DownloadFlag
@@ -44,7 +46,7 @@ class UpdateService : LNBaseService() {
     }
 
     fun getContent(id: String, ep: Int, page: Int) {
-        val pageEntity = EpPagesEntity.get(id, ep, page)
+        val pageEntity = EpPagesEntity.query(id, ep, page)
         var epEntity = EpEntity.get(id, ep)
 
         if (pageEntity != null) {
@@ -100,6 +102,7 @@ class UpdateService : LNBaseService() {
                         "${epEntity.downloadCount}/${epPagesEntity.total}".toast()
                         UOrm.db().update(it)
                         UOrm.db().update(epEntity)
+                        RxBus.get().post(BUS_ACTION_URL_DOWNLOAD,epEntity)
                     }
                 }
             })

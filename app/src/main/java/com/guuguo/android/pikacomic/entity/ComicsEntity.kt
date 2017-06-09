@@ -5,10 +5,12 @@ import com.litesuits.orm.db.annotation.Ignore
 import com.litesuits.orm.db.annotation.Mapping
 import com.litesuits.orm.db.annotation.PrimaryKey
 import com.litesuits.orm.db.annotation.Table
+import com.litesuits.orm.db.assit.QueryBuilder
 import com.litesuits.orm.db.enums.AssignType
 import com.litesuits.orm.db.enums.Relation
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * mimi 创造于 2017-05-24.
@@ -38,17 +40,14 @@ class ComicsEntity : Serializable {
     var isFavourite: Boolean = false
     var isLiked: Boolean = false
     var commentsCount: Int = 0
-
-    //    @Mapping(Relation.OneToMany)
-    @Ignore
-    var categories: ArrayList<String> = ArrayList<String>()   
-    //    @Mapping(Relation.OneToMany)
-    @Ignore
-    var tags: ArrayList<String> = ArrayList<String>()
-
     var readEp: Int? = null
     var lastReadTime: Long = 0L
     var addDownloadTime: Long = 0L
+
+    @Ignore
+    var categories: ArrayList<String> = ArrayList<String>()
+    @Ignore
+    var tags: ArrayList<String> = ArrayList<String>()
 
 
     fun save() {
@@ -61,5 +60,12 @@ class ComicsEntity : Serializable {
             addDownloadTime = entity.addDownloadTime
             UOrm.db().update(this)
         }
+    }
+
+    companion object {
+        fun queryDownloadComics(): ArrayList<ComicsEntity>? {
+            return UOrm.db().query(QueryBuilder(ComicsEntity::class.java).whereNoEquals("addDownloadTime", 0).appendOrderDescBy("addDownloadTime"))
+        }
+
     }
 }

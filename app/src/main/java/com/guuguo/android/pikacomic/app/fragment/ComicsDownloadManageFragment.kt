@@ -16,7 +16,6 @@ import com.guuguo.android.pikacomic.app.viewModel.ComicsDownloadManageViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.databinding.FragmentComicDownloadManegeBinding
 import com.guuguo.android.pikacomic.entity.ComicsEntity
-import kotlinx.android.synthetic.main.layout_title_bar.*
 
 /**
  * mimi 创造于 2017-05-22.
@@ -59,9 +58,13 @@ class ComicsDownloadManageFragment : BaseFragment() {
 
     override fun initView() {
         super.initView()
-        binding.recycler.layoutManager=GridLayoutManager(activity,3)
+        binding.recycler.layoutManager = GridLayoutManager(activity, 3)
         comicsAdapter.bindToRecyclerView(binding.recycler)
+        comicsAdapter.setOnItemClickListener { _, _, i ->
+            EpsDownloadManageFragment.intentTo(activity, comicsAdapter.getItem(i))
+        }
     }
+
     fun setUpDownload(comics: ArrayList<ComicsEntity>?) {
         comicsAdapter.setNewData(comics)
     }

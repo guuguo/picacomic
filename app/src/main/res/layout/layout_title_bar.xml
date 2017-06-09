@@ -26,7 +26,7 @@
             app:srcCompat="@drawable/ic_arrowleft" />
 
         <TextView
-            android:maxEms="13"
+            android:maxEms="10"
             android:ellipsize="end"
             android:maxLines="1"
             android:id="@+id/tv_title_bar"

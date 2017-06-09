@@ -2,6 +2,8 @@ package com.guuguo.android.pikacomic.db
 
 import android.database.sqlite.SQLiteDatabase
 import com.guuguo.android.pikacomic.app.MyApplication
+import com.guuguo.android.pikacomic.entity.ComicsEntity
+import com.guuguo.android.pikacomic.entity.EpEntity
 import com.litesuits.orm.LiteOrm
 import com.litesuits.orm.db.DataBaseConfig
 import com.litesuits.orm.db.assit.SQLiteHelper
@@ -13,7 +15,7 @@ object UOrm : SQLiteHelper.OnUpdateListener {
     private var isDbUpdate = false
 
     init {
-        config.dbVersion = 9//新增拼音字段,字母大写模式
+        config.dbVersion = 10//新增拼音字段,字母大写模式
         config.debugged = true
         config.onUpdateListener = this
         mLiteOrm = LiteOrm.newCascadeInstance(config)
@@ -26,8 +28,8 @@ object UOrm : SQLiteHelper.OnUpdateListener {
     }
 
     private fun updateDb() {
-//        db().dropTable(ComicsEntity::class.java)
-//        db().dropTable(EpEntity::class.java)
+        db().dropTable(ComicsEntity::class.java)
+        db().dropTable(EpEntity::class.java)
     }
 
     fun db(): LiteOrm {

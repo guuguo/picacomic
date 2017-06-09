@@ -14,7 +14,7 @@ import com.litesuits.orm.db.assit.QueryBuilder
 class ComicsDownloadManageViewModel(val fragment: ComicsDownloadManageFragment) : BaseObservable() {
     val activity = fragment.activity
     fun getDownloadComics() {
-        val comics = UOrm.db().query(QueryBuilder(ComicsEntity::class.java).whereNoEquals("addDownloadTime", 0).appendOrderDescBy("addDownloadTime"))
+        val comics =ComicsEntity.queryDownloadComics() 
         fragment.setUpDownload(comics)
     }
 

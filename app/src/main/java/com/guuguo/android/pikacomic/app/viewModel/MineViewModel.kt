@@ -4,7 +4,7 @@ import android.databinding.BaseObservable
 import android.databinding.ObservableField
 import android.view.View
 import com.guuguo.android.lib.extension.toast
-import com.guuguo.android.pikacomic.app.fragment.ComicDownloadManageFragment
+import com.guuguo.android.pikacomic.app.fragment.ComicsDownloadManageFragment
 import com.guuguo.android.pikacomic.app.fragment.ComicsFragment
 import com.guuguo.android.pikacomic.app.fragment.MineFragment
 import com.guuguo.android.pikacomic.constant.LocalData
@@ -42,7 +42,7 @@ class MineViewModel(val fragment: MineFragment) : BaseObservable() {
         ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_MY_FAVORITE)
     }
     fun  onDownloadClick(v: View) {
-        ComicDownloadManageFragment.intentTo(activity)
+        ComicsDownloadManageFragment.intentTo(activity)
     }
     fun getHistoryComics(page: Int, limit: Int) {
         val comics = UOrm.db().query(QueryBuilder(ComicsEntity::class.java).whereNoEquals("lastReadTime", 0).appendOrderDescBy("lastReadTime").limit(page * limit, limit))

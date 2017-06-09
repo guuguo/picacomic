@@ -91,8 +91,7 @@ class ComicDetailFragment : BaseFragment() {
                 if (epAdapter.selectedEp.isEmpty())
                     "没有选中的章节".toast()
                 else {
-//                    val comic = readDbComic()
-                    
+
                     viewModel.comic.get()!!.addDownloadTime=System.currentTimeMillis()
                     UOrm.db().update(viewModel.comic.get())
                     viewModel.downLoadComic(epAdapter.selectedEp)
