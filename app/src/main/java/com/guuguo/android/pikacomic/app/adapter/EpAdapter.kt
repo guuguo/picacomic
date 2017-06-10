@@ -24,24 +24,21 @@ class EpAdapter(var canDownLoadSelect: Boolean = false) : BaseQuickAdapter<Int, 
 
     override fun convert(helper: ViewHolder, item: Int) {
         helper.addOnClickListener(R.id.tv_ep)
-        if (!canDownLoadSelect)
-            if (item == readEp) {
+        if (canDownLoadSelect && selectedEp.contains(item)) {
+            helper.tvEp.delegate.backgroundColor = ContextCompat.getColor(mContext, R.color.colorPrimaryBlue)
+            helper.tvEp.setTextColor(Color.WHITE)
+        } else {
+            if (item == readEp && canDownLoadSelect) {
+                helper.tvEp.delegate.backgroundColor = ContextCompat.getColor(mContext, R.color.black40)
+                helper.tvEp.setTextColor(Color.WHITE)
+            } else if (item == readEp) {
                 helper.tvEp.delegate.backgroundColor = ContextCompat.getColor(mContext, R.color.colorPrimary)
                 helper.tvEp.setTextColor(Color.WHITE)
             } else {
                 helper.tvEp.delegate.backgroundColor = ContextCompat.getColor(mContext, R.color.migray)
                 helper.tvEp.setTextColor(Color.BLACK)
             }
-        else {
-            if (selectedEp.contains(item)) {
-                helper.tvEp.delegate.backgroundColor = ContextCompat.getColor(mContext, R.color.black50)
-                helper.tvEp.setTextColor(Color.WHITE)
-            } else {
-                helper.tvEp.delegate.backgroundColor = ContextCompat.getColor(mContext, R.color.migray)
-                helper.tvEp.setTextColor(Color.BLACK)
-            }
         }
-
         helper.tvEp.text = item.toString()
     }
 }

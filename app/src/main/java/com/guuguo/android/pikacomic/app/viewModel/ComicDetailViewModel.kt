@@ -27,7 +27,7 @@ import java.util.*
 class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable() {
     val activity = fragment.activity
     val comic: ObservableField<ComicsEntity> = ObservableField()
-
+//    val locationVisible: ObservableField<Int> = ObservableField(View.GONE)
     fun bindResult(result: ComicsEntity) {
         this.comic.set(result)
         fragment.setUpComic(result)
@@ -43,6 +43,9 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
 
     fun onClickFavorite(view: View) {
         actionComic(comic.get()._id, ACTION_FAVORITE)
+    }
+    fun onClickLocation(view: View) {
+        fragment.binding.recyclerEp.smoothScrollToPosition(fragment.epAdapter.readEp)
     }
 
     fun onClickLike(view: View) {
@@ -92,7 +95,7 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
     }
 
     fun getComic(id: String) {
-        fragment.binding.spbSmooth.visibility = View.VISIBLE
+        fragment.partDetailBinding.spbSmooth.visibility = View.VISIBLE
         MyApiServer.getComicDetail(id).subscribe(object : BaseCallback<ResponseModel<ComicDetailResponse>>() {
             override fun onSubscribe(d: Disposable?) {
                 activity.addApiCall(d)
@@ -100,7 +103,7 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
 
             override fun onSuccess(t: ResponseModel<ComicDetailResponse>) {
                 super.onSuccess(t)
-                fragment.binding.spbSmooth.visibility = View.GONE
+                fragment.partDetailBinding.spbSmooth.visibility = View.GONE
                 t.data?.comic?.let {
                     t.data?.comic!!.save()
                     bindResult(t.data?.comic!!)
@@ -108,7 +111,7 @@ class ComicDetailViewModel(val fragment: ComicDetailFragment) : BaseObservable()
             }
 
             override fun onApiLoadError(msg: String) {
-                fragment.binding.spbSmooth.visibility = View.GONE
+                fragment.partDetailBinding.spbSmooth.visibility = View.GONE
                 activity.dialogDismiss()
                 msg.toast()
             }

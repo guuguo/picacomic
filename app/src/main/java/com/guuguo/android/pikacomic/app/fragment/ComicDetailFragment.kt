@@ -4,12 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.view.*
 import com.bumptech.glide.Glide
 import com.flyco.roundview.RoundTextView
 import com.github.florent37.expectanim.ExpectAnim
+import com.github.florent37.expectanim.core.Expectations.alignTop
 import com.github.florent37.expectanim.core.Expectations.outOfScreen
-import com.github.florent37.expectanim.core.Expectations.topOfParent
 import com.guuguo.android.lib.app.LNBaseActivity
 import com.guuguo.android.lib.extension.safe
 import com.guuguo.android.lib.extension.toast
@@ -21,6 +22,7 @@ import com.guuguo.android.pikacomic.app.fragment.ComicsFragment.Companion.ARG_GE
 import com.guuguo.android.pikacomic.app.viewModel.ComicDetailViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
 import com.guuguo.android.pikacomic.databinding.FragmentComicDetailBinding
+import com.guuguo.android.pikacomic.databinding.PartComicDetailBinding
 import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.ComicsEntity
 
@@ -30,6 +32,7 @@ import com.guuguo.android.pikacomic.entity.ComicsEntity
  */
 class ComicDetailFragment : BaseFragment() {
     lateinit var binding: FragmentComicDetailBinding
+    lateinit var partDetailBinding: PartComicDetailBinding
     val viewModel by lazy { ComicDetailViewModel(this) }
     val epAdapter = EpAdapter(false)
 
@@ -41,6 +44,12 @@ class ComicDetailFragment : BaseFragment() {
         return comicEntity._id
     }
 
+    override fun setLayoutResId(inflater: LayoutInflater?, resId: Int, container: ViewGroup?): View {
+        binding = DataBindingUtil.inflate(inflater, resId, container, false)
+        binding.viewModel = viewModel
+        return binding.root
+    }
+
     override fun getMenuResId(): Int {
         if (epAdapter.canDownLoadSelect)
             return R.menu.download_function
@@ -50,7 +59,8 @@ class ComicDetailFragment : BaseFragment() {
     }
 
     val enterAnimator by lazy {
-        ExpectAnim().expect(binding.recyclerEp).toBe(topOfParent())
+        ExpectAnim().expect(binding.placeholderTop).toBe(outOfScreen(Gravity.TOP))
+                .expect(binding.recyclerEp).toBe(alignTop(binding.placeholderTop))
                 .expect(binding.rlBar).toBe(outOfScreen(Gravity.BOTTOM))
                 .toAnimation().setDuration(150)!!
     }
@@ -69,14 +79,13 @@ class ComicDetailFragment : BaseFragment() {
             activity.invalidateOptionsMenu()
             activity.title = "漫画下载"
             if (epAdapter.readEp > 0)
-                epAdapter.notifyItemChanged(epAdapter.readEp - 1)
-
+                epAdapter.notifyItemChanged(epAdapter.readEp - 1 + epAdapter.headerLayoutCount)
             enterAnimator.start()
         } else {
             epAdapter.canDownLoadSelect = false
             activity.invalidateOptionsMenu()
             activity.title = getHeaderTitle()
-            epAdapter.notifyItemRangeChanged(0, epAdapter.data.size)
+            epAdapter.notifyDataSetChanged()
             epAdapter.selectedEp.clear()
             enterAnimator.reset()
         }
@@ -92,7 +101,7 @@ class ComicDetailFragment : BaseFragment() {
                     "没有选中的章节".toast()
                 else {
 
-                    viewModel.comic.get()!!.addDownloadTime=System.currentTimeMillis()
+                    viewModel.comic.get()!!.addDownloadTime = System.currentTimeMillis()
                     UOrm.db().update(viewModel.comic.get())
                     viewModel.downLoadComic(epAdapter.selectedEp)
                     onBackPressed()
@@ -105,17 +114,12 @@ class ComicDetailFragment : BaseFragment() {
                 } else {
                     epAdapter.selectedEp.clear()
                 }
-                epAdapter.notifyItemRangeChanged(0, epAdapter.data.size)
+                epAdapter.notifyDataSetChanged()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun setLayoutResId(inflater: LayoutInflater?, resId: Int, container: ViewGroup?): View {
-        binding = DataBindingUtil.inflate(inflater, resId, container, false)
-        binding.viewModel = viewModel
-        return binding.root
-    }
 
     companion object {
         val ARG_COMIC = "ARG_COMIC"
@@ -145,21 +149,23 @@ class ComicDetailFragment : BaseFragment() {
 
     override fun initView() {
         super.initView()
+
+
         val dbComic = readDbComic()
         if (dbComic != null)
             comicEntity = dbComic
-
-        binding.recyclerEp.setAdapter(epAdapter)
+        binding.recyclerEp.layoutManager = GridLayoutManager(activity, 4)
+        binding.recyclerEp.adapter = epAdapter
         epAdapter.setOnItemChildClickListener { _, view, i ->
             val item = epAdapter.getItem(i)
             if (epAdapter.canDownLoadSelect) {
                 if (view is RoundTextView) {
                     if (epAdapter.selectedEp.contains(item)) {
                         epAdapter.selectedEp.remove(item)
-                        epAdapter.notifyItemChanged(i)
+                        epAdapter.notifyItemChanged(i + epAdapter.headerLayoutCount)
                     } else {
                         epAdapter.selectedEp.add(item)
-                        epAdapter.notifyItemChanged(i)
+                        epAdapter.notifyItemChanged(i + epAdapter.headerLayoutCount)
                     }
                 }
             } else
@@ -168,6 +174,10 @@ class ComicDetailFragment : BaseFragment() {
         binding.rtvRead.setOnClickListener {
             ComicContentActivity.intentTo(activity, viewModel.comic.get(), if (epAdapter.readEp != 0) epAdapter.readEp else 1)
         }
+
+        partDetailBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.part_comic_detail, contentView as ViewGroup, false)
+        partDetailBinding.viewModel = viewModel
+        epAdapter.addHeaderView(partDetailBinding.root)
     }
 
 
@@ -178,7 +188,12 @@ class ComicDetailFragment : BaseFragment() {
     }
 
     fun setUpComic(comic: ComicsEntity) {
-        Glide.with(activity).load(comic.thumb?.getOriginUrl()).asBitmap().placeholder(R.drawable.placeholder_loading).centerCrop().into(binding.ivBanner)
+//        if (epAdapter.readEp > 0 && epAdapter.itemCount > 20) {
+//            viewModel.locationVisible.set(View.VISIBLE)
+//        } else {
+//            viewModel.locationVisible.set(View.GONE)
+//        }
+        Glide.with(activity).load(comic.thumb?.getOriginUrl()).asBitmap().placeholder(R.drawable.placeholder_loading).centerCrop().into(partDetailBinding.ivBanner)
         val array: ArrayList<Int> = arrayListOf()
         (1..comic.epsCount).map { array.add(it) }
         epAdapter.readEp = comic.readEp.safe()

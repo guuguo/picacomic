@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.guuguo.android.pikacomic.app.viewModel.ComicDetailViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/v_comic_color"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+            android:id="@+id/spb_smooth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_comic_color"
+            app:spb_color="@color/colorPrimaryBlue"
+            app:spb_mirror_mode="false"
+            app:spb_progressiveStart_activated="true"
+            app:spb_progressiveStart_speed="1.5"
+            app:spb_progressiveStop_speed="3.4"
+            app:spb_reversed="false"
+            app:spb_sections_count="4"
+            app:spb_speed="2.0"
+            app:spb_stroke_separator_length="4dp"
+            app:spb_stroke_width="2dp" />
+
+        <ImageView
+            android:id="@+id/iv_banner"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_margin="15dp"
+            android:background="@color/white"
+            android:elevation="3dp"
+            app:elevation="3dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@color/black20" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text='@{viewModel.getUpdateTime(viewModel.comic.updated_at)}'
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/v_comic_color"
+            app:layout_constraintRight_toRightOf="@+id/v_comic_color"
+            app:layout_constraintTop_toTopOf="@+id/iv_banner"
+            tools:text="2015/2/3更新" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_item_title_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:maxLines="3"
+            android:text='@{viewModel.comic.title}'
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@+id/iv_banner"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_comic_color"
+            tools:text="game" />
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text='@{viewModel.comic.author}'
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            tools:text="日天君" />
+
+        <TextView
+            android:id="@+id/tv_view_num"
+            style="@style/text_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text='@{@string/views_count+viewModel.comic.viewsCount}'
+            app:layout_constraintLeft_toLeftOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_author"
+            tools:text="战斗力：1111" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="0dp"
+            android:layout_height="62dp"
+            android:background="@drawable/bg_edittext_normal"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minLines="2"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text='@{viewModel.comic.description}'
+            app:layout_constraintLeft_toLeftOf="@+id/iv_banner"
+            app:layout_constraintRight_toRightOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/iv_banner"
+            tools:text="tv_content" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
