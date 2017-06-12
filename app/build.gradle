@@ -68,8 +68,8 @@ kapt {
 }
 
 dependencies {
-//    compile project(':androidLib:androidLib')
-    compile 'com.github.GUUGUO:androidLib:-SNAPSHOT'
+    compile project(':androidLib:androidLib')
+//    compile 'com.github.GUUGUO:androidLib:0.1'
     compile project(':library')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'

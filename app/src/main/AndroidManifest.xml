@@ -44,6 +44,8 @@
             android:name=".app.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".app.activity.SearchActivity"
+            android:screenOrientation="portrait" />   <activity
             android:name=".app.activity.BaseTitleFragmentActivity"
             android:screenOrientation="portrait" />
         <activity

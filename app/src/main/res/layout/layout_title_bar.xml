@@ -15,15 +15,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_navigation"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="center_vertical"
-            android:padding="10dp"
-            android:tint="@color/white"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_arrowleft" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_navigation"-->
+            <!--android:layout_width="?attr/actionBarSize"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:padding="10dp"-->
+            <!--android:tint="@color/white"-->
+            <!--android:visibility="gone"-->
+            <!--app:srcCompat="@drawable/ic_arrowleft" />-->
 
         <TextView
             android:maxEms="10"

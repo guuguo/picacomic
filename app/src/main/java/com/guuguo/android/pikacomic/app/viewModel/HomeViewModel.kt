@@ -4,6 +4,7 @@ import android.databinding.BaseObservable
 import android.view.View
 import com.google.gson.reflect.TypeToken
 import com.guuguo.android.lib.extension.toast
+import com.guuguo.android.pikacomic.app.activity.SearchActivity
 import com.guuguo.android.pikacomic.app.fragment.HomeFragment
 import com.guuguo.android.pikacomic.constant.LocalData
 import com.guuguo.android.pikacomic.constant.myGson
@@ -22,6 +23,9 @@ import io.reactivex.disposables.Disposable
  */
 class HomeViewModel(val fragment: HomeFragment) : BaseObservable() {
     val activity = fragment.activity
+   fun onSearchClick(v:View){
+       SearchActivity.intentTo(activity,v)
+   }
     fun getAnnouncementsFromNet() {
         fragment.binding.spbSmooth.visibility = View.VISIBLE
         MyApiServer.getAnnouncements().subscribe(object : BaseCallback<ResponseModel<AnnouncementsResponse>>() {
