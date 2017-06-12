@@ -88,7 +88,7 @@ class ComicsFragment : BaseFragment() {
             loadData()
         }, binding.recycler)
         comicsAdapter.setOnItemClickListener { _, _, position ->
-            ComicDetailFragment.intentTo(activity, comicsAdapter.getItem(position))
+            ComicDetailFragment.intentTo(activity, comicsAdapter.getItem(position)!!)
         }
     }
 

@@ -92,7 +92,7 @@ class ComicDetailFragment : BaseFragment() {
                     "没有选中的章节".toast()
                 else {
 
-                    viewModel.comic.get()!!.addDownloadTime=System.currentTimeMillis()
+                    viewModel.comic.get()!!.addDownloadTime = System.currentTimeMillis()
                     UOrm.db().update(viewModel.comic.get())
                     viewModel.downLoadComic(epAdapter.selectedEp)
                     onBackPressed()
@@ -151,7 +151,7 @@ class ComicDetailFragment : BaseFragment() {
 
         binding.recyclerEp.setAdapter(epAdapter)
         epAdapter.setOnItemChildClickListener { _, view, i ->
-            val item = epAdapter.getItem(i)
+            val item = epAdapter.getItem(i)!!
             if (epAdapter.canDownLoadSelect) {
                 if (view is RoundTextView) {
                     if (epAdapter.selectedEp.contains(item)) {
