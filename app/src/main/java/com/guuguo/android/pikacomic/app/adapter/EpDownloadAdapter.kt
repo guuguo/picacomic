@@ -29,21 +29,14 @@ class EpDownloadAdapter : BaseQuickAdapter<EpEntity, EpDownloadAdapter.ViewHolde
     }
 
     override fun convert(helper: ViewHolder, item: EpEntity) {
-        val position = helper.layoutPosition
-        val pages: ArrayList<EpPagesEntity>
-//        if (!pageMap.containsKey(position)) {
-            pages = EpPagesEntity.queryByEpOrder(item.order, item.comicId)
-//            pageMap.put(position, pages)
-//        } else {
-//            pages = pageMap[position]!!
-//        }
-
+        val pages = EpPagesEntity.queryFirstByEpOrder(item.order, item.comicId)
+        helper.addOnClickListener(R.id.rtv_read)
         helper.tv_title.text = item.title
         helper.tv_hint.text =
-                if (pages.isEmpty()) {
+                if (pages == null) {
                     "未开始下载"
                 } else {
-                    "${item.downloadCount}/${pages[0].total} ${if (item.downloadCount >= pages[0].total) "已完成" else "下载中"}"
+                    "${item.downloadCount}/${pages.total} ${if (item.downloadCount >= pages.total) "已完成" else "下载中"}"
                 }
 
     }

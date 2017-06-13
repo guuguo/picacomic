@@ -41,7 +41,7 @@ class MineFragment : BaseFragment() {
     override fun initView() {
         super.initView()
         comicsAdapter.setOnItemClickListener { _, _, position ->
-            ComicDetailFragment.intentTo(activity, comicsAdapter.getItem(position))
+            ComicDetailFragment.intentTo(activity, comicsAdapter.getItem(position)!!)
         }
 
         val inf = activity.layoutInflater

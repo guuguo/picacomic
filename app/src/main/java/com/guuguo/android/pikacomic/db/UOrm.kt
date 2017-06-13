@@ -33,7 +33,7 @@ object UOrm : SQLiteHelper.OnUpdateListener {
     }
 
     fun db(): LiteOrm {
-        return mLiteOrm
+        return mLiteOrm.cascade()
     }
 
 

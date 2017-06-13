@@ -42,12 +42,15 @@ class EpPagesEntity {
             else null
         }
 
-        fun queryByEpOrder(order: Int, comicId: String): ArrayList<EpPagesEntity> {
-            val entities = UOrm.db()
+        fun queryFirstByEpOrder(order: Int, comicId: String): EpPagesEntity? {
+            val entities = UOrm.db().single()
                     .query(QueryBuilder(EpPagesEntity::class.java)
                             .whereEquals("comicId", comicId).whereAppendAnd().whereEquals("ep", order)
-                            .appendOrderAscBy("page"))
-            return entities
+                            .appendOrderAscBy("page").limit(0, 1))
+            if (entities.isNotEmpty())
+                return entities[0]
+            else return null
+
         }
     }
 }

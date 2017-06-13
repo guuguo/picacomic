@@ -157,7 +157,7 @@ class ComicDetailFragment : BaseFragment() {
         binding.recyclerEp.layoutManager = GridLayoutManager(activity, 4)
         binding.recyclerEp.adapter = epAdapter
         epAdapter.setOnItemChildClickListener { _, view, i ->
-            val item = epAdapter.getItem(i)
+            val item = epAdapter.getItem(i)!!
             if (epAdapter.canDownLoadSelect) {
                 if (view is RoundTextView) {
                     if (epAdapter.selectedEp.contains(item)) {

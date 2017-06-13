@@ -61,7 +61,7 @@ class ComicsDownloadManageFragment : BaseFragment() {
         binding.recycler.layoutManager = GridLayoutManager(activity, 3)
         comicsAdapter.bindToRecyclerView(binding.recycler)
         comicsAdapter.setOnItemClickListener { _, _, i ->
-            EpsDownloadManageFragment.intentTo(activity, comicsAdapter.getItem(i))
+            EpsDownloadManageFragment.intentTo(activity, comicsAdapter.getItem(i)!!)
         }
     }
 

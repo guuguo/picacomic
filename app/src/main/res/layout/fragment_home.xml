@@ -23,13 +23,15 @@
             app:elevation="0dp">
 
             <com.flyco.roundview.RoundTextView
+                android:onClick="@{viewModel::onSearchClick}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:drawableLeft="@drawable/ic_search_p"
+                android:drawableStart="@drawable/ic_search_p"
                 android:drawablePadding="6dp"
+                android:transitionName="search_view"
                 android:gravity="center_vertical"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:text="搜索漫画"
                 android:textColor="@color/bottom_navigation_unSelected"
                 app:rv_backgroundColor="@color/white"
