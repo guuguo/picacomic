@@ -14,6 +14,7 @@ object LocalData {
     var randomComics by Preference(mContext, "")
     var categories by Preference(mContext, "")
     var announcement by Preference(mContext, "")
+    var keywords by Preference(mContext, "")
     var mine by Preference(mContext, "")
     var isLogin by Preference(mContext, false)
     var email by Preference(mContext, "")

@@ -24,6 +24,9 @@ interface Service {
 
     @GET("/users/profile")
     fun userProfile(): Single<ResponseModel<UserResponse>>
+    
+    @GET("/keywords")
+    fun keywords(): Single<ResponseModel<KeyWordResponse>>
 
     @GET("/users/favourite")
     fun myFavorites(@Query("page") page: Int, @Query("rnd") rnd: Int = 8689): Single<ResponseModel<ComicsResponse>>
@@ -56,7 +59,7 @@ interface Service {
     fun getComicsRank(@Query("tt") tt: String = "H24", @Query("ct") ct: String = "VC"): Single<ResponseModel<ComicsRandomResponse>>
 
     @GET("/comics/search")
-    fun getComicsSearch(@Query("page") page: Int, @Query("q") query: String): Single<ResponseModel<ComicsResponse>>
+    fun searchComics(@Query("page") page: Int, @Query("q") query: String): Single<ResponseModel<ComicsResponse>>
 
     @POST("/users/punch-in")
     fun punch_in(): Single<ResponseModel<PunchInResponse>>

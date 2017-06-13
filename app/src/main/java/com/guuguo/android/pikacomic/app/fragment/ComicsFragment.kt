@@ -108,19 +108,17 @@ class ComicsFragment : BaseFragment() {
 
     var page = 1;
     fun setUpComicsPage(comics: ComicsResponse.ComicsBean) {
+        setUpComics(comics.docs)
         if (comics.pages <= comics.page)
             comicsAdapter.loadMoreEnd()
         else {
             comicsAdapter.loadMoreComplete()
         }
-        comicsAdapter.disableLoadMoreIfNotFullPage()
-        setUpComics(comics.docs)
-    }
+        comicsAdapter.disableLoadMoreIfNotFullPage()   }
 
     fun setUpComics(comics: List<ComicsEntity>) {
         if (comicsAdapter.emptyViewCount < 1)
             comicsAdapter.setEmptyView(R.layout.simple_empty_view)
-//        comics.forEach { it.save() }
         UOrm.db().insert(comics)
         comicsAdapter.addData(comics)
     }

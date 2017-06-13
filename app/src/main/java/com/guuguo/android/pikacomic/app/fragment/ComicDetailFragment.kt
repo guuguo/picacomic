@@ -9,9 +9,10 @@ import android.view.*
 import com.bumptech.glide.Glide
 import com.flyco.roundview.RoundTextView
 import com.github.florent37.expectanim.ExpectAnim
-import com.github.florent37.expectanim.core.Expectations.alignTop
 import com.github.florent37.expectanim.core.Expectations.outOfScreen
+import com.github.florent37.viewanimator.ViewAnimator
 import com.guuguo.android.lib.app.LNBaseActivity
+import com.guuguo.android.lib.extension.dpToPx
 import com.guuguo.android.lib.extension.safe
 import com.guuguo.android.lib.extension.toast
 import com.guuguo.android.pikacomic.R
@@ -59,10 +60,16 @@ class ComicDetailFragment : BaseFragment() {
     }
 
     val enterAnimator by lazy {
-        ExpectAnim().expect(binding.placeholderTop).toBe(outOfScreen(Gravity.TOP))
-                .expect(binding.recyclerEp).toBe(alignTop(binding.placeholderTop))
+        ExpectAnim()/*.expect(binding.placeholderTop).toBe(outOfScreen(Gravity.TOP))
+                .expect(binding.recyclerEp).toBe(alignTop(binding.placeholderTop))*/
                 .expect(binding.rlBar).toBe(outOfScreen(Gravity.BOTTOM))
                 .toAnimation().setDuration(150)!!
+    }
+    val enterAnimatorView by lazy {
+        ViewAnimator.animate(binding.recyclerEp).translationY(0f, -227.dpToPx().toFloat()).duration(150)
+    }
+    val outAnimatorView by lazy {
+        ViewAnimator.animate(binding.recyclerEp).translationY(-227.dpToPx().toFloat(), 0f).duration(150)
     }
 
     override fun onBackPressed(): Boolean {
@@ -81,6 +88,7 @@ class ComicDetailFragment : BaseFragment() {
             if (epAdapter.readEp > 0)
                 epAdapter.notifyItemChanged(epAdapter.readEp - 1 + epAdapter.headerLayoutCount)
             enterAnimator.start()
+            enterAnimatorView.start()
         } else {
             epAdapter.canDownLoadSelect = false
             activity.invalidateOptionsMenu()
@@ -88,6 +96,7 @@ class ComicDetailFragment : BaseFragment() {
             epAdapter.notifyDataSetChanged()
             epAdapter.selectedEp.clear()
             enterAnimator.reset()
+            outAnimatorView.start()
         }
     }
 

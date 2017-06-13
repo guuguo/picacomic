@@ -12,7 +12,6 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AlphaAnimation
-import com.bm.library.Info
 import com.flyco.systembar.SystemBarHelper
 import com.github.florent37.viewanimator.ViewAnimator
 import com.guuguo.android.lib.utils.DisplayUtil
@@ -65,9 +64,6 @@ class ComicContentActivity : BaseActivity() {
         ep = intent.getIntExtra(ARG_EP, 1)
     }
 
-    internal lateinit var mInfo: Info
-    internal var animationIn = AlphaAnimation(0f, 1f)
-    internal var animationOut = AlphaAnimation(1f, 0f)
     lateinit var mDetector: GestureDetectorCompat
     override fun initView() {
         super.initView()

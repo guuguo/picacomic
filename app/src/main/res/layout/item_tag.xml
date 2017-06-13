@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<com.flyco.roundview.RoundTextView android:id="@+id/tv_content"
+    android:layout_width="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:textColor="@color/black"
+    android:layout_height="33dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginRight="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:gravity="center"
+    app:rv_backgroundColor="@color/white"
+    app:rv_cornerRadius="2dp"
+    app:rv_isRadiusHalfHeight="true"
+    app:rv_backgroundPressColor="@color/colorPrimary"
+    app:rv_strokeColor="@color/black40"
+    app:rv_strokeWidth="1px"
+    tools:text="热血"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" />

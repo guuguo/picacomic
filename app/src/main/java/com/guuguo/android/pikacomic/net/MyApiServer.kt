@@ -60,6 +60,11 @@ object MyApiServer {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
+    fun keywords(): Single<ResponseModel<KeyWordResponse>> {
+        return service.keywords()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
 
     fun getAnnouncements(): Single<ResponseModel<AnnouncementsResponse>> {
         return service.getAnnouncements(1)
@@ -78,7 +83,11 @@ object MyApiServer {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
-
+    fun searchComics(page: Int, query: String): Single<ResponseModel<ComicsResponse>> {
+        return service.searchComics(page, query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
     fun getComicsContent(id: String, ep: Int, page: Int): Single<ResponseModel<ComicsContentResponse>> {
         return service.getComicContent(id, ep, page)
                 .subscribeOn(Schedulers.io())
