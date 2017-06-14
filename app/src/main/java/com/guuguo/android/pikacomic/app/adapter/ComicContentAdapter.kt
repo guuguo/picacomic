@@ -43,5 +43,6 @@ class ComicContentAdapter : BaseQuickAdapter<ImageEntity, ComicContentAdapter.Vi
         }
                 .centerCrop().placeholder(drawable).into(ScaleContentImageViewTarget(helper.rivContent, item, comicId))
     }
+
     var comicId = ""
 }

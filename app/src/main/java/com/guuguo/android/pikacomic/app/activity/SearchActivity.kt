@@ -70,6 +70,10 @@ class SearchActivity : BaseActivity() {
         binding.edtSearch.setText("")
     }
 
+    fun onTagsCloseClick(v: View) {
+        focusRecycler()
+    }
+
     override fun loadData() {
         super.loadData()
         viewModel.getHotKeys()
@@ -133,14 +137,18 @@ class SearchActivity : BaseActivity() {
 
     private fun showTags() {
         if (binding.wlTags.visibility != View.VISIBLE) {
-            ViewAnimator.animate(binding.wlTags).alpha(0f, 1f).duration(200).start()
+            ViewAnimator.animate(binding.wlTags, binding.ivTagsClose).alpha(0f, 1f).duration(200).start()
             binding.wlTags.visibility = View.VISIBLE
+            binding.ivTagsClose.visibility = View.VISIBLE
         }
     }
 
     private fun hideTags() {
         if (binding.wlTags.visibility != View.GONE) {
-            ViewAnimator.animate(binding.wlTags).alpha(1f, 0f).onStop { binding.wlTags.visibility = View.GONE }.duration(200).start()
+            ViewAnimator.animate(binding.wlTags, binding.ivTagsClose).alpha(1f, 0f).onStop {
+                binding.wlTags.visibility = View.GONE
+                binding.ivTagsClose.visibility = View.GONE
+            }.duration(200).start()
         }
     }
 
@@ -167,7 +175,7 @@ class SearchActivity : BaseActivity() {
     }
 
     private fun focusRecycler() {
-        InputMethodUtils.closeInputMethod(binding.edtSearch,true)
+        InputMethodUtils.closeInputMethod(binding.edtSearch, true)
         binding.recycler.requestFocus()
     }
 

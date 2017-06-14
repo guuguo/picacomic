@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.guuguo.android.lib.app.LNBaseActivity
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.app.activity.BaseTitleFragmentActivity
+import com.guuguo.android.pikacomic.app.activity.ComicContentActivity
 import com.guuguo.android.pikacomic.app.adapter.EpDownloadAdapter
 import com.guuguo.android.pikacomic.app.viewModel.EpsDownloadManageViewModel
 import com.guuguo.android.pikacomic.base.BaseFragment
@@ -77,6 +78,10 @@ class EpsDownloadManageFragment : BaseFragment() {
         RxBus.get().register(this)
         binding.recycler.layoutManager = LinearLayoutManager(activity)
         epsAdapter.bindToRecyclerView(binding.recycler)
+        epsAdapter.setOnItemChildClickListener { adapter, view, position ->
+            if (view.id == R.id.rtv_read)
+                ComicContentActivity.intentTo(activity, comicEntity, epsAdapter.data[position].order)
+        }
     }
 
 
@@ -87,6 +92,7 @@ class EpsDownloadManageFragment : BaseFragment() {
     fun downloadNotify(epEntity: EpEntity) {
         if (epEntity.comicId == comicEntity._id) {
             val index = epsAdapter.data.indexOfFirst { it.order == epEntity.order }
+            epsAdapter.data[index].downloadCount = epEntity.downloadCount
             epsAdapter.notifyItemChanged(index)
         }
     }

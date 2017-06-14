@@ -29,10 +29,11 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
         activity.onBackPressed()
     }
 
-    fun setReadStatus(ep: Int) {
+    fun setReadStatus(ep: Int, position: Int) {
         activity.comic.readEp = ep
-        activity.comic.lastReadTime =System.currentTimeMillis()
-        UOrm.db().save(activity.comic)
+        activity.comic.lastReadTime = System.currentTimeMillis()
+        activity.comic.readPosition = position
+        UOrm.db().single().save(activity.comic)
     }
 
     fun getContentFromNet(id: String, ep: Int, page: Int) {
@@ -54,7 +55,7 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
                     UOrm.db().save(t.data!!.pages)
 
                     //保存epEntity
-                    t.data!!.ep?.save(ep,id)
+                    t.data!!.ep?.save(ep, id)
                     activity.setContent(t.data!!.pages!!)
                 }
             }
@@ -68,11 +69,19 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
 
     fun getContent(id: String, ep: Int, page: Int) {
         val pageEntity = EpPagesEntity.query(id, ep, page)
-
-        if (pageEntity != null)
+        if (pageEntity != null) {
             activity.setContent(pageEntity)
-        else
+            if (activity.lastReadEp == ep)
+                if (activity.lastReadPosition > activity.comicsContentAdapter.data.size) {
+                    activity.page++
+                    getContent(id, ep, activity.page)
+                } else {
+                    activity.toPosition(activity.lastReadPosition - 1)
+                }
+        } else {
             getContentFromNet(id, ep, page)
+            activity.firstLoad = false
+        }
     }
 
     fun unImmersiveStatusBar(window: Window) {
@@ -118,6 +127,7 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
                 val item = activity.comicsContentAdapter.getItem(firstItemPosition)
                 if (item is ImageEntity) {
                     activity.setUpReadInfo(item.ep, item.position, item.total)
+                    setReadStatus(item.ep, item.position)
                 }
             }
         }

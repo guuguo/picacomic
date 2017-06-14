@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.AlphaAnimation
 import com.flyco.systembar.SystemBarHelper
 import com.github.florent37.viewanimator.ViewAnimator
 import com.guuguo.android.lib.utils.DisplayUtil
@@ -31,6 +30,8 @@ class ComicContentActivity : BaseActivity() {
     val comicsContentAdapter = ComicContentAdapter()
     //argument
     var ep = 1
+    var lastReadPosition = 1
+    var lastReadEp = 1
     lateinit var comic: ComicsEntity
     override fun getLayoutResId() = R.layout.activity_comic_content
 
@@ -62,6 +63,8 @@ class ComicContentActivity : BaseActivity() {
         super.initVariable(savedInstanceState)
         comic = intent.getSerializableExtra(ARG_COMIC) as ComicsEntity
         ep = intent.getIntExtra(ARG_EP, 1)
+        lastReadPosition = comic.readPosition
+        lastReadEp = comic.readEp
     }
 
     lateinit var mDetector: GestureDetectorCompat
@@ -71,7 +74,7 @@ class ComicContentActivity : BaseActivity() {
         binding.recycler.layoutManager = LinearLayoutManager(activity)
         binding.recycler.addItemDecoration(HorizontalDividerItemDecoration.Builder(activity).color(Color.BLACK).build())
         comicsContentAdapter.bindToRecyclerView(binding.recycler)
-        comicsContentAdapter.comicId=comic._id
+        comicsContentAdapter.comicId = comic._id
         comicsContentAdapter.setOnLoadMoreListener({
             page++
             loadData()
@@ -129,7 +132,7 @@ class ComicContentActivity : BaseActivity() {
     }
 
     val scaleLeft = DisplayUtil.getScreenWidth() * 0.3.toFloat()
-    
+
     fun fingerUp() {
         val translationX = binding.recycler.translationX
         if (translationX > scaleLeft) {
@@ -140,7 +143,7 @@ class ComicContentActivity : BaseActivity() {
     }
 
     fun setUpReadInfo(ep: Int, position: Int, total: Int) {
-        binding.tvEp.text = "第${ep}/${comic.epsCount}话 $position/$total"
+        binding.tvEp.text = "第${ep}话 $position/${total}页"
     }
 
     var barChangeRun = false
@@ -169,7 +172,6 @@ class ComicContentActivity : BaseActivity() {
 
     override fun loadData() {
         super.loadData()
-
         viewModel.getContent(comic._id, ep, page)
     }
 
@@ -177,15 +179,14 @@ class ComicContentActivity : BaseActivity() {
     var page = 1
     //漫画列表保存三个page数量的漫画内容，再有新的列表加载好会移除原先的第一个列表
     fun setContent(data: EpPagesEntity) {
-        firstLoad = false
         (0..data.docs.size - 1).map {
             data.docs[it].ep = ep
             data.docs[it].position = ((data.page - 1) * data.limit) + it + 1
             data.docs[it].total = data.total
         }
         if (page == 1) {
-            setUpReadInfo(ep, 0, data.total)
-            viewModel.setReadStatus(ep)
+            setUpReadInfo(ep, 1, data.total)
+            viewModel.setReadStatus(ep, 1)
 
             //总列表保持两个章节
             comicsContentAdapter.data.removeAll(comicsContentAdapter.firstEpList)
@@ -211,6 +212,17 @@ class ComicContentActivity : BaseActivity() {
 
         //总列表添加新的一页
         comicsContentAdapter.addData(data.docs)
+    }
+
+    fun toPosition(position: Int) {
+        if (firstLoad) {
+            firstLoad = false
+            if (position >= 0) {
+                binding.recycler.scrollToPosition(position)
+                setUpReadInfo(lastReadEp, position + 1, comicsContentAdapter.data[0].total)
+                viewModel.setReadStatus(lastReadEp, position + 1)
+            }
+        }
     }
 
 

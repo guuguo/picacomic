@@ -49,14 +49,13 @@ class ScaleContentImageViewTarget(view: RatioImageView, private var item: ImageE
             val fop: FileOutputStream = FileOutputStream(getFileDir() + "/" + item.media!!.path)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fop)
             fop.close()
-
-            item.media!!.isDownload = true
-            val epEntity = EpEntity.get(comicId, item.ep)
-            epEntity?.let { epEntity.downloadCount++ }
-
-            UOrm.db().update(item.media!!)
-            UOrm.db().update(epEntity)
-
+            if (!item.media!!.isDownload) {
+                item.media!!.isDownload = true
+                val epEntity = EpEntity.get(comicId, item.ep)
+                epEntity?.let { epEntity.downloadCount++ }
+                UOrm.db().update(item.media!!)
+                UOrm.db().update(epEntity)
+            }
         }.subscribeOn(Schedulers.io()).subscribe({}, {
             e ->
             e.printStackTrace()

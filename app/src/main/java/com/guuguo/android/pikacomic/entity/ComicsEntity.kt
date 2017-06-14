@@ -40,7 +40,8 @@ class ComicsEntity : Serializable {
     var isFavourite: Boolean = false
     var isLiked: Boolean = false
     var commentsCount: Int = 0
-    var readEp: Int? = null
+    var readEp: Int=1
+    var readPosition: Int = 1
     var lastReadTime: Long = 0L
     var addDownloadTime: Long = 0L
 
@@ -58,6 +59,7 @@ class ComicsEntity : Serializable {
             readEp = entity.readEp
             lastReadTime = entity.lastReadTime
             addDownloadTime = entity.addDownloadTime
+            readPosition=entity.readPosition
             UOrm.db().update(this)
         }
     }

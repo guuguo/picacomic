@@ -33,7 +33,7 @@ class EpDownloadAdapter : BaseQuickAdapter<EpEntity, EpDownloadAdapter.ViewHolde
         helper.addOnClickListener(R.id.rtv_read)
         helper.tv_title.text = item.title
         helper.tv_hint.text =
-                if (pages == null) {
+                if (pages==null || item.downloadCount == -1) {
                     "未开始下载"
                 } else {
                     "${item.downloadCount}/${pages.total} ${if (item.downloadCount >= pages.total) "已完成" else "下载中"}"

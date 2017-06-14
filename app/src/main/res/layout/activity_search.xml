@@ -17,11 +17,22 @@
         android:orientation="vertical"
         tools:context=".app.activity.MainActivity">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appbar"
+            tools:listitem="@layout/item_comics" />
+
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="0dp"
             android:layout_height="?actionBarSize"
-            app:elevation="2dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -61,9 +72,10 @@
                         android:maxLines="1"
                         android:paddingLeft="10dp"
                         android:singleLine="true"
-                        android:textColorHint="@color/bottom_navigation_unSelected" >
-                        <requestFocus/>
-                        </EditText>
+                        android:textColorHint="@color/bottom_navigation_unSelected">
+
+                        <requestFocus />
+                    </EditText>
 
                     <ImageButton
                         android:id="@+id/btn_clear"
@@ -80,24 +92,14 @@
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
-        <android.support.v7.widget.RecyclerView
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:id="@+id/recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar"
-            tools:listitem="@layout/item_comics" />
+
 
         <am.widget.wraplayout.WrapLayout
-            android:clickable="true"
             android:id="@+id/wl_tags"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
+            android:clickable="true"
             android:horizontalSpacing="10dp"
             android:padding="10dp"
             android:verticalSpacing="10dp"
@@ -107,10 +109,22 @@
             app:layout_constraintTop_toTopOf="@+id/recycler"
             app:wlyGravity="top"
             app:wlyHorizontalSpacing="10dp"
-            app:wlyVerticalSpacing="10dp"
-            >
+            app:wlyVerticalSpacing="10dp">
 
         </am.widget.wraplayout.WrapLayout>
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_tags_close"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_tags_close"
+            android:onClick="onTagsCloseClick"
+            android:padding="4dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wl_tags"
+            app:srcCompat="@drawable/ic_close" />
 
         <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
             android:id="@+id/spb_smooth"
@@ -132,6 +146,6 @@
             app:spb_stroke_separator_length="4dp"
             app:spb_stroke_width="2dp" />
 
-   
+
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -197,11 +197,6 @@ class ComicDetailFragment : BaseFragment() {
     }
 
     fun setUpComic(comic: ComicsEntity) {
-//        if (epAdapter.readEp > 0 && epAdapter.itemCount > 20) {
-//            viewModel.locationVisible.set(View.VISIBLE)
-//        } else {
-//            viewModel.locationVisible.set(View.GONE)
-//        }
         Glide.with(activity).load(comic.thumb?.getOriginUrl()).asBitmap().placeholder(R.drawable.placeholder_loading).centerCrop().into(partDetailBinding.ivBanner)
         val array: ArrayList<Int> = arrayListOf()
         (1..comic.epsCount).map { array.add(it) }

@@ -90,7 +90,7 @@ class UpdateService : LNBaseService() {
         epPagesEntity.docs.map { it.media!! }.filter { !it.isDownload }.apply {
             val dispose = RxDownload.getInstance(MyApplication.instance).serviceMultiDownload(id + ep,
                     *this.map { it.getOriginUrl() }.toTypedArray())
-                    .subscribe({ "开始下载".toast() })
+                    .subscribe({ "已经开始下载，请在我的下载里面查看".toast() })
             addDispose(dispose)
         }.forEach {
             RxDownload.getInstance(MyApplication.instance).receiveDownloadStatus(it.getOriginUrl()).subscribe({ downloadEvent ->
@@ -99,7 +99,7 @@ class UpdateService : LNBaseService() {
                     DownloadFlag.COMPLETED -> {
                         it.isDownload = true
                         epEntity.downloadCount++
-                        "${epEntity.downloadCount}/${epPagesEntity.total}".toast()
+//                        "${epEntity.downloadCount}/${epPagesEntity.total}".toast()
                         UOrm.db().update(it)
                         UOrm.db().update(epEntity)
                         RxBus.get().post(BUS_ACTION_URL_DOWNLOAD,epEntity)
