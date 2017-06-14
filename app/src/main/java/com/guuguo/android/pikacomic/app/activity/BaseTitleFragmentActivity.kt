@@ -8,7 +8,7 @@ import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.base.BaseActivity
 import kotlinx.android.synthetic.main.layout_title_bar.*
 
-class BaseTitleFragmentActivity : BaseActivity() {
+open class BaseTitleFragmentActivity : BaseActivity() {
 
     override fun getLayoutResId() = R.layout.activity_title_fragment
     override fun isNavigationBack() = true

@@ -90,7 +90,9 @@ class UpdateService : LNBaseService() {
         epPagesEntity.docs.map { it.media!! }.filter { !it.isDownload }.apply {
             val dispose = RxDownload.getInstance(MyApplication.instance).serviceMultiDownload(id + ep,
                     *this.map { it.getOriginUrl() }.toTypedArray())
-                    .subscribe({ "已经开始下载，请在我的下载里面查看".toast() })
+                    .subscribe({ "已经开始下载，请在我的下载里面查看".toast()
+                        RxBus.get().post(BUS_ACTION_URL_DOWNLOAD,epEntity)
+                    })
             addDispose(dispose)
         }.forEach {
             RxDownload.getInstance(MyApplication.instance).receiveDownloadStatus(it.getOriginUrl()).subscribe({ downloadEvent ->

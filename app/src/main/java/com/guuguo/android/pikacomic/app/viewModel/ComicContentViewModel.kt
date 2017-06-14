@@ -102,7 +102,7 @@ class ComicContentViewModel(val activity: ComicContentActivity) : BaseObservable
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
 
-        val contentView = window.decorView.findViewById(Window.ID_ANDROID_CONTENT) as ViewGroup
+        val contentView = window.decorView.findViewById<ViewGroup>(Window.ID_ANDROID_CONTENT)
         val rootView = contentView.getChildAt(0)
         val statusBarHeight = SystemBarHelper.getStatusBarHeight(window.context)
         if (rootView != null) {

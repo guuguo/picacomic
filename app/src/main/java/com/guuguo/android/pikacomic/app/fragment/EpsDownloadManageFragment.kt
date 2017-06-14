@@ -92,8 +92,12 @@ class EpsDownloadManageFragment : BaseFragment() {
     fun downloadNotify(epEntity: EpEntity) {
         if (epEntity.comicId == comicEntity._id) {
             val index = epsAdapter.data.indexOfFirst { it.order == epEntity.order }
-            epsAdapter.data[index].downloadCount = epEntity.downloadCount
-            epsAdapter.notifyItemChanged(index)
+            if (index >= 0) {
+                epsAdapter.data[index].downloadCount = epEntity.downloadCount
+                epsAdapter.notifyItemChanged(index)
+            } else {
+                epsAdapter.addData(epEntity)
+            }
         }
     }
 

@@ -17,6 +17,7 @@ import com.guuguo.android.pikacomic.entity.UserResponse
 import com.guuguo.android.pikacomic.net.http.BaseCallback
 import com.guuguo.android.pikacomic.net.http.ResponseModel
 import com.guuguo.gank.net.MyApiServer
+import com.guuguo.android.pikacomic.app.activity.AboutActivity
 import com.litesuits.orm.db.assit.QueryBuilder
 import io.reactivex.disposables.Disposable
 
@@ -40,6 +41,9 @@ class MineViewModel(val fragment: MineFragment) : BaseObservable() {
 
     fun onFavoriteClick(v: View) {
         ComicsFragment.intentTo(activity, ComicsFragment.TYPE_COMICS_MY_FAVORITE)
+    }
+    fun onAboutClick(v: View) {
+        AboutActivity.intentTo(activity)
     }
     fun  onDownloadClick(v: View) {
         ComicsDownloadManageFragment.intentTo(activity)

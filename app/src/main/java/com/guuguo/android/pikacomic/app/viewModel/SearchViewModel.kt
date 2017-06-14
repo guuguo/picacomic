@@ -34,7 +34,7 @@ class SearchViewModel(val activity: SearchActivity) : BaseObservable() {
                 activity.binding.spbSmooth.visibility = View.GONE
                 t.data?.keywords?.let {
                     LocalData.keywords = myGson.toJson(t.data?.keywords!!)
-                    activity.setUpKeywords(t.data!!.keywords!!)
+                    activity.setUpTags(t.data!!.keywords!!)
                 }
             }
 
@@ -49,7 +49,7 @@ class SearchViewModel(val activity: SearchActivity) : BaseObservable() {
         val keywordsStr = LocalData.keywords
         try {
             val keywords: ArrayList<String> = myGson.fromJson(keywordsStr, object : TypeToken<ArrayList<String>>() {}.type)
-            activity.setUpKeywords(keywords)
+            activity.setUpTags(keywords)
         } catch (e: Exception) {
         }
         getHotKeysFromNet()

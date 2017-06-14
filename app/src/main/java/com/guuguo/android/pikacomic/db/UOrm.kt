@@ -28,8 +28,7 @@ object UOrm : SQLiteHelper.OnUpdateListener {
     }
 
     private fun updateDb() {
-        db().dropTable(ComicsEntity::class.java)
-        db().dropTable(EpEntity::class.java)
+     
     }
 
     fun db(): LiteOrm {

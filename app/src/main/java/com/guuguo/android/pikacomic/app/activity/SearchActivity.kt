@@ -114,13 +114,13 @@ class SearchActivity : BaseActivity() {
         }
     }
 
-    fun setUpKeywords(keywords: List<String>) {
+    fun setUpTags(keywords: List<String>) {
         if (comicsAdapter.data.isEmpty()) {
             binding.wlTags.removeAllViews()
 
             keywords.forEach {
                 val view = layoutInflater.inflate(R.layout.item_tag, binding.wlTags, false)
-                val tvContent = view.findViewById(R.id.tv_content) as TextView
+                val tvContent = view.findViewById<TextView>(R.id.tv_content)
                 tvContent.text = it
                 val str = it
                 binding.wlTags.addView(view)

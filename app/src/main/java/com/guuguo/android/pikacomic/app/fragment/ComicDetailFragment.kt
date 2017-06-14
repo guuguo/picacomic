@@ -206,7 +206,10 @@ class ComicDetailFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ComicContentActivity.ACTIVITY_COMIC_CONTENT) {
-            viewModel.bindResult(readDbComic()!!)
+            val comics = readDbComic()
+            comics?.let {
+                viewModel.bindResult(comics)
+            }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
