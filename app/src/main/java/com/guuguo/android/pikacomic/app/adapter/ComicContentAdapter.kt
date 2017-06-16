@@ -7,7 +7,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.guuguo.android.lib.view.RatioImageView
+import com.guuguo.android.lib.ui.imageview.RatioImageView
 import com.guuguo.android.pikacomic.R
 import com.guuguo.android.pikacomic.constant.getFileDir
 import com.guuguo.android.pikacomic.entity.ImageEntity

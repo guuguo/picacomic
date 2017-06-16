@@ -8,8 +8,8 @@ import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.ImageViewTarget
 import com.bumptech.glide.request.target.SizeReadyCallback
 import com.bumptech.glide.request.target.SquaringDrawable
+import com.guuguo.android.lib.ui.imageview.RatioImageView
 import com.guuguo.android.lib.utils.FileUtil
-import com.guuguo.android.lib.view.RatioImageView
 import com.guuguo.android.pikacomic.constant.getFileDir
 import com.guuguo.android.pikacomic.db.UOrm
 import com.guuguo.android.pikacomic.entity.EpEntity

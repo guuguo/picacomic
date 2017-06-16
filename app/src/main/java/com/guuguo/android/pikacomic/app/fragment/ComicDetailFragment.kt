@@ -31,7 +31,7 @@ import com.guuguo.android.pikacomic.entity.ComicsEntity
  * mimi 创造于 2017-05-22.
  * 项目 pika
  */
-class ComicDetailFragment : BaseFragment() {
+class ComicDetailFragment : BaseFragment()/*, Toolbar.OnMenuItemClickListener*/ {
     lateinit var binding: FragmentComicDetailBinding
     lateinit var partDetailBinding: PartComicDetailBinding
     val viewModel by lazy { ComicDetailViewModel(this) }
@@ -99,7 +99,10 @@ class ComicDetailFragment : BaseFragment() {
             outAnimatorView.start()
         }
     }
-
+//
+//    override fun onMenuItemClick(item: MenuItem): Boolean {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_download -> {
@@ -159,6 +162,8 @@ class ComicDetailFragment : BaseFragment() {
     override fun initView() {
         super.initView()
 
+//        activity.getToolBar()?.inflateMenu(getMenuResId())
+//        activity.getToolBar()?.setOnMenuItemClickListener(this)
 
         val dbComic = readDbComic()
         if (dbComic != null)
